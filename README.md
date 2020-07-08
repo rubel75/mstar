@@ -56,7 +56,9 @@ Options:
 The file headers explain the content.
 
 
-For tutorials, please refer to ...
+### Documentation
+
+For tutorials and tips on how to generate a file that contains optical matrix elements (`case.mommat2[up/dn]` in WIEN2k or `WAVEDER` in VASP), please refer to the [Wiki page](https://github.com/rubel75/mstar/wiki).
 
 Examples of "real life" applications can be found in ...
 
