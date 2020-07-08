@@ -182,7 +182,7 @@ IF (wien2k) THEN
                 nltot) ! -> args out
     write (*,'(A,I0)') '  number of lines in mommat file = ', nltot
     IF (nltot < 10) THEN
-        write(*,*) 'The file', TRIM(fnameinp), 'is too short ', & !...
+        write(*,*) 'The file ', TRIM(fnameinp), ' is too short ', & !...
             'and most likely useless. Stopping'
         STOP
     END IF

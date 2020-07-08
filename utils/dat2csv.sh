@@ -9,14 +9,15 @@
 # here E are energy eigenvalues (eV) relative to the Fermi energy set diring band structure calculation
 # minv is the inverse effective mass component selected below
 #
-# (c) Oleg Rubel (Feb 2020)
+# (c) Oleg Rubel (May 2020)
 
-nbmin=25
-nbmax=36
-fname='minv_c'; col=2; suffix='' # conductivity eff. mass; col = column in the *dat file
+nbmin=21
+nbmax=22
+case=${PWD##*/}
+#fname='minv_c-up'; col=2; suffix='' # conductivity eff. mass; col = column in the *dat file
 #fname='minv_d'; col=2; suffix='' # DOS eff. mass; col = column in the *dat file
-#fname='minv_ij'; col=2; suffix='_xx' # eff. mass xx
-#fname='minv_ij'; col=3; suffix='_yy' # eff. mass yy
+fname='minv_ij-up'; col=2; suffix='_xx' # eff. mass xx
+#fname='minv_ij-up'; col=3; suffix='_yy' # eff. mass yy
 #fname='minv_ij'; col=4; suffix='_zz' # eff. mass zz
 
 
@@ -24,7 +25,7 @@ fname='minv_c'; col=2; suffix='' # conductivity eff. mass; col = column in the *
 # get column of dk on the path
 
 rm tmp1
-sed -n -E "/^  bandindex:[[:space:]]+1$/,/^  bandindex:[[:space:]]+2$/p" mass.spaghetti_ene | sed '/^  bandindex/d' | awk {'print $4'} > tmp1 # [[:space:]]+ will match arbitrary number of spaces
+sed -n -E "/^  bandindex:[[:space:]]+1$/,/^  bandindex:[[:space:]]+2$/p" ${case}.spaghetti_ene | sed '/^  bandindex/d' | awk {'print $4'} > tmp1 # [[:space:]]+ will match arbitrary number of spaces
 
 
 # get band energies [eV]
@@ -34,7 +35,7 @@ do
   echo "band $i"
   ip1=$((i + 1))
   echo "ip1 = $ip1"
-  sed -n -E "/^  bandindex:[[:space:]]+${i}$/,/^  bandindex:[[:space:]]+${ip1}$/p" mass.spaghetti_ene | sed '/^  bandindex/d' | awk {'print $5'} > tmp2
+  sed -n -E "/^  bandindex:[[:space:]]+${i}$/,/^  bandindex:[[:space:]]+${ip1}$/p" ${case}.spaghetti_ene | sed '/^  bandindex/d' | awk {'print $5'} > tmp2
   paste -d, tmp1 tmp2 > tmp3 # past in CSV format
   mv tmp3 tmp1
 done
@@ -55,6 +56,7 @@ rm tmp2 # leave tmp1
 echo "# k [rad/bohr],energy [eV] for bands ${nbmin}-${nbmax}, (m0/m*) for bands ${nbmin}-${nbmax}" > ${fname}${suffix}-b${nbmin}-${nbmax}.csv
 cat tmp1 >> ${fname}${suffix}-b${nbmin}-${nbmax}.csv
 rm tmp1
+echo "Results are stored in file ${fname}${suffix}-b${nbmin}-${nbmax}.csv"
 
 # Display tick label that are usefull for gnuplot
 
