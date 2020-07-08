@@ -36,7 +36,7 @@ Options:
 
 `minv_pr.dat` - contains principal components of the inverse eff. mass tensor eig(m0/m*_ij).
 
-`minv_d.dat` - density of states inverse effective mass m0/m*_d = m0/(m_1*m_2*m_3)**(1/3).
+`minv_d.dat` - density of states inverse effective mass m0/m*_d = m0/(m_1 *m_2 *m_3)**(1/3).
 
 The file headers explain the content.
 
@@ -47,4 +47,8 @@ Examples of "real life" applications can be found in ...
 
 Please communicate your feedback, support or feature requests via WIEN2k [mailing list](http://www.wien2k.at/reg_user/mailing_list)
 
-If you find results useful, please cite: ...
+### Reference
+
+If you find the results useful and publishable, we will appreciate citing the following paper:
+
+* O. Rubel, F. Tran, X. Rocquefelte, and P. Blaha "Perturbation approach to _ab initio_ effective mass calculations" [to appear on arXiv.org](https://arxiv.org).
