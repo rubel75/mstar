@@ -5,6 +5,8 @@ Effective mass calculation with DFT using a perturbation theory. Currently suppo
 
 It is written in Fortran and intended for Linux OS
 
+WIEN2k compatibility note:
+The format of the `case.mommat2` file has slightly changed in v20.1 to enable calculations for the number of bands greater than 9999. The present `mstar` core is compatible with these changes. If you would like to use this code in conjunction with WIEN2k _prior_ to v20.1, you need to comment/uncomment two lines in 
 
 ### Installation:
 First clone the GitHub repository
