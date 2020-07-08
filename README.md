@@ -30,10 +30,15 @@ Options:
 
 ### Output
 
-`minv_ij.dat` - contains elements of the (m0/m*_ij) tensor.
+`minv_ij.dat` - contains elements of the (m0/m*_ij) tensor for each k point and band.
+
 `min_c.dat` - conductivity effective mass (m0/m*_c).
-`minv_pr.dat` - contains principal components of the inverse eff. mass tensor eig(m0/m*_ij)
-`minv_d.dat` - density of states inverse effective mass m0/m*_d = m0/(m_1*m_2*m_3)**(1/3)
+
+`minv_pr.dat` - contains principal components of the inverse eff. mass tensor eig(m0/m*_ij).
+
+`minv_d.dat` - density of states inverse effective mass m0/m*_d = m0/(m_1*m_2*m_3)**(1/3).
+
+The file headers explain the content.
 
 
 For tutorials, please refer to ...
