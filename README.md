@@ -30,7 +30,7 @@ The `makefile` is set up for Intel Fortran compiler `ifort`. To compile, simply 
 ### Execution
 First, you need to perform a standard SCF calculation and generate a file that contains optical matrix elements (`case.mommat2[up/dn]` in WIEN2k or `WAVEDER` in VASP). Tips on how to do this can be found at this [Wiki page](https://github.com/rubel75/mstar/wiki). Once the file is ready, execute
 
-`x mstar [-up] [-settol 1.0e-5] # if you use the version built into WIEN2k starting with v20.1`
+`x mstar [-up/-dn] [-settol 1.0e-5] # if you use the version built into WIEN2k starting with v20.1`
 
 `/path/to/mstar case.mommat2[up/dn] [1e-5] # if you use this GitHub version and WIEN2k (see the compatibility note above)`
 
@@ -38,7 +38,9 @@ First, you need to perform a standard SCF calculation and generate a file that c
 
 Options:
 
-  `[1e-5]` is (optional) degeneracy energy tolerance [Ha], which is max dE for 2 states to be considered as degenerate (default value is 1.0e-6 Ha).
+  * `[-up/-dn]` tells `mstar` to read `case.mommat2[up/dn]` files (needed for spin-polarized calculations or calculations with spin-orbit coupling).
+
+  * `[-settol 1.0e-5]` or `[1e-5]` is (optional) degeneracy energy tolerance [Ha], which is max dE for 2 states to be considered as degenerate (default value is 1.0e-6 Ha).
 
 
 ### Output
