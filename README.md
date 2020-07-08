@@ -17,7 +17,7 @@ The `makefile` is set up for Intel Fortran compiler `ifort`. To compile, simply 
 
 
 ### Execution
-First, you need to perform a standard SCF calculation and generate a file that contains optical matrix elements (`case.mommat2[up/dn]` in WIEN2k or `WAVEDER` in VASP). Once the file is ready, execute
+First, you need to perform a standard SCF calculation and generate a file that contains optical matrix elements (`case.mommat2[up/dn]` in WIEN2k or `WAVEDER` in VASP). Tips for this can be found at... Once the file is ready, execute
 
 `/path/to/mstar case.mommat2[up/dn] [1e-5] # WIEN2k`
 
