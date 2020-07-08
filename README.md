@@ -3,7 +3,7 @@ Effective mass calculation with DFT using a perturbation theory. Currently suppo
 * [WIEN2k](http://www.wien2k.at)
 * [VASP](https://www.vasp.at)
 
-It is fritten in Fortran and intended for Linux OS
+It is written in Fortran and intended for Linux OS
 
 For installation and tutorials, please refer to ...
 
