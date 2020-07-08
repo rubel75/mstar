@@ -22,7 +22,7 @@ First clone the GitHub repository
 
 `$ git clone https://github.com/rubel75/mstar`
 
-The `makefile` is set up for Intel Fortran compiler `ifort` and Intel MKL. (It does not imply that the code is incompatible with `gfortran`. It was compiled once and successfully tested with WIEN2k. But you need to adapt `FC`, `FCFLAGS`, and `FLFLAGS` variables.). To compile, simply execute
+The `makefile` is set up for Intel Fortran compiler `ifort` and Intel MKL. (It does not imply that the code is incompatible with `gfortran`. It was compiled once and successfully tested with WIEN2k. But you need to edit `FC`, `FCFLAGS`, and `FLFLAGS` variables in the `makefile`). To compile, simply execute
 
 `$ cd mstar; make`
 
