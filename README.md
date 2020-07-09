@@ -60,7 +60,7 @@ The file headers explain the content.
 
 For tutorials and tips on how to generate a file that contains optical matrix elements (`case.mommat2[up/dn]` in WIEN2k or `WAVEDER` in VASP), please refer to the [Wiki page](https://github.com/rubel75/mstar/wiki).
 
-Examples of "real life" applications can be found in ...
+Examples of "real life" applications can be found in [arXiv:2007.03816 [cond-mat.mtrl-sci]](https://arxiv.org/abs/2007.03816)
 
 Please communicate your feedback, support or feature requests via WIEN2k [mailing list](http://www.wien2k.at/reg_user/mailing_list)
 
