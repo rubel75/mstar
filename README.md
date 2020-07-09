@@ -68,4 +68,4 @@ Please communicate your feedback, support or feature requests via WIEN2k [mailin
 
 If you find the results useful and publishable, we will appreciate citing the following paper:
 
-* O. Rubel, F. Tran, X. Rocquefelte, and P. Blaha "Perturbation approach to _ab initio_ effective mass calculations" [to appear on arXiv.org](https://arxiv.org).
+* O. Rubel, F. Tran, X. Rocquefelte, and P. Blaha "Perturbation approach to _ab initio_ effective mass calculations" [arXiv:2007.03816 [cond-mat.mtrl-sci]](https://arxiv.org/abs/2007.03816).
