@@ -545,6 +545,7 @@ write(*,*) 'Suggested reference:'
 write(*,*) '[1] O. Rubel, F. Tran, X. Rocquefelte, and P. Blaha "Perturbation'
 write(*,*) '    approach to ab initio effective mass calculations"'
 write(*,*) '    Comp. Phys. Commun. 261, 107648 (2021).'
+write(*,*) '    https://doi.org/10.1016/j.cpc.2020.107648'
 STOP ! end of the main code
 
 !! Help section
