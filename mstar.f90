@@ -9,7 +9,7 @@ PROGRAM mstar
 !       and energy differences E_i - E_j in a k-point block of mommat file
 !     read_numlines.f90 -- Read number of lines in a file
 !
-! (c) Oleg Rubel, May 2020
+! (c) Oleg Rubel, Mar 2021
 !
 ! Execution:
 !   $ ./mstar arg1 [arg2]
@@ -541,6 +541,10 @@ write(*,*) '(4) Density of states inverse effective mass'
 write(*,*) '    m0/m*_d = m0/(m_1*m_2*m_3)**(1/3) are stored in file ', &!...
     TRIM(fnameout5)
 write(*,*) 'See the file header for the description'
+write(*,*) 'Suggested reference:'
+write(*,*) '[1] O. Rubel, F. Tran, X. Rocquefelte, and P. Blaha "Perturbation'
+write(*,*) '    approach to ab initio effective mass calculations"'
+write(*,*) '    Comp. Phys. Commun. 261, 107648 (2021).'
 STOP ! end of the main code
 
 !! Help section

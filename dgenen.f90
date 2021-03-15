@@ -20,40 +20,43 @@ INTEGER, intent(out) :: &
 
 INTEGER :: &
     i,j, & ! counters
-    uboundnmlist ! length of array nmlist
-INTEGER, ALLOCATABLE :: &
-    nmlocal(:) ! 1D array of list of degeneracy indices
+    uboundnmlist, & ! length of array nmlist
+    nmlocal(2*nb) ! 1D array of list of degeneracy indices
 REAL(kind=4) :: &
     dE ! energy difference
 
 !! create list of degenerate bands (1,3,3,7,...,nb)
 
-ALLOCATE( nmlocal(0) )
 i = 1
+uboundnmlist = 0
 loop1: DO WHILE (.TRUE.)
     loop2: DO j = i+1,nb
         dE = abs(dEij(i,j))
         IF (dE > dEtol) THEN
-            nmlocal = [nmlocal, i, j-1]
+            nmlocal(uboundnmlist+1) = i
+            nmlocal(uboundnmlist+2) = j-1
+            uboundnmlist = uboundnmlist + 2
             i = j
             exit loop2
         ELSEIF (j==nb) THEN
-            nmlocal = [nmlocal, i, j]
+            nmlocal(uboundnmlist+1) = i
+            nmlocal(uboundnmlist+2) = j
+            uboundnmlist = uboundnmlist + 2
             i = j
             exit loop2
         END IF
     END DO loop2
     IF (j == nb) THEN
-        uboundnmlist = Ubound(nmlocal,1)
         IF (nmlocal(uboundnmlist)==nb) THEN
             exit loop1
         ELSE
-            nmlocal = [nmlocal, i, j]
+            nmlocal(uboundnmlist+1) = i
+            nmlocal(uboundnmlist+2) = j
+            uboundnmlist = uboundnmlist + 2
             exit loop1
         END IF
     END IF
 END DO loop1
-uboundnmlist = Ubound(nmlocal,1)
 
 !! reshape the list
 !! (1,3)

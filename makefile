@@ -8,14 +8,14 @@
 # Edit to adjust for Fortran compiler and flags. Keep '-assume byterecl' !!!
 FC = ifort
 
-#FCFLAGS = -assume realloc_lhs -assume byterecl -g -traceback -check all -debug all
-#FLFLAGS = -assume realloc_lhs -assume byterecl -g -traceback -check all -debug all
+#FCFLAGS = -assume byterecl -g -traceback -check all -debug all
+#FLFLAGS = -assume byterecl -g -traceback -check all -debug all
 
-#FCFLAGS =  -assume realloc_lhs -L${MKLROOT}/lib/intel64 -lmkl_intel_ilp64 -lmkl_sequential -lmkl_core -lpthread -qopenmp -ldl -g -traceback -check all -debug all
-#FLFLAGS =  -assume realloc_lhs -i8 -I${MKLROOT}/include -g -traceback -check all -debug all -qopenmp
+#FCFLAGS = -L${MKLROOT}/lib/intel64 -lmkl_intel_ilp64 -lmkl_sequential -lmkl_core -lpthread -qopenmp -ldl -g -traceback -check all -debug all
+#FLFLAGS = -i8 -I${MKLROOT}/include -g -traceback -check all -debug all -qopenmp
 
-FCFLAGS =  -assume realloc_lhs -L${MKLROOT}/lib/intel64 -lmkl_intel_ilp64 -lmkl_sequential -lmkl_core -lpthread -qopenmp -ldl
-FLFLAGS =  -assume realloc_lhs -i8 -I${MKLROOT}/include -qopenmp
+FCFLAGS =  -L${MKLROOT}/lib/intel64 -lmkl_intel_ilp64 -lmkl_sequential -lmkl_core -lpthread -qopenmp -ldl
+FLFLAGS =  -i8 -I${MKLROOT}/include -qopenmp
 
 # ~~~ Do not edit after that line ~~~
 
