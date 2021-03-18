@@ -5,6 +5,16 @@ Effective mass calculation with DFT using a perturbation theory. Currently suppo
 
 It is written in Fortran and intended for Linux OS
 
+### Current Version
+
+Version Mar 18, 2021
+
+
+### Installation:
+First clone the GitHub repository
+
+`$ git clone https://github.com/rubel75/mstar`
+
 **WIEN2k compatibility note**:
 The format of the `case.mommat2` file has slightly changed in v20.1 to enable calculations for the number of bands greater than 9999. This `mstar` code is compatible with these changes (a new not fixed format). If you would like to use this code in conjunction with WIEN2k _prior_ to v20.1, you need to comment/uncomment two lines in `mstar/read_mommat_pij.f90` file making the following changes before compiling the code:
 
@@ -13,14 +23,9 @@ The format of the `case.mommat2` file has slightly changed in v20.1 to enable ca
         p1_Re, p1_Im, p2_Re, p2_Im, p3_Re, p3_Im, dEij(bii,bjj)
     
     ! WIEN2k after May 2020 (the case.mommat2 file is not a fixed format)
-    !READ(cline,*,ERR=20) bii ,bjj, & !...
+    !READ(cline,*,ERR=30) bii ,bjj, & !...
     !    p1_Re, p1_Im, p2_Re, p2_Im, p3_Re, p3_Im, dEij(bii,bjj)
 ```
-
-### Installation:
-First clone the GitHub repository
-
-`$ git clone https://github.com/rubel75/mstar`
 
 The `makefile` is set up for Intel Fortran compiler `ifort` and Intel MKL. (It does not imply that the code is incompatible with `gfortran`. It was compiled once and successfully tested with WIEN2k. But you need to edit `FC`, `FCFLAGS`, and `FLFLAGS` variables in the `makefile`). To compile, simply execute
 

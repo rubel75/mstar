@@ -45,7 +45,7 @@ DO WHILE ( .true. )
     !    p1_Re, p1_Im, p2_Re, p2_Im, p3_Re, p3_Im, dEij(bii,bjj)
     
     ! WIEN2k after May 2020 (the case.mommat2 file is not a fixed format)
-    READ(cline,*,ERR=20) bii ,bjj, & !...
+    READ(cline,*,ERR=30) bii ,bjj, & !...
         p1_Re, p1_Im, p2_Re, p2_Im, p3_Re, p3_Im, dEij(bii,bjj)
     pij(1,bii,bjj) = CMPLX(p1_Re,p1_Im) ! convert to complex
     pij(2,bii,bjj) = CMPLX(p2_Re,p2_Im)
@@ -83,13 +83,23 @@ write(*,'(A,I0)') 'line number ', iline
 CLOSE(fid)
 STOP
 
-! error reading the line
+! error reading the line (old format)
 20 write(*,*) 'ERROR reading the line from mommat file containing'
 write(*,'(A)') TRIM(cline)
 write(*,'(A,I0)') 'line number ', iline
-write(*,*) 'while expecting something like this'
+write(*,*) 'while expecting a _fixed_ format line like this'
 write(*,'(A)')  '      1  32 0.270604E-02 0.659085E-03 0.555417E-03'//&
     '-0.308709E-02-0.132694E-11-0.600436E-11   2.35217055'
+CLOSE(fid)
+STOP
+
+! error reading the line (new format)
+30 write(*,*) 'ERROR reading the line from mommat file containing'
+write(*,'(A)') TRIM(cline)
+write(*,'(A,I0)') 'line number ', iline
+write(*,*) 'while expecting a _free_ format line like this'
+write(*,'(A)')  '  1  32 0.270604E-02 0.659085E-03 0.555417E-03'//&
+    ' -0.308709E-02 -0.132694E-11 -0.600436E-11 2.35217055'
 CLOSE(fid)
 STOP
 
