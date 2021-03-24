@@ -18,8 +18,7 @@ REAL(kind=4), intent(out) :: &
 
 INTEGER :: &
     lwork, liwork, & ! The size of the work arrays
-    info, & ! status argument
-    I, J ! counters
+    info ! status argument
 INTEGER, ALLOCATABLE :: iwork(:) ! The size of the work array (lwork>=n)
 REAL(kind=4) :: &
     A(n,n) ! used for H matrix and then overwritten by eigenvectors

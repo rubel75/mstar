@@ -92,8 +92,8 @@ REAL(kind=4) :: &
 REAL(kind=4), ALLOCATABLE :: &
     dEij(:,:), & ! energy differences E_i-E_j [Ha]
     dEijks(:,:,:,:), & ! k- and spin-dependent energy differences E_i-E_j [Ha]
-    EIGV(:), & ! eigenvalues of Mnm
-    EIGF(:,:), & ! eigenvectors of Mnm
+    EIGV(:), & ! eigenvalues of Mnm or 1/m*
+    EIGFR(:,:), & ! real eigenvectors of 1/m*
     minv(:,:) ! array to store inverse masses
 COMPLEX(kind=4) :: &
     dM, & ! contribution to the Mnm matrix
@@ -101,7 +101,8 @@ COMPLEX(kind=4) :: &
 COMPLEX(kind=4), ALLOCATABLE :: &
     pij(:,:,:), & ! momentum matrix elements [at.u.]
     pijks(:,:,:,:,:), & ! k- and spin-dependent momentum matrix elements [at.u.]
-    Mnm(:,:) ! momentum matrix elements
+    Mnm(:,:), & ! momentum matrix elements
+    EIGFC(:,:) ! complex eigenvectors of Mnm
 LOGICAL :: &
     fmommatend, & ! end of mommat file
     file_exists, &
@@ -227,7 +228,6 @@ IF (.not.(wien2k)) THEN
             pijks, dEijks) ! -> args out
 END IF
 
-
 ! Loop over spins (for VASP only)
 ! In WIEN2k nstot=1 since case.momat2up and case.momat2dn files should be
 ! read one after the other any ways
@@ -297,7 +297,7 @@ DO ispin = 1, nstot
     write(5,'(A)') '# band m0/m_d'
 
     !! Main part nested loops
-
+    
     fmommatend = .false. ! end of mommat file is not reached
     ikpt = 0 ! initialize the counter for k-points
     nbb = 0 ! initialize the number of band-to-band transitions
@@ -329,7 +329,7 @@ DO ispin = 1, nstot
             pij = pijks(:,:,:,ikpt,ispin)
             dEij = dEijks(:,:,ikpt,ispin)
         END IF
-
+        
         !! Find degenerate states within the energy tolerance
 
         ALLOCATE( nmlist(nb,2) )
@@ -447,14 +447,12 @@ DO ispin = 1, nstot
                     END DO ! loop over 'im'
                 END DO ! loop over 'in'
                 ! find eigenvalues of Mnm
-                !write(*,*) 'Mnm=', Mnm ! debug
-                !STOP ! debug
-                ALLOCATE( EIGV(nd), EIGF(nd,nd) )
+                ALLOCATE( EIGV(nd), EIGFC(nd,nd) )
                 CALL eigvz(nd, Mnm, & ! <- args in 
-                        EIGV, EIGF) ! -> args out
+                        EIGV, EIGFC) ! -> args out
                 ! store the inverse effective masses (+ 1 if alpha=beta)
                 minv(:,ivoigt) = EIGV + kdelta(alpha,beta)
-                DEALLOCATE( Mnm, EIGV, EIGF ) ! EIGF is not used
+                DEALLOCATE( Mnm, EIGV, EIGFC ) ! EIGFC is not used
             END DO ! loop over 'ivoigt'
             ! store the inverse effective masses
             DO i = 1,nd
@@ -470,14 +468,14 @@ DO ispin = 1, nstot
                 minv_U(2,3) = minv(i,4)
                 minv_U(1,3) = minv(i,5)
                 minv_U(1,2) = minv(i,6)
-                ALLOCATE( EIGV(3), EIGF(3,3) )
+                ALLOCATE( EIGV(3), EIGFR(3,3) )
                 CALL eigvs(3, minv_U, & ! <- args in 
-                        EIGV, EIGF) ! -> args out
+                        EIGV, EIGFR) ! -> args out
                 write(4,TRIM(wformat4)) nmlist(id,1)+i-1, EIGV(1:3)
                 ! DOS effective mass
                 write(5,TRIM(wformat5)) nmlist(id,1)+i-1, &!...
                     (EIGV(1)*EIGV(2)*EIGV(3))**(1.0/3.0)
-                DEALLOCATE( EIGV, EIGF ) ! EIGF is not used
+                DEALLOCATE( EIGV, EIGFR ) ! EIGFR is not used
             END DO
             DEALLOCATE( minv )
         END DO ! loop over 'id'

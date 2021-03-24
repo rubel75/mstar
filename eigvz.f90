@@ -11,15 +11,15 @@ INTEGER, intent(in) :: &
 COMPLEX(kind=4), intent(in) :: &
     H(n,n) ! square Hermitian matrix
 REAL(kind=4), intent(out) :: &
-    EIGV(n), & ! eigenvalues
+    EIGV(n) ! eigenvalues
+COMPLEX(kind=4), intent(out) :: &
     EIGF(n,n) ! eigenvectors
 
 !! Internal variables
 
 INTEGER :: &
     info, & ! status argument
-    lwork, lrwork, liwork, & ! The size of the work arrays
-    I, J ! counters
+    lwork, lrwork, liwork ! The size of the work arrays
 INTEGER, ALLOCATABLE :: &
     iwork(:) ! The size of the work array (lwork>=n)
 REAL(kind=4), ALLOCATABLE :: &

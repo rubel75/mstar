@@ -22,9 +22,8 @@ COMPLEX(kind=4), intent(out) :: &
 !! Variables internal
 
 CHARACTER(len=256) :: cline ! text in the current line
-INTEGER :: row, col  ! counter for rows and columns
+INTEGER :: row  ! counter for rows
 INTEGER :: bii, bjj  ! band indices used to determine the total number of bands
-INTEGER :: i ! counter
 REAL(kind=4) :: p1_Re, p1_Im, p2_Re, p2_Im, p3_Re, p3_Im
 
 !! Read momentum matrix element

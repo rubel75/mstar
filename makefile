@@ -5,17 +5,23 @@
 # make clean
 # make veryclean
 
-# Edit to adjust for Fortran compiler and flags. Keep '-assume byterecl' !!!
-FC = ifort
+# Edit to adjust for Fortran compiler and flags.
 
-#FCFLAGS = -assume byterecl -g -traceback -check all -debug all
-#FLFLAGS = -assume byterecl -g -traceback -check all -debug all
+# Intel Fortran
+
+FC = ifort
 
 #FCFLAGS = -L${MKLROOT}/lib/intel64 -lmkl_intel_ilp64 -lmkl_sequential -lmkl_core -lpthread -qopenmp -ldl -g -traceback -check all -debug all
 #FLFLAGS = -i8 -I${MKLROOT}/include -g -traceback -check all -debug all -qopenmp
 
 FCFLAGS =  -L${MKLROOT}/lib/intel64 -lmkl_intel_ilp64 -lmkl_sequential -lmkl_core -lpthread -qopenmp -ldl
 FLFLAGS =  -i8 -I${MKLROOT}/include -qopenmp
+
+# GNU Fortran
+
+#FC = gfortran
+#FCFLAGS = -L${MKLROOT}/lib/intel64 -lmkl_gf_lp64 -lmkl_sequential -lmkl_core -lpthread -fopenmp -ldl -g -fbacktrace -ffpe-summary=none
+#FLFLAGS = -I${MKLROOT}/include -fopenmp -g -fbacktrace -ffpe-summary=none
 
 # ~~~ Do not edit after that line ~~~
 
