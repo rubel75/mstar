@@ -7,7 +7,7 @@ It is written in Fortran and intended for Linux OS
 
 ### Current Version
 
-Version Mar 24, 2021
+Version Mar 24, 2021 (+gfortran compatibility)
 
 
 ### Installation:
@@ -27,7 +27,7 @@ The format of the `case.mommat2` file has slightly changed in v20.1 to enable ca
     !    p1_Re, p1_Im, p2_Re, p2_Im, p3_Re, p3_Im, dEij(bii,bjj)
 ```
 
-The `makefile` is set up for Intel Fortran compiler `ifort` and Intel MKL. (It does not imply that the code is incompatible with `gfortran`. It was compiled once and successfully tested with WIEN2k. But you need to edit `FC`, `FCFLAGS`, and `FLFLAGS` variables in the `makefile`). To compile, simply execute
+The `makefile` is set up for Intel Fortran compiler `ifort` and Intel MKL. (To compile with `gfortran` you need to uncoment corresponding `FC`, `FCFLAGS`, and `FLFLAGS` variables in the `makefile`). To compile, simply execute
 
 `$ cd mstar; make`
 
