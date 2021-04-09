@@ -12,10 +12,10 @@
 FC = ifort
 
 #FCFLAGS = -L${MKLROOT}/lib/intel64 -lmkl_intel_ilp64 -lmkl_sequential -lmkl_core -lpthread -qopenmp -ldl -g -traceback -check all -debug all
-#FLFLAGS = -i8 -I${MKLROOT}/include -g -traceback -check all -debug all -qopenmp
+#FLFLAGS = -I${MKLROOT}/include -g -traceback -check all -debug all -qopenmp
 
 FCFLAGS =  -L${MKLROOT}/lib/intel64 -lmkl_intel_ilp64 -lmkl_sequential -lmkl_core -lpthread -qopenmp -ldl
-FLFLAGS =  -i8 -I${MKLROOT}/include -qopenmp
+FLFLAGS =  -I${MKLROOT}/include -qopenmp
 
 # GNU Fortran
 
