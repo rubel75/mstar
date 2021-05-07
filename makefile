@@ -9,19 +9,19 @@
 
 # Intel Fortran
 
-FC = ifort
+#FC = ifort
 
-#FCFLAGS = -L${MKLROOT}/lib/intel64 -lmkl_intel_ilp64 -lmkl_sequential -lmkl_core -lpthread -qopenmp -ldl -g -traceback -check all -debug all
-#FLFLAGS = -I${MKLROOT}/include -g -traceback -check all -debug all -qopenmp
+#FCFLAGS = -I${MKLROOT}/include -g -traceback -check all -debug all -qopenmp -O0 -i8
+#FLFLAGS = -L${MKLROOT}/lib/intel64 -lmkl_intel_ilp64 -lmkl_sequential -lmkl_core -lpthread -qopenmp -ldl -g -traceback -check all -debug all -O0
 
-FCFLAGS =  -L${MKLROOT}/lib/intel64 -lmkl_intel_ilp64 -lmkl_sequential -lmkl_core -lpthread -qopenmp -ldl
-FLFLAGS =  -I${MKLROOT}/include -qopenmp
+#FCFLAGS =  -I${MKLROOT}/include -qopenmp -i8
+#FLFLAGS =  -L${MKLROOT}/lib/intel64 -lmkl_intel_ilp64 -lmkl_sequential -lmkl_core -lpthread -qopenmp -ldl
 
 # GNU Fortran
 
-#FC = gfortran
-#FCFLAGS = -L${MKLROOT}/lib/intel64 -lmkl_gf_lp64 -lmkl_sequential -lmkl_core -lpthread -fopenmp -ldl -g -fbacktrace -ffpe-summary=none
-#FLFLAGS = -I${MKLROOT}/include -fopenmp -g -fbacktrace -ffpe-summary=none
+FC = gfortran
+FCFLAGS = -I${MKLROOT}/include -fopenmp -g -fbacktrace -ffpe-summary=none
+FLFLAGS = -L${MKLROOT}/lib/intel64 -lmkl_gf_lp64 -lmkl_sequential -lmkl_core -lpthread -fopenmp -ldl -g -fbacktrace -ffpe-summary=none
 
 # ~~~ Do not edit after that line ~~~
 
@@ -35,13 +35,13 @@ SRCS = $(patsubst %.f90, %.o, $(wildcard *.f90)) \
 all: $(PROGRAM)
 
 $(PROGRAM): $(SRCS)
-	$(FC) $(FCFLAGS) $(FLINK) -o $@ $^
+	$(FC) $(FLFLAGS) $(FLINK) -o $@ $^
 
 %.o: %.f90
-	$(FC) $(FLFLAGS) $(FOPT) -c $<
+	$(FC) $(FCFLAGS) $(FOPT) -c $<
 
 #%.mod: %.h
-#	$(FC) $(FLFLAGS) -o $@ $<
+#	$(FC) $(FCFLAGS) -o $@ $<
 
 
 
