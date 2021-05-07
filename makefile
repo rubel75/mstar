@@ -9,19 +9,19 @@
 
 # Intel Fortran
 
-#FC = ifort
+FC = ifort
 
 #FCFLAGS = -I${MKLROOT}/include -g -traceback -check all -debug all -qopenmp -O0 -i8
 #FLFLAGS = -L${MKLROOT}/lib/intel64 -lmkl_intel_ilp64 -lmkl_sequential -lmkl_core -lpthread -qopenmp -ldl -g -traceback -check all -debug all -O0
 
-#FCFLAGS =  -I${MKLROOT}/include -qopenmp -i8
-#FLFLAGS =  -L${MKLROOT}/lib/intel64 -lmkl_intel_ilp64 -lmkl_sequential -lmkl_core -lpthread -qopenmp -ldl
+FCFLAGS =  -I${MKLROOT}/include -qopenmp -i8
+FLFLAGS =  -L${MKLROOT}/lib/intel64 -lmkl_intel_ilp64 -lmkl_sequential -lmkl_core -lpthread -qopenmp -ldl
 
 # GNU Fortran
 
-FC = gfortran
-FCFLAGS = -I${MKLROOT}/include -fopenmp -g -fbacktrace -ffpe-summary=none
-FLFLAGS = -L${MKLROOT}/lib/intel64 -lmkl_gf_lp64 -lmkl_sequential -lmkl_core -lpthread -fopenmp -ldl -g -fbacktrace -ffpe-summary=none
+#FC = gfortran
+#FCFLAGS = -I${MKLROOT}/include -fopenmp -g -fbacktrace -ffpe-summary=none
+#FLFLAGS = -L${MKLROOT}/lib/intel64 -lmkl_gf_lp64 -lmkl_sequential -lmkl_core -lpthread -fopenmp -ldl -g -fbacktrace -ffpe-summary=none
 
 # ~~~ Do not edit after that line ~~~
 
