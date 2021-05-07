@@ -48,7 +48,7 @@ allocate( work(1), rwork(1), iwork(1) )
 call CHEEVD(jobz, uplo, n, A, n, EIGV, work, lwork, rwork, lrwork, & !...
     iwork, liwork, info) ! single precision (kind=4)
 IF (info .ne. 0) THEN
-    write (*,*) "ERROR in dsyevd: info = ", info
+    write (*,*) "ERROR in CHEEVD (1st call): info = ", info
     write (*,*) "If info = -i, the i-th parameter had an illegal value."
     write (*,*) "If info = i, and jobz = 'V', then the algorithm failed to"
     write (*,*) "compute an eigenvalue while working on the submatrix lying"
@@ -67,7 +67,7 @@ call CHEEVD(jobz, uplo, n, A, n, EIGV, work, lwork, rwork, lrwork, & !...
     iwork, liwork, info) ! single precision (kind=4)
 deallocate ( work, rwork, iwork )
 IF (info .ne. 0) THEN
-    write (*,*) "ERROR in dsyevd: info = ", info
+    write (*,*) "ERROR in CHEEVD (2nd call): info = ", info
     write (*,*) "If info = -i, the i-th parameter had an illegal value."
     write (*,*) "If info = i, and jobz = 'V', then the algorithm failed to"
     write (*,*) "compute an eigenvalue while working on the submatrix lying"

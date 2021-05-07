@@ -43,7 +43,7 @@ allocate( work(1), iwork(1) )
 !call dsyevd(jobz, uplo, n, A, n, EIGV, work, lwork, iwork, liwork, info) ! double precision (kind=8)
 call ssyevd(jobz, uplo, n, A, n, EIGV, work, lwork, iwork, liwork, info) ! single precision (kind=4)
 IF (info .ne. 0) THEN
-    write (*,*) "ERROR in dsyevd: info = ", info
+    write (*,*) "ERROR in ssyevd (1st call): info = ", info
     write (*,*) "If info = -i, the i-th parameter had an illegal value."
     write (*,*) "If info = i, and jobz = 'V', then the algorithm failed to "//&
         "compute an eigenvalue while working on the submatrix lying in "//&
@@ -61,7 +61,7 @@ allocate( work(lwork), iwork(liwork) )
 call ssyevd(jobz, uplo, n, A, n, EIGV, work, lwork, iwork, liwork, info) ! single precision (kind=4)
 deallocate ( work, iwork )
 IF (info .ne. 0) THEN
-    write (*,*) "ERROR in dsyevd: info = ", info
+    write (*,*) "ERROR in ssyevd (2nd call): info = ", info
     write (*,*) "If info = -i, the i-th parameter had an illegal value."
     write (*,*) "If info = i, and jobz = 'V', then the algorithm failed to "//&
         "compute an eigenvalue while working on the submatrix lying in rows "//&
