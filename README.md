@@ -37,9 +37,9 @@ First, you need to perform a standard SCF (self-consistent field) calculation an
 
 `x mstar [-up/-dn] [-settol 1.0e-5] # if you use the version built into WIEN2k starting with v20.1`
 
-`/path/to/mstar case.mommat2[up/dn] [1e-5] # if you use this GitHub version and WIEN2k (see the compatibility note above)`
+`/path/to/mstar/mstar case.mommat2[up/dn] [1e-5] # if you use this GitHub version and WIEN2k (see the compatibility note above)`
 
-`/path/to/mstar WAVEDER [1e-5] # VASP`
+`/path/to/mstar/mstar WAVEDER [1e-5] # VASP`
 
 Options:
 
