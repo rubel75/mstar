@@ -52,7 +52,7 @@ Options:
 
 `minv_ij.dat` - contains elements of the (m0/m*_ij) tensor for each k point and band.
 
-`min_c.dat` - conductivity effective mass (m0/m*_c).
+`minv_c.dat` - conductivity effective mass (m0/m*_c).
 
 `minv_pr.dat` - contains principal components of the inverse eff. mass tensor eig(m0/m*_ij).
 
