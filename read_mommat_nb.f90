@@ -49,6 +49,9 @@ END DO
 
 ! unexpected end of file
 10 write(*,*) 'reached end of mommat file, but unable to find a line with "KP:"'
+write(*,*) 'Sometimes it happens when VASP file is read assuming WIEN2k', &
+    ' format. If you read VASP file, the input file should have exact name', &
+    ' WAVEDER.'
 CLOSE(fid)
 STOP
 
@@ -60,6 +63,9 @@ write(*,*) '   KP:     1 NEMIN NEMAX :     1  116 dE:  -5.0   5.0 K:'
 write(*,*) 'If NEMIN > 1, it most likely implies that you have valence states', &
     ' below -5 Ry (check case.scf). If this is the case, set a lower value of', &
     ' Emin in optic.inop (e.g., -8 Ry)'
+write(*,*) 'If the line printed above is not readable, most likely you read', &
+    ' the VASP binary file assuming WIEN2k format. If you read VASP file,', &
+    ' the input file should have the exact name WAVEDER.'
 CLOSE(fid)
 STOP
 

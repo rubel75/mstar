@@ -20,7 +20,7 @@ PROGRAM mstar
 !
 ! Output:
 ! minv_ij.dat - contains elements of the (m0/m*_ij) tensor.               
-! min_c.dat - conductivity effective mass (m0/m*_c).
+! minv_c.dat - conductivity effective mass (m0/m*_c).
 ! minv_pr.dat - contains principal components of the inverse eff. mass 
 !               tensor eig(m0/m*_ij)
 ! minv_d.dat - density of states inverse effective mass 
@@ -148,13 +148,18 @@ END IF
 
 !! WIEN2k or VASP?
 
-wien2k = .true.
-IF ( TRIM(fnameinp) == 'WAVEDER' .OR. TRIM(fnameinp) == 'WAVEDERF' ) THEN
+IF ( TRIM(fnameinp) == 'WAVEDER' .OR. TRIM(fnameinp) == 'WAVEDERF' ) THEN ! VASP
     wien2k = .false.
     write (*,*) 'Assume VASP calculation'
     ! change to a binary file in case it is pointed at the formatted 
     ! file WAVEDER
     fnameinp = 'WAVEDER'
+    write(*,*) 'Assumed VASP calculation based on the input file name.'
+ELSE ! WIEN2k (default)
+    wien2k = .true.
+    write(*,*) 'Assumed WIEN2k calculation based on the input file name.'
+    write(*,*) '(If you would like to read VASP file, the input file should'
+    write(*,*) 'have the exact name WAVEDER.)'
 END IF
 
 !! Determine number of lines in mommat file & read VASP WAVEDER header
