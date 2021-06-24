@@ -25,6 +25,11 @@ FLFLAGS =  -L${MKLROOT}/lib/intel64 -lmkl_intel_lp64 -lmkl_sequential -lmkl_core
 
 # ~~~ Do not edit after that line ~~~
 
+# Check env variables
+ifndef MKLROOT
+    $(error: MKLROOT enviriment variable is not set. Please check your MKL setup.)
+endif
+
 PROGRAM = mstar
 
 # source files and objects
