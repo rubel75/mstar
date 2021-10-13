@@ -360,17 +360,17 @@ DO ispin = 1, nstot
         
         write(wformat2,'(I0)') nbcder ! make a character of the length 'nbcder'
         ! format line to write inverse effective masses
-        write(wformat2,'(A,I0,A)') '(I', LEN(TRIM(wformat2)), & !...
-            ',1X,5(es10.3,1X),es10.3)'
+        write(wformat2,'(I0)') LEN(TRIM(wformat2))
+        wformat2 = '(I' // TRIM(wformat2) // ',1X,5(es10.3,1X),es10.3)'
         write(wformat3,'(I0)') nbcder
-        write(wformat3,'(A,I0,A)') '(I', LEN(TRIM(wformat3)), & !...
-            ',1X,es10.3)'
+        write(wformat3,'(I0)') LEN(TRIM(wformat3))
+        wformat3 = '(I' // TRIM(wformat3) // ',1X,es10.3)'
         write(wformat4,'(I0)') nbcder
-        write(wformat4,'(A,I0,A)') '(I', LEN(TRIM(wformat4)), & !...
-            ',1X,2(es10.3,1X),es10.3)'
+        write(wformat4,'(I0)') LEN(TRIM(wformat4))
+        wformat4 = '(I' // TRIM(wformat4) // ',1X,2(es10.3,1X),es10.3)'
         write(wformat5,'(I0)') nbcder
-        write(wformat5,'(A,I0,A)') '(I', LEN(TRIM(wformat5)), & !...
-            ',1X,es10.3)'
+        write(wformat5,'(I0)') LEN(TRIM(wformat5))
+        wformat5 = '(I' // TRIM(wformat5) // ',1X,es10.3)'
             
         !! Loop through blocks of degenerate states
                 
