@@ -7,7 +7,7 @@ It is written in Fortran and intended for Linux OS
 
 ### Current Version
 
-Version Jun 23, 2021
+Version Oct 13, 2021
 
 Version Mar 24, 2021 (+gfortran compatibility)
 
