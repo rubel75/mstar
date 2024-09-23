@@ -33,7 +33,7 @@ PROGRAM mstar
 !      OFF to ON in the following line:
 !      ON           ON/OFF   writes MME to unit 4
 !      -^
-! (2): Make sure to get _plenty_ empty bands during SCF.
+! (2): Make sure to get _plenty_ of empty bands during SCF.
 !      This requires modification in several input files:
 !      (a) extend "de" in case.in1(c) above 5 Ry
 !          K-VECTORS FROM UNIT:4   -9.0      10.0    10   emin / de (emax=Ef+de) / nband
@@ -62,7 +62,7 @@ CHARACTER(len=256) :: &
     fnameinp, fnameout2, &
     fnameout3, fnameout4, fnameout5, & ! input/output file names
     wformat2, wformat3, &
-    wformat4, wformat5, & ! format for writing/reading data
+    wformat4, wformat5, wformat5w, & ! format for writing/reading data
     charspin ! spin component for spin-polarized calculations
 INTEGER :: &
     nltot, & ! total number of lines in mommat file
@@ -88,6 +88,8 @@ INTEGER, ALLOCATABLE :: &
 REAL(kind=4) :: &
     dE, & ! energy difference [Ha]
     dEtol, & ! max dE for 2 states to be considered as degenerate [Ha]
+    minv_det, & ! determinant of the inverse eff. mass tensor
+    minv_d, & ! density of states eff. mass
     minv_U(3,3) ! the upper triangular part of the m0/m*_ij tensor
 REAL(kind=4), ALLOCATABLE :: &
     dEij(:,:), & ! energy differences E_i-E_j [Ha]
@@ -106,7 +108,8 @@ COMPLEX(kind=4), ALLOCATABLE :: &
 LOGICAL :: &
     fmommatend, & ! end of mommat file
     file_exists, &
-    wien2k ! true if this is a WIEN2k calculation
+    wien2k, & ! true if this is a WIEN2k calculation
+    warnHyperb ! warning on hyperbolic band dispersion
 
 !! Get command line input arguments
 
@@ -193,7 +196,7 @@ IF (wien2k) THEN
         STOP
     END IF
     ! assume 1 spin since case.momat2up and case.momat2dn files should be
-    ! read one after the other any ways
+    ! read one after the other any way
     nstot = 1 
 ELSE ! VASP
     CALL read_numlines_vasp(fnameinp, 1, & ! <- args in 
@@ -235,7 +238,8 @@ END IF
 
 ! Loop over spins (for VASP only)
 ! In WIEN2k nstot=1 since case.momat2up and case.momat2dn files should be
-! read one after the other any ways
+! read one after the other any way
+warnHyperb = .false.
 write(*,*) 'Entering the main loop...'
 DO ispin = 1, nstot
 
@@ -356,7 +360,7 @@ DO ispin = 1, nstot
         write(5,'(A,I0,1X,A,I0,1X,A,I0)') & !...
             '# KP: ', ikpt, 'NBCDER: ', nmlist(ndblen,2), 'NEMAX: ', nb
         
-        !! preapare output formats for effective masses
+        !! prepare output formats for effective masses
         
         write(wformat2,'(I0)') nbcder ! make a character of the length 'nbcder'
         ! format line to write inverse effective masses
@@ -371,6 +375,9 @@ DO ispin = 1, nstot
         write(wformat5,'(I0)') nbcder
         write(wformat5,'(I0)') LEN(TRIM(wformat5))
         wformat5 = '(I' // TRIM(wformat5) // ',1X,es10.3)'
+        write(wformat5w,'(I0)') nbcder
+        write(wformat5w,'(I0)') LEN(TRIM(wformat5w))
+        wformat5w = '(I' // TRIM(wformat5w) // ',1X,es10.3,1X,A)'
             
         !! Loop through blocks of degenerate states
                 
@@ -380,7 +387,7 @@ DO ispin = 1, nstot
             ! array to store inverse masses; size 6 is because of 6 Voigt indices
             ALLOCATE( minv(nd,6) ) 
             
-            ! loop over Voigt indecies: 1=xx; 2=yy; 3=zz; 4=yz; 5=xz; 6=xy
+            ! loop over Voigt indices: 1=xx; 2=yy; 3=zz; 4=yz; 5=xz; 6=xy
             DO ivoigt = 1,6
                 ! handle Voigt notations
                 SELECT CASE (ivoigt) ; ; 
@@ -478,8 +485,22 @@ DO ispin = 1, nstot
                         EIGV, EIGFR) ! -> args out
                 write(4,TRIM(wformat4)) nmlist(id,1)+i-1, EIGV(1:3)
                 ! DOS effective mass
-                write(5,TRIM(wformat5)) nmlist(id,1)+i-1, &!...
-                    (EIGV(1)*EIGV(2)*EIGV(3))**(1.0/3.0)
+                ! determinant of inv. eff. mass tensor
+                minv_det = EIGV(1)*EIGV(2)*EIGV(3)
+                minv_d = SIGN(abs(minv_det)**(1.0/3.0) , minv_det)
+                IF (((EIGV(1) .LT. 0.0) .AND. (EIGV(2) .LT. 0.0) &!...
+                        .AND. (EIGV(3) .LT. 0.0)) .OR. &!...
+                        ((EIGV(1) .GT. 0.0) .AND. (EIGV(2) .GT. 0.0) &!...
+                        .AND. (EIGV(3) .GT. 0.0))) THEN
+                    ! parabolic band dispersion
+                    write(5,TRIM(wformat5)) nmlist(id,1)+i-1, &!...
+                        minv_d
+                ELSE
+                    ! hyperbolic band dispersion (signs of masses are different)
+                    write(5,TRIM(wformat5w)) nmlist(id,1)+i-1, &!...
+                        minv_d, 'warning: hyperbolic dispersion'
+                    warnHyperb = .true.
+                END IF
                 DEALLOCATE( EIGV, EIGFR ) ! EIGFR is not used
             END DO
             DEALLOCATE( minv )
@@ -543,6 +564,12 @@ write(*,*) '    are stored in file ', TRIM(fnameout4)
 write(*,*) '(4) Density of states inverse effective mass'
 write(*,*) '    m0/m*_d = m0/(m_1*m_2*m_3)**(1/3) are stored in file ', &!...
     TRIM(fnameout5)
+IF (warnHyperb) THEN
+    write(*,*) '    There was a warning about hyperbolic band dispersion in the output file.'
+    write(*,*) '    This indicates a limited validity of the geometric average'
+    write(*,*) '    (m_1*m_2*m_3)**(1/3) for the DOS effective mass in the situations when'
+    write(*,*) '    the band dispersion is _not_ parabolic.'
+END IF
 write(*,*) 'See the file header for the description'
 write(*,*) 'Suggested reference:'
 write(*,*) '[1] O. Rubel, F. Tran, X. Rocquefelte, and P. Blaha "Perturbation'
@@ -575,7 +602,7 @@ write(*,*) '     To enable writing, edit the case.inop file and change'
 write(*,*) '     OFF to ON in the following line:'
 write(*,*) '     ON           ON/OFF   writes MME to unit 4'
 write(*,*) '     -^'
-write(*,*) '(2): Make sure to get _plenty_ empty bands during SCF.'
+write(*,*) '(2): Make sure to get _plenty_ of empty bands during SCF.'
 write(*,*) '     This requires modification in several input files:'
 write(*,*) '     (a) extend "de" in case.in1(c) above 5 Ry'
 write(*,'(A)') '          K-VECTORS FROM UNIT:4   -9.0      10.0'//&!...
