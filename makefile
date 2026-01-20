@@ -7,27 +7,36 @@
 
 # Edit to adjust for Fortran compiler and flags.
 
-# Intel Fortran
+# Intel Fortran + MKL (debug)
 
-FC = ifort
-
+#FC = ifort
 #FCFLAGS = -I${MKLROOT}/include -g -traceback -check all -debug all -qopenmp -O0
 #FLFLAGS = -L${MKLROOT}/lib/intel64 -lmkl_intel_lp64 -lmkl_sequential -lmkl_core -lpthread -qopenmp -ldl -g -traceback -check all -debug all -O0
 
+# Intel Fortran + MKL (performance)
+
+FC = ifort
 FCFLAGS =  -I${MKLROOT}/include -qopenmp
 FLFLAGS =  -L${MKLROOT}/lib/intel64 -lmkl_intel_lp64 -lmkl_sequential -lmkl_core -lpthread -qopenmp -ldl
 
-# GNU Fortran
+# GNU Fortran + MKL (performance)
 
 #FC = gfortran
 #FCFLAGS = -I${MKLROOT}/include -fopenmp -g -fbacktrace -ffpe-summary=none
 #FLFLAGS = -L${MKLROOT}/lib/intel64 -lmkl_gf_lp64 -lmkl_sequential -lmkl_core -lpthread -fopenmp -ldl -g -fbacktrace -ffpe-summary=none
 
+# GNU Fortran + OpenBLAS (performance)
+
+#FC = gfortran
+#OPENBLAS_ROOT = /you/path/to/openblas
+#FCFLAGS = -I$(OPENBLAS_ROOT)/include -fopenmp -g -fbacktrace -ffpe-summary=none
+#FLFLAGS = -L$(OPENBLAS_ROOT)/lib -lopenblas -lpthread -fopenmp -ldl -g -fbacktrace -ffpe-summary=none
+
 # ~~~ Do not edit after that line ~~~
 
-# Check env variables
-ifndef MKLROOT
-    $(error: MKLROOT enviriment variable is not set. Please check your MKL setup.)
+# Check math libraries variables
+ifeq ($(strip $(MKLROOT)$(OPENBLAS_ROOT)),)
+    $(error Neither MKLROOT (env) nor OPENBLAS_ROOT (internal) is set)
 endif
 
 PROGRAM = mstar
