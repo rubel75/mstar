@@ -193,6 +193,8 @@ All values are dimensionless inverse masses in units of 1/m0. Each k-point block
 
 where k is the k-point index in the order of the input file, Nout is the last band written, and Nbands is the number of bands at that k-point. Each record starts with the band index and the ID of the degenerate block (numbered from 1 at each k-point), followed by the values. Annotations follow a `#` at the end of a record (`# non-commuting block`, and `# hyperbolic dispersion` in `minv_d.dat` when the principal components have different signs, where the geometric average is of limited use). The files can therefore be read directly by gnuplot or `numpy.loadtxt`. Every file has a header that describes its content.
 
+Before the calculation, mstar prints an estimate of the memory needed for the matrix elements (all k-points for VASP, one k-point for WIEN2k, which is read one k-point at a time). About 2 MiB of program and library overhead come on top of it.
+
 Existing output files are replaced. The input is checked before the output files are opened, so a run that stops on unusable input does not overwrite the results of a previous run. All errors terminate with a nonzero exit status.
 
 The script `utils/dat2csv.sh` combines band energies along a WIEN2k band-structure path with selected mass components into a CSV file.
@@ -244,6 +246,7 @@ Input and interface:
 - VASP and WIEN2k input is read with the routines of [BerryCPT](https://github.com/rubel75/berrycpt). Only the rows of the target bands are stored. WIEN2k files are read in a single pass. The VASP eigenvalues are kept in double precision.
 - The input file may be given with a path. For VASP, `EIGENVAL` is read from the directory of `WAVEDER`.
 - The input is checked before the output files are opened.
+- A memory estimate is printed for WIEN2k as for VASP.
 - Regression tests in `test_files`.
 
 ### Earlier versions

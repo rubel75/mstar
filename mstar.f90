@@ -119,6 +119,8 @@ INTEGER :: &
     nflagged = 0 ! number of non-commuting degenerate blocks
 REAL(kind=dp), PARAMETER :: &
     block_tol = 1.0e-3_dp ! threshold on block_inconsistency for flagging
+REAL(kind=dp) :: &
+    mem_pij, mem_dEij ! memory estimate for WIEN2k matrix elements [GiB]
 LOGICAL :: &
     found, & ! a k-point record was found in the mommat file
     file_exists, &
@@ -249,6 +251,20 @@ IF (wien2k) THEN
         write(*,*) 'be named WAVEDER or WAVEDERF.'
         ERROR STOP 1
     END IF
+    ! memory estimate for the matrix elements of one k-point (the file is
+    ! read one k-point at a time; NEMAX may vary between k-points)
+    nbt = nb
+    IF (nbmax > 0) nbt = MIN(nbt, nbmax)
+    mem_pij = 3.0_dp*REAL(nbt,dp)*REAL(nb,dp)* &
+        REAL(STORAGE_SIZE(CMPLX(0.0_sp,0.0_sp,KIND=sp))/8,dp)/1024.0_dp**3
+    mem_dEij = REAL(nbt,dp)*REAL(nb,dp)* &
+        REAL(STORAGE_SIZE(0.0_sp)/8,dp)/1024.0_dp**3
+    write(*,'(/,A,I0,A)') ' WIEN2k matrix-element memory estimate (one k-point,'// &
+        ' NEMAX = ', nb, ' at the first k-point)'
+    write(*,'(A,F12.3,A)') ' pij      = ', mem_pij, ' GiB'
+    write(*,'(A,F12.3,A)') ' dEij     = ', mem_dEij, ' GiB'
+    write(*,'(A,F12.3,A)') ' combined = ', mem_pij + mem_dEij, ' GiB'
+    write(*,'(A)') ' This estimate excludes work arrays and runtime overhead.'
 ELSE ! VASP
     INQUIRE(FILE=fnameene, EXIST=file_exists)
     IF ( .not.(file_exists) ) THEN
