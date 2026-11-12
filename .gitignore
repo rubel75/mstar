@@ -1,6 +1,16 @@
 # Compiled source
 *.o
 
+# Fortran module files
+*.mod
+*__genmod.*
+
 # Executables
 mstar
+
+# Generated at build time
+version_mod.f90
+version_mod.f90.tmp
+
+# Test runs
 test_files/*/run/

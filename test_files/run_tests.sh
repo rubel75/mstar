@@ -62,8 +62,9 @@ run_test VASP VASP VASP "WAVEDER EIGENVAL" WAVEDER
 # --nbmax 3 cuts through the fourfold block of bands 1-4 at k-point 1
 run_test WIEN2k_nbmax3 WIEN2k WIEN2k_nbmax3 "CoSi-berrycpt.mommat2" \
     CoSi-berrycpt.mommat2 1e-5 --nbmax 3
-# --nbmax above NBANDS_CDER (156) must not change the VASP results
-run_test VASP_nbmax1000 VASP VASP "WAVEDER EIGENVAL" --nbmax 1000 WAVEDER
+# --nbmax above NBANDS_CDER (156) must not change the VASP results; the input
+# is given with its path (EIGENVAL is taken from the same directory)
+run_test VASP_nbmax1000 VASP VASP "" --nbmax 1000 "$inputs/VASP/WAVEDER"
 
 if [ $status -eq 0 ]; then
     echo "All tests passed."
