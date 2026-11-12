@@ -100,14 +100,14 @@ The inverse effective mass tensor of band n follows from second-order k·p pertu
 
 where α, β are Cartesian directions, $p^{(\alpha)}_{nl}$ are momentum matrix elements between cell-periodic Bloch states at the same k, and the sum runs over all bands available in the input. Negative values correspond to a downward curvature (e.g., holes at a valence band maximum).
 
-### Matrix elements and limitations
+### Matrix elements
 
-The general form of the first term is $(m_0/\hbar^2)\langle u_n | \partial^2 \hat{H}_\mathbf{k} / \partial k_\alpha \partial k_\beta | u_n \rangle$, and the momentum operator in the sum is, more generally, the velocity operator $m_0\hat{\mathbf{v}} = (m_0/\hbar)\,\partial \hat{H}_\mathbf{k}/\partial \mathbf{k}$. This leads to the following differences between the two codes.
+The general form of the first term is $(m_0/\hbar^2)\langle u_n | \partial^2 \hat{H}_\mathbf{k} / \partial k_\alpha \partial k_\beta | u_n \rangle$, and the momentum operator in the sum is, more generally, the velocity operator $m_0\hat{\mathbf{v}} = (m_0/\hbar)\,\partial \hat{H}_\mathbf{k}/\partial \mathbf{k}$.
 
-- **WIEN2k** (`OPTIC`) provides momentum matrix elements. For a local potential (LDA, GGA, TB-mBJ), momentum and velocity matrix elements coincide, and the first term is exactly $\delta_{\alpha\beta}$. A nonlocal potential adds $i[\hat{V}_\mathrm{NL}, \hat{\mathbf{r}}]$ to the velocity operator, which WIEN2k does not provide. Hybrid functionals are therefore not supported (with momentum matrix elements, the masses would be systematically too heavy, by about 25% for YS-PBE0). No problems were observed for DFT+U. With SOC, the matrix elements are taken between spinor states, but the spin-orbit correction to the velocity operator itself is not included.
+- **WIEN2k** (`OPTIC`) provides momentum matrix elements. For a local potential (LDA, GGA, TB-mBJ), momentum and velocity matrix elements coincide, and the first term is exactly $\delta_{\alpha\beta}$.
 - **VASP** (`WAVEDER`) provides derivative overlaps that include the nonlocal PAW terms, so the matrix elements in the sum are velocity matrix elements. The conventions are documented in `read_mommat_pij_vasp_mod.f90`. The phase of the matrix elements does not affect the effective masses.
-- **Free-electron term.** The VASP PAW Hamiltonian contains nonlocal projectors that depend on k. The velocity matrix elements in `WAVEDER` include their first derivative. The second derivative $\langle u_n | \partial^2 \hat{V}_\mathrm{NL} / \partial k_\alpha \partial k_\beta | u_n \rangle$ and the related terms of the PAW overlap operator are not available and are approximated by $\delta_{\alpha\beta}$ [see Phys. Rev. B 93, 205147 (2016)]. Effective masses obtained with VASP have agreed well with WIEN2k results in our comparisons, which suggests that this approximation is minor for the systems studied so far.
-- **Truncated band sum.** Only the bands available in the input enter the sums (see [Convergence](#convergence)). Core states are not included.
+
+See [Limitations](#limitations) for the consequences.
 
 ## Degenerate bands
 
@@ -124,8 +124,6 @@ M^{(\alpha\beta)}_{nm} = \frac{1}{2m_0} \sum_{l \notin D}
 
 and the inverse masses of the block are $\delta_{\alpha\beta} + \mathrm{eig}\, M^{(\alpha\beta)}$ [Eq. (7)], listed in ascending order. For a single band this is the non-degenerate expression. For exactly degenerate states, the averaged inverse energy difference equals the expression of the reference. The sums are accumulated in double precision with compensated (Kahan) summation.
 
-The theory assumes that the degeneracy is not lifted at first order in k, i.e., that the bands of the block have zero velocity at k within the block. At points where bands cross linearly (e.g., Weyl or multifold fermions, such as CoSi at Γ), the dispersion is not quadratic and the masses of these blocks do not describe it.
-
 ### Grouping and tolerance
 
 Bands are grouped into blocks at every k-point by chaining adjacent bands whose energies differ by no more than the tolerance (as in BerryCPT). Eigenvalues of states that are degenerate by symmetry differ slightly for numerical reasons, and treating them as non-degenerate leads to large errors through the energy denominators. Inspect the eigenvalues of the states that should be degenerate (e.g., the top valence bands of GaAs at Γ) and set the tolerance slightly above their spread. The approach is stable as long as the block is well separated from other bands compared with the tolerance.
@@ -140,10 +138,41 @@ For every block, mstar evaluates
 r = \max_p \frac{\left\| \mathrm{offdiag}\left( U^\dagger M_p U \right) \right\|_F}{\max_p \| M_p \|_F} ,
 ```
 
-where $M_p$ are the six matrices of the block and $U$ diagonalizes a generic linear combination of them. If the matrices commute (e.g., for a Kramers pair that remains degenerate around k), r vanishes up to rounding. Otherwise r estimates the relative error of a per-band tensor. Blocks with r > 1e-3 are marked `# non-commuting block`, and `minv_ij.dat` also gives r. For records of marked blocks:
+where $M_p$ are the six matrices of the block and $U$ diagonalizes a generic linear combination of them. If the matrices commute (e.g., for a Kramers pair that remains degenerate around k), r vanishes up to rounding. Otherwise r estimates the relative error of a per-band tensor. Blocks with r > 1e-3 are marked `# non-commuting block`, and `minv_ij.dat` also gives r. Which values of a marked block can be used is explained under [Limitations](#limitations).
 
-- the diagonal components xx, yy, zz in `minv_ij.dat` are the inverse masses along the Cartesian axes (direction-resolved masses, labelled by ascending order),
-- the off-diagonal components yz, xz, xy and the values in `minv_c.dat`, `minv_pr.dat`, and `minv_d.dat` are not defined for individual bands.
+## Limitations
+
+### Matrix elements
+
+- **WIEN2k, nonlocal potentials.** A nonlocal potential adds $i[\hat{V}_\mathrm{NL}, \hat{\mathbf{r}}]$ to the velocity operator, which WIEN2k does not provide. Hybrid functionals are therefore not supported (with momentum matrix elements, the masses would be systematically too heavy, by about 25% for YS-PBE0). No problems were observed for DFT+U.
+- **WIEN2k, spin-orbit coupling.** With SOC, the matrix elements are taken between spinor states, but the spin-orbit correction to the velocity operator itself is not included.
+- **VASP, free-electron term.** The VASP PAW Hamiltonian contains nonlocal projectors that depend on k. The velocity matrix elements in `WAVEDER` include their first derivative. The second derivative $\langle u_n | \partial^2 \hat{V}_\mathrm{NL} / \partial k_\alpha \partial k_\beta | u_n \rangle$ and the related terms of the PAW overlap operator are not available and are approximated by $\delta_{\alpha\beta}$ [see Phys. Rev. B 93, 205147 (2016)]. Effective masses obtained with VASP have agreed well with WIEN2k results in our comparisons, which suggests that this approximation is minor for the systems studied so far.
+
+### Finite band sums
+
+Only the bands available in the input enter the sums, and core states are not included. The masses converge slowly with the number of empty bands, in particular for weakly dispersive bands and for states with d character (see [Convergence](#convergence)). Masses of bands near the top of the available range are not converged, and `--nbmax` can be used to omit them.
+
+### Degenerate blocks
+
+In a degenerate block, each tensor component αβ has its own effective matrix $M^{(\alpha\beta)}$, and the six matrices are diagonalized separately, with eigenvalues listed in ascending order for each component. When the matrices do not commute (band warping, e.g., heavy and light holes), the eigenvalues of different components belong to different linear combinations of the degenerate states, and an inverse mass tensor cannot be assigned to an individual band [Phys. Rev. B 93, 205147 (2016), Sec. III]. Such blocks are marked `# non-commuting block` (see [Band warping](#band-warping-and-the--non-commuting-block-flag)). For their records:
+
+- the diagonal components xx, yy, zz in `minv_ij.dat` are the inverse masses along the Cartesian axes, labelled by ascending order,
+- the off-diagonal components yz, xz, xy, and the values in `minv_c.dat`, `minv_pr.dat`, and `minv_d.dat`, are not defined for individual bands. A record of `minv_ij.dat` must not be treated as a tensor, e.g., to obtain principal axes, mass ellipsoids, DOS masses, or masses along directions other than x, y, z, since the result depends on the ordering and on the Cartesian frame,
+- the band index inside a block labels the ascending order of each component, not a state, so following one band index across k does not follow one state.
+
+Well-defined alternatives are the block average of a component, $\mathrm{Tr}\,M^{(\alpha\beta)}/N$ for a block of N bands, which forms a proper tensor of the block but merges, e.g., heavy and light holes, and the inverse masses along a direction $\hat{\mathbf{n}}$, given by the eigenvalues of $\sum_{\alpha\beta} \hat{n}_\alpha \hat{n}_\beta (\delta_{\alpha\beta} + M^{(\alpha\beta)})$ (neither is written by mstar). Blocks whose matrices commute, e.g., Kramers pairs that remain degenerate around k, are not affected.
+
+### Degeneracy lifted at first order
+
+Degenerate perturbation theory assumes that the degeneracy is not lifted at first order in k, i.e., that the bands of a block have zero velocity at k within the block. At points where bands cross linearly (e.g., Weyl or multifold fermions, such as CoSi at Γ), the dispersion is not quadratic, and the masses of these blocks do not describe it.
+
+### Degeneracy tolerance
+
+The blocks depend on the tolerance. A tolerance that is too small leaves states that are degenerate by symmetry in separate blocks and leads to large errors through the energy denominators. A tolerance that is too large merges states that are split by a small but real amount. Near band crossings, the results may therefore change with the tolerance.
+
+### Conductivity and DOS masses
+
+`minv_c.dat` and `minv_d.dat` are derived from the tensor of each band. The geometric average in `minv_d.dat` is of limited use when the principal components have different signs (marked `# hyperbolic dispersion`).
 
 ## Output
 
