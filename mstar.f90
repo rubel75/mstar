@@ -14,11 +14,13 @@ PROGRAM mstar
 ! (c) Oleg Rubel, Mar 2021
 !
 ! Execution:
-!   $ ./mstar arg1 [arg2]
-! arg1 - input mommat file name
+!   $ ./mstar arg1 [arg2] [--nbmax N]
+! arg1 - input case.mommat2[up/dn] (WIEN2k) or WAVEDER (VASP) file name
 ! arg2 - (optional) degeneracy energy tolerance [Ha]
 !        max dE between adjacent states to be grouped as degenerate
 !        default value is 1.0e-6 Ha
+! --nbmax N - (optional) write masses only for bands 1..N
+! See README.md for details.
 !
 ! Output:
 ! minv_ij.dat - contains elements of the (m0/m*_ij) tensor.               
@@ -49,10 +51,12 @@ PROGRAM mstar
 !          and push this parameter up to 5 Ry
 !          -5.0 3.5 9999 Emin, Emax for matrix elements, NBvalMAX
 !          ------^
-! (3): In VASP calculations use LOPTICS = .TRUE., increase (at least x3) 
-!      the number NBANDS = XXXX, and disable a finite differences derivative 
-!      of the cell-periodic part of the orbitals LPEAD =.FALSE. Tests show 
-!      that m* values calculated with LPEAD =.TRUE. make no sense.
+! (3): In VASP calculations use LOPTICS = .TRUE. and LPEAD = .FALSE., and
+!      increase (at least x3) the number NBANDS = XXXX. With LPEAD = .TRUE.,
+!      the derivatives are obtained by finite differences on the k-point
+!      mesh, which is usually too coarse for effective masses. GW PAW
+!      potentials are recommended for a better description of the
+!      high-energy empty states.
 
 
 !! Variables
@@ -534,11 +538,13 @@ write(*,*) '         be OK, but it can be good to test the convergence'
 write(*,*) '         and push this parameter up to 5 Ry'
 write(*,*) '         -5.0 3.5 9999 Emin, Emax for matrix elements, NBvalMAX'
 write(*,*) '         ------^'
-write(*,*) '(3): In VASP calculations use LOPTICS = .TRUE., increase'
-write(*,*) '     (at least x3) the number NBANDS = XXXX, and disable a finite'
-write(*,*) '     differences derivative of the cell-periodic part of'
-write(*,*) '     the orbitals LPEAD =.FALSE. Tests show that m* values'
-write(*,*) '     calculated with LPEAD =.TRUE. make no sense.'
+write(*,*) '(3): In VASP calculations use LOPTICS = .TRUE. and LPEAD = .FALSE.,'
+write(*,*) '     and increase (at least x3) the number NBANDS = XXXX.'
+write(*,*) '     With LPEAD = .TRUE., the derivatives are obtained by finite'
+write(*,*) '     differences on the k-point mesh, which is usually too coarse'
+write(*,*) '     for effective masses. GW PAW potentials are recommended for a'
+write(*,*) '     better description of the high-energy empty states.'
+write(*,*) 'See README.md for details.'
 STOP
 
 !! Error section
