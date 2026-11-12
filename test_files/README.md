@@ -36,6 +36,10 @@ libraries. The tolerances can be changed with `--rtol` and `--atol`.
 
 ## History of the reference outputs
 
+- 2026-11-12 (pass 3): regenerated after adding the degenerate-block ID
+  column and changing to chain grouping of degenerate bands. All values are
+  identical to the pass-2 references; the groups are the same for these
+  inputs.
 - 2026-11-12 (pass 2): regenerated with gfortran 13.3 and reference LAPACK
   after the change to double precision with compensated summation, the
   free-format reading of EIGENVAL, and the 7-digit output format. WIEN2k:

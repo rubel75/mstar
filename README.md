@@ -13,6 +13,8 @@ Development version, November 2026 (changes since Oct 13, 2021):
 * The band sums are accumulated in double precision with compensated (Kahan) summation, and the effective matrices are diagonalized in double precision. Results no longer depend on the number of OpenMP threads (the OpenMP parallelization of the inner loop was removed). Values are written with 7 significant digits.
 * For numerically near-degenerate states inside a degenerate group, the effective matrix uses the average of the inverse energy differences, which keeps it Hermitian. For exactly degenerate states the result is unchanged.
 * VASP input is read with the routines of [BerryCPT](https://github.com/rubel75/berrycpt). Only the derivative-band block is stored, which reduces the memory needed for `WAVEDER` by more than half.
+* Each record of the output files now gives the band index followed by the ID of the degenerate block to which the band belongs (numbered from 1 at each k-point). Scripts that read the output by column need to account for the extra column (`utils/dat2csv.sh` is updated).
+* Degenerate blocks are formed by chaining adjacent bands whose energies differ by no more than the tolerance, as in BerryCPT. Previously, all bands of a block had to lie within the tolerance of the first band of the block.
 * Errors terminate with a nonzero exit status.
 * Regression tests are in `test_files` (see `test_files/README.md`).
 
@@ -58,7 +60,7 @@ Options:
 
   * `[-up/-dn]` tells `mstar` to read `case.mommat2[up/dn]` files (needed for spin-polarized calculations or calculations with spin-orbit coupling).
 
-  * `[-settol 1.0e-5]` or `[1e-5]` is (optional) degeneracy energy tolerance [Ha], which is max dE for 2 states to be considered as degenerate (default value is 1.0e-6 Ha). Eigenvalues of states that are physically expected to be degenerate (for example light and heavy holes in GaAs at Gamma point) are not exactly the same for numerical reasons. If we treat them as non-degenerate states, a large error will occur due to the term p^2/dE when dE -> 0. These states need to be "bundled" together and treated as degenerate. It is recommended to inspect eigenvalues (in the case of GaAs it will be the top valence bands) and evaluate the energy difference dE between states that should be treated as degenerate. Then set the tolerance slightly greater than this value.
+  * `[-settol 1.0e-5]` or `[1e-5]` is (optional) degeneracy energy tolerance [Ha], which is the max dE between adjacent states for them to be grouped as degenerate (default value is 1.0e-6 Ha). Eigenvalues of states that are physically expected to be degenerate (for example light and heavy holes in GaAs at Gamma point) are not exactly the same for numerical reasons. If we treat them as non-degenerate states, a large error will occur due to the term p^2/dE when dE -> 0. These states need to be "bundled" together and treated as degenerate. It is recommended to inspect eigenvalues (in the case of GaAs it will be the top valence bands) and evaluate the energy difference dE between states that should be treated as degenerate. Then set the tolerance slightly greater than this value.
 
 
 ### Output

@@ -14,11 +14,14 @@
 nbmin=21
 nbmax=22
 case=${PWD##*/}
-#fname='minv_c-up'; col=2; suffix='' # conductivity eff. mass; col = column in the *dat file
-#fname='minv_d'; col=2; suffix='' # DOS eff. mass; col = column in the *dat file
-fname='minv_ij-up'; col=2; suffix='_xx' # eff. mass xx
-#fname='minv_ij-up'; col=3; suffix='_yy' # eff. mass yy
-#fname='minv_ij'; col=4; suffix='_zz' # eff. mass zz
+# Columns of the *.dat files: band, block (degenerate-block ID), then values.
+# (Files written by mstar versions before Nov 2026 have no block column;
+# subtract 1 from the column numbers below for such files.)
+#fname='minv_c-up'; col=3; suffix='' # conductivity eff. mass; col = column in the *dat file
+#fname='minv_d'; col=3; suffix='' # DOS eff. mass; col = column in the *dat file
+fname='minv_ij-up'; col=3; suffix='_xx' # eff. mass xx
+#fname='minv_ij-up'; col=4; suffix='_yy' # eff. mass yy
+#fname='minv_ij'; col=5; suffix='_zz' # eff. mass zz
 
 
 

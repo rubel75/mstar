@@ -4,1292 +4,1297 @@
 # are grouped by k-point index and then by the band index. Here
 # m0/m_1  m0/m_2  m0/m_3 are principal components of the inverse
 # eff. mass tensor eig(m0/m*_ij).
+# Each band record also gives the ID of its degenerate block (numbered
+# from 1 at each k-point). Bands with the same block ID were treated
+# together by degenerate perturbation theory (Eqs. 6 and 7 of the
+# reference); adjacent bands belong to one block when their energies
+# differ by no more than the degeneracy tolerance.
 # Columns correspond to
-# band m0/m_d
+# band block m0/m_d
 # KP: 1 NBCDER: 428 NEMAX: 428
-  1  3.429466E-001
-  2  3.429467E-001
-  3  3.452042E-001
-  4  3.452043E-001
-  5  3.479626E-001
-  6  3.479627E-001
-  7  3.404207E-001
-  8  3.404208E-001
-  9  3.328409E-001
- 10  3.328410E-001
- 11  2.969744E-001
- 12  2.969744E-001
- 13  3.613066E-001
- 14  3.613066E-001
- 15  3.254267E-001
- 16  3.254268E-001
- 17  3.316520E-001
- 18  3.316521E-001
- 19  3.360287E-001
- 20  3.360287E-001
- 21  2.895072E-001
- 22  2.895073E-001
- 23  3.560536E-001
- 24  3.560537E-001
- 25  9.387089E-001
- 26  9.387089E-001
- 27 -5.987983E+001
- 28 -5.987982E+001
- 29  4.011390E+001 warning: hyperbolic dispersion
- 30  4.011391E+001 warning: hyperbolic dispersion
- 31  7.121057E+001
- 32  7.121058E+001
- 33 -4.412604E+001
- 34 -4.412578E+001
- 35 -2.541128E+001 warning: hyperbolic dispersion
- 36 -2.541118E+001 warning: hyperbolic dispersion
- 37  3.853110E+001
- 38  3.853128E+001
- 39 -1.749465E+001
- 40 -1.749463E+001
- 41  9.521454E+000 warning: hyperbolic dispersion
- 42  9.521474E+000 warning: hyperbolic dispersion
- 43  1.769906E+001
- 44  1.769909E+001
- 45  8.111013E-001
- 46  8.111026E-001
- 47  1.951204E-001
- 48  1.951211E-001
- 49  1.628524E+000
- 50  1.628525E+000
- 51  1.920325E-001
- 52  1.920330E-001
- 53  4.988764E-001
- 54  4.988765E-001
- 55  3.886855E-001
- 56  3.886856E-001
- 57 -6.117460E-001
- 58 -6.117433E-001
- 59  6.982666E-002 warning: hyperbolic dispersion
- 60  6.983073E-002 warning: hyperbolic dispersion
- 61  2.476678E+000
- 62  2.476682E+000
- 63 -2.801364E-001
- 64 -2.801359E-001
- 65  5.516574E-001
- 66  5.516584E-001
- 67  7.198485E-001
- 68  7.198487E-001
- 69  6.099231E-001
- 70  6.099234E-001
- 71  7.030023E-001
- 72  7.030024E-001
- 73 -8.681274E-001
- 74 -8.681245E-001
- 75 -8.619756E-001 warning: hyperbolic dispersion
- 76 -8.619708E-001 warning: hyperbolic dispersion
- 77  2.134747E+000
- 78  2.134749E+000
- 79 -1.193547E+001
- 80 -1.193547E+001
- 81  5.387992E+000 warning: hyperbolic dispersion
- 82  5.387999E+000 warning: hyperbolic dispersion
- 83  5.206332E+000
- 84  5.206344E+000
- 85 -5.732168E+000
- 86 -5.732167E+000
- 87  5.908019E+000
- 88  5.908021E+000
- 89 -3.434136E+000 warning: hyperbolic dispersion
- 90 -3.434129E+000 warning: hyperbolic dispersion
- 91  2.339183E+000
- 92  2.339185E+000
- 93  4.968932E+000
- 94  4.968936E+000
- 95  4.532883E+000
- 96  4.532884E+000
- 97 -4.867725E+001
- 98 -4.867690E+001
- 99 -2.866033E+001 warning: hyperbolic dispersion
-100 -2.866023E+001 warning: hyperbolic dispersion
-101  4.758093E+001
-102  4.758116E+001
-103 -5.739373E+000
-104 -5.739372E+000
-105  8.632917E+000 warning: hyperbolic dispersion
-106  8.632920E+000 warning: hyperbolic dispersion
-107 -7.136692E+000
-108 -7.136691E+000
-109  6.517605E+000
-110  6.517607E+000
-111  1.925102E+000
-112  1.925130E+000
-113 -4.128674E+000
-114 -4.128640E+000
-115  9.497094E+000
-116  9.497095E+000
-117  1.737475E+001
-118  1.737475E+001
-119 -1.388412E+001
-120 -1.388412E+001
-121  4.352165E-001
-122  4.352166E-001
-123 -3.375595E+001
-124 -3.375594E+001
-125 -1.050491E+001 warning: hyperbolic dispersion
-126 -1.050490E+001 warning: hyperbolic dispersion
-127  2.045035E+001
-128  2.045035E+001
-129  1.240163E+001
-130  1.240163E+001
-131 -2.862585E+001
-132 -2.862585E+001
-133  1.943138E+000
-134  1.943139E+000
-135  2.833168E+000
-136  2.833171E+000
-137 -4.219346E+000
-138 -4.219346E+000
-139  2.286937E+001
-140  2.286938E+001
-141 -7.639241E+000
-142 -7.639200E+000
-143  2.364163E+000
-144  2.364173E+000
-145 -9.090907E-001
-146 -9.090534E-001
-147 -6.938552E+001
-148 -6.938552E+001
-149 -4.223531E+001 warning: hyperbolic dispersion
-150 -4.223531E+001 warning: hyperbolic dispersion
-151  3.972970E+001
-152  3.972971E+001
-153 -1.617597E+001
-154 -1.617597E+001
-155  9.049617E+000
-156  9.049619E+000
-157  9.777545E-001
-158  9.777563E-001
-159  7.085086E+000
-160  7.085087E+000
-161  1.681411E+001
-162  1.681411E+001
-163 -5.607254E+001
-164 -5.607250E+001
-165  4.155771E+001 warning: hyperbolic dispersion
-166  4.155773E+001 warning: hyperbolic dispersion
-167  6.374739E+001
-168  6.374744E+001
-169  8.522234E+000
-170  8.522236E+000
-171 -3.339997E+001
-172 -3.339996E+001
-173  3.485319E+001 warning: hyperbolic dispersion
-174  3.485319E+001 warning: hyperbolic dispersion
-175  2.615574E+001
-176  2.615575E+001
-177  3.259323E+000
-178  3.259324E+000
-179 -2.822983E+001
-180 -2.822981E+001
-181 -3.403291E+001 warning: hyperbolic dispersion
-182 -3.403291E+001 warning: hyperbolic dispersion
-183  8.575974E+000
-184  8.576008E+000
-185  8.587001E-001
-186  8.588544E-001
-187  2.062924E+001
-188  2.062925E+001
-189 -2.782982E+000
-190 -2.782981E+000
-191 -3.818718E+000
-192 -3.818716E+000
-193  7.502581E+000 warning: hyperbolic dispersion
-194  7.502582E+000 warning: hyperbolic dispersion
-195 -7.283834E+000
-196 -7.283832E+000
-197 -1.392579E+002
-198 -1.392579E+002
-199 -8.217794E+001 warning: hyperbolic dispersion
-200 -8.217792E+001 warning: hyperbolic dispersion
-201  2.955853E+001 warning: hyperbolic dispersion
-202  2.955848E+001 warning: hyperbolic dispersion
-203 -1.601896E+001
-204 -1.601895E+001
-205  7.696117E+001
-206  7.696119E+001
-207  4.910132E+000
-208  4.910134E+000
-209 -1.330443E+001 warning: hyperbolic dispersion
-210 -1.330443E+001 warning: hyperbolic dispersion
-211  2.458762E+001
-212  2.458762E+001
-213 -1.042737E+001 warning: hyperbolic dispersion
-214 -1.042737E+001 warning: hyperbolic dispersion
-215  1.097030E+001 warning: hyperbolic dispersion
-216  1.097031E+001 warning: hyperbolic dispersion
-217  4.093879E+001
-218  4.093879E+001
-219 -8.972688E+001
-220 -8.972686E+001
-221  6.143937E+001 warning: hyperbolic dispersion
-222  6.143938E+001 warning: hyperbolic dispersion
-223  1.251638E+002
-224  1.251638E+002
-225 -6.806699E+000
-226 -6.806698E+000
-227 -1.321274E+003
-228 -1.321273E+003
-229  8.653912E+002 warning: hyperbolic dispersion
-230  8.653918E+002 warning: hyperbolic dispersion
-231  1.513339E+003
-232  1.513340E+003
-233  3.019821E+000
-234  3.019827E+000
-235 -1.399901E+001 warning: hyperbolic dispersion
-236 -1.399900E+001 warning: hyperbolic dispersion
-237  4.166417E+001
-238  4.166418E+001
-239 -1.782338E+001
-240 -1.782338E+001
-241  1.199417E+001
-242  1.199417E+001
-243 -2.421359E+002
-244 -2.421358E+002
-245 -1.240138E+002 warning: hyperbolic dispersion
-246 -1.240137E+002 warning: hyperbolic dispersion
-247  1.875173E+002
-248  1.875174E+002
-249 -8.073177E+003
-250 -8.073150E+003
-251 -4.408478E+003 warning: hyperbolic dispersion
-252 -4.408460E+003 warning: hyperbolic dispersion
-253  6.824215E+003
-254  6.824238E+003
-255  4.005626E+000
-256  4.005626E+000
-257 -5.465870E+001
-258 -5.465869E+001
-259 -1.122011E+001 warning: hyperbolic dispersion
-260 -1.122011E+001 warning: hyperbolic dispersion
-261  2.397752E+001 warning: hyperbolic dispersion
-262  2.397752E+001 warning: hyperbolic dispersion
-263 -5.888026E-001 warning: hyperbolic dispersion
-264 -5.887978E-001 warning: hyperbolic dispersion
-265  5.810359E+001
-266  5.810359E+001
-267 -1.331767E+002
-268 -1.331767E+002
-269 -6.549769E+001 warning: hyperbolic dispersion
-270 -6.549768E+001 warning: hyperbolic dispersion
-271  1.042384E+002
-272  1.042384E+002
-273 -6.442041E+002
-274 -6.442038E+002
-275 -3.649322E+002 warning: hyperbolic dispersion
-276 -3.649321E+002 warning: hyperbolic dispersion
-277  5.591696E+002
-278  5.591698E+002
-279 -1.017898E+001
-280 -1.017897E+001
-281 -8.546865E+000
-282 -8.546864E+000
-283  1.019547E+001 warning: hyperbolic dispersion
-284  1.019547E+001 warning: hyperbolic dispersion
-285 -4.037261E+002
-286 -4.037260E+002
-287 -6.767688E+000
-288 -6.767685E+000
-289 -1.339653E+002
-290 -1.339652E+002
-291 -7.267973E+001 warning: hyperbolic dispersion
-292 -7.267971E+001 warning: hyperbolic dispersion
-293  5.377294E+002
-294  5.377295E+002
-295  1.478748E+000
-296  1.478750E+000
-297 -1.544387E+001
-298 -1.544387E+001
-299 -9.891716E+000
-300 -9.891712E+000
-301 -1.299625E+001
-302 -1.299625E+001
-303  1.565782E+001
-304  1.565782E+001
-305 -3.253289E+000
-306 -3.253288E+000
-307  7.368335E+000
-308  7.368338E+000
-309 -1.408071E+002
-310 -1.408071E+002
-311  9.184832E+001 warning: hyperbolic dispersion
-312  9.184833E+001 warning: hyperbolic dispersion
-313  1.938885E+002
-314  1.938885E+002
-315 -5.297894E+002
-316 -5.297893E+002
-317 -2.973481E+002 warning: hyperbolic dispersion
-318 -2.973481E+002 warning: hyperbolic dispersion
-319  4.682050E+002
-320  4.682051E+002
-321 -1.086723E+001
-322 -1.086723E+001
-323 -8.246877E+000 warning: hyperbolic dispersion
-324 -8.246876E+000 warning: hyperbolic dispersion
-325  1.618997E+001
-326  1.618998E+001
-327 -1.236395E+001
-328 -1.236395E+001
-329 -2.080152E+001
-330 -2.080152E+001
-331  9.701502E+000 warning: hyperbolic dispersion
-332  9.701504E+000 warning: hyperbolic dispersion
-333  1.589992E+001
-334  1.589992E+001
-335 -3.733882E+002
-336 -3.733881E+002
-337 -2.129209E+002 warning: hyperbolic dispersion
-338 -2.129208E+002 warning: hyperbolic dispersion
-339  3.253825E+002
-340  3.253826E+002
-341 -7.161957E+001
-342 -7.161955E+001
-343 -1.236659E+002
-344 -1.236659E+002
-345  3.155789E+001 warning: hyperbolic dispersion
-346  3.155790E+001 warning: hyperbolic dispersion
-347  1.882384E+001
-348  1.882386E+001
-349 -5.870804E+001 warning: hyperbolic dispersion
-350 -5.870803E+001 warning: hyperbolic dispersion
-351  1.243832E+002
-352  1.243832E+002
-353  3.135347E+000
-354  3.135348E+000
-355  3.525659E+001
-356  3.525660E+001
-357  3.339545E-002
-358  3.339966E-002
-359 -4.172614E+001
-360 -4.172613E+001
-361  2.384645E+001 warning: hyperbolic dispersion
-362  2.384645E+001 warning: hyperbolic dispersion
-363  8.136619E+000
-364  8.136628E+000
-365  4.142195E+001
-366  4.142196E+001
-367 -3.374653E+001
-368 -3.374653E+001
-369  2.641550E+000
-370  2.641551E+000
-371 -2.800166E+002
-372 -2.800166E+002
-373  2.069478E+002 warning: hyperbolic dispersion
-374  2.069478E+002 warning: hyperbolic dispersion
-375  3.345751E+002
-376  3.345752E+002
-377  4.108332E+001
-378  4.108332E+001
-379  8.922449E-001
-380  8.922463E-001
-381 -2.718828E+000
-382 -2.718827E+000
-383  1.332850E+001
-384  1.332850E+001
-385 -1.706075E+001
-386 -1.706074E+001
-387 -2.255801E+001
-388 -2.255801E+001
-389  3.110497E+000
-390  3.110496E+000
-391 -3.651916E+000
-392 -3.651913E+000
-393  1.935888E+001
-394  1.935888E+001
-395  2.022380E+001
-396  2.022380E+001
-397 -4.895942E+001
-398 -4.895940E+001
-399 -2.832253E+001 warning: hyperbolic dispersion
-400 -2.832252E+001 warning: hyperbolic dispersion
-401  6.173784E+001
-402  6.173786E+001
-403  7.136106E+000
-404  7.136108E+000
-405  5.672490E+000
-406  5.672491E+000
-407  1.358438E+001
-408  1.358438E+001
-409 -1.013745E+002
-410 -1.013745E+002
-411 -5.779604E+001
-412 -5.779604E+001
-413  3.983474E+001
-414  3.983474E+001
-415 -1.137959E+002
-416 -1.137959E+002
-417 -9.572080E+001 warning: hyperbolic dispersion
-418 -9.572077E+001 warning: hyperbolic dispersion
-419  1.546561E+002
-420  1.546562E+002
-421 -2.927087E+001
-422 -2.927086E+001
-423  2.667568E+001
-424  2.667568E+001
-425  1.595621E+001
-426  1.595622E+001
-427  7.726334E+001
-428  7.726335E+001
+  1   1  3.429466E-001
+  2   1  3.429467E-001
+  3   1  3.452042E-001
+  4   1  3.452043E-001
+  5   2  3.479626E-001
+  6   2  3.479627E-001
+  7   3  3.404207E-001
+  8   3  3.404208E-001
+  9   4  3.328409E-001
+ 10   4  3.328410E-001
+ 11   5  2.969744E-001
+ 12   5  2.969744E-001
+ 13   5  3.613066E-001
+ 14   5  3.613066E-001
+ 15   6  3.254267E-001
+ 16   6  3.254268E-001
+ 17   7  3.316520E-001
+ 18   7  3.316521E-001
+ 19   7  3.360287E-001
+ 20   7  3.360287E-001
+ 21   8  2.895072E-001
+ 22   8  2.895073E-001
+ 23   8  3.560536E-001
+ 24   8  3.560537E-001
+ 25   9  9.387089E-001
+ 26   9  9.387089E-001
+ 27  10 -5.987983E+001
+ 28  10 -5.987982E+001
+ 29  10  4.011390E+001 warning: hyperbolic dispersion
+ 30  10  4.011391E+001 warning: hyperbolic dispersion
+ 31  11  7.121057E+001
+ 32  11  7.121058E+001
+ 33  12 -4.412604E+001
+ 34  12 -4.412578E+001
+ 35  13 -2.541128E+001 warning: hyperbolic dispersion
+ 36  13 -2.541118E+001 warning: hyperbolic dispersion
+ 37  13  3.853110E+001
+ 38  13  3.853128E+001
+ 39  14 -1.749465E+001
+ 40  14 -1.749463E+001
+ 41  14  9.521454E+000 warning: hyperbolic dispersion
+ 42  14  9.521474E+000 warning: hyperbolic dispersion
+ 43  15  1.769906E+001
+ 44  15  1.769909E+001
+ 45  16  8.111013E-001
+ 46  16  8.111026E-001
+ 47  17  1.951204E-001
+ 48  17  1.951211E-001
+ 49  17  1.628524E+000
+ 50  17  1.628525E+000
+ 51  18  1.920325E-001
+ 52  18  1.920330E-001
+ 53  18  4.988764E-001
+ 54  18  4.988765E-001
+ 55  19  3.886855E-001
+ 56  19  3.886856E-001
+ 57  20 -6.117460E-001
+ 58  20 -6.117433E-001
+ 59  20  6.982666E-002 warning: hyperbolic dispersion
+ 60  20  6.983073E-002 warning: hyperbolic dispersion
+ 61  21  2.476678E+000
+ 62  21  2.476682E+000
+ 63  22 -2.801364E-001
+ 64  22 -2.801359E-001
+ 65  23  5.516574E-001
+ 66  23  5.516584E-001
+ 67  23  7.198485E-001
+ 68  23  7.198487E-001
+ 69  24  6.099231E-001
+ 70  24  6.099234E-001
+ 71  24  7.030023E-001
+ 72  24  7.030024E-001
+ 73  25 -8.681274E-001
+ 74  25 -8.681245E-001
+ 75  26 -8.619756E-001 warning: hyperbolic dispersion
+ 76  26 -8.619708E-001 warning: hyperbolic dispersion
+ 77  26  2.134747E+000
+ 78  26  2.134749E+000
+ 79  27 -1.193547E+001
+ 80  27 -1.193547E+001
+ 81  27  5.387992E+000 warning: hyperbolic dispersion
+ 82  27  5.387999E+000 warning: hyperbolic dispersion
+ 83  28  5.206332E+000
+ 84  28  5.206344E+000
+ 85  29 -5.732168E+000
+ 86  29 -5.732167E+000
+ 87  29  5.908019E+000
+ 88  29  5.908021E+000
+ 89  30 -3.434136E+000 warning: hyperbolic dispersion
+ 90  30 -3.434129E+000 warning: hyperbolic dispersion
+ 91  30  2.339183E+000
+ 92  30  2.339185E+000
+ 93  31  4.968932E+000
+ 94  31  4.968936E+000
+ 95  32  4.532883E+000
+ 96  32  4.532884E+000
+ 97  33 -4.867725E+001
+ 98  33 -4.867690E+001
+ 99  34 -2.866033E+001 warning: hyperbolic dispersion
+100  34 -2.866023E+001 warning: hyperbolic dispersion
+101  34  4.758093E+001
+102  34  4.758116E+001
+103  35 -5.739373E+000
+104  35 -5.739372E+000
+105  35  8.632917E+000 warning: hyperbolic dispersion
+106  35  8.632920E+000 warning: hyperbolic dispersion
+107  36 -7.136692E+000
+108  36 -7.136691E+000
+109  37  6.517605E+000
+110  37  6.517607E+000
+111  38  1.925102E+000
+112  38  1.925130E+000
+113  39 -4.128674E+000
+114  39 -4.128640E+000
+115  39  9.497094E+000
+116  39  9.497095E+000
+117  40  1.737475E+001
+118  40  1.737475E+001
+119  41 -1.388412E+001
+120  41 -1.388412E+001
+121  41  4.352165E-001
+122  41  4.352166E-001
+123  42 -3.375595E+001
+124  42 -3.375594E+001
+125  43 -1.050491E+001 warning: hyperbolic dispersion
+126  43 -1.050490E+001 warning: hyperbolic dispersion
+127  43  2.045035E+001
+128  43  2.045035E+001
+129  44  1.240163E+001
+130  44  1.240163E+001
+131  45 -2.862585E+001
+132  45 -2.862585E+001
+133  45  1.943138E+000
+134  45  1.943139E+000
+135  46  2.833168E+000
+136  46  2.833171E+000
+137  47 -4.219346E+000
+138  47 -4.219346E+000
+139  47  2.286937E+001
+140  47  2.286938E+001
+141  48 -7.639241E+000
+142  48 -7.639200E+000
+143  48  2.364163E+000
+144  48  2.364173E+000
+145  49 -9.090907E-001
+146  49 -9.090534E-001
+147  50 -6.938552E+001
+148  50 -6.938552E+001
+149  51 -4.223531E+001 warning: hyperbolic dispersion
+150  51 -4.223531E+001 warning: hyperbolic dispersion
+151  51  3.972970E+001
+152  51  3.972971E+001
+153  52 -1.617597E+001
+154  52 -1.617597E+001
+155  52  9.049617E+000
+156  52  9.049619E+000
+157  53  9.777545E-001
+158  53  9.777563E-001
+159  54  7.085086E+000
+160  54  7.085087E+000
+161  54  1.681411E+001
+162  54  1.681411E+001
+163  55 -5.607254E+001
+164  55 -5.607250E+001
+165  55  4.155771E+001 warning: hyperbolic dispersion
+166  55  4.155773E+001 warning: hyperbolic dispersion
+167  56  6.374739E+001
+168  56  6.374744E+001
+169  57  8.522234E+000
+170  57  8.522236E+000
+171  58 -3.339997E+001
+172  58 -3.339996E+001
+173  58  3.485319E+001 warning: hyperbolic dispersion
+174  58  3.485319E+001 warning: hyperbolic dispersion
+175  59  2.615574E+001
+176  59  2.615575E+001
+177  60  3.259323E+000
+178  60  3.259324E+000
+179  61 -2.822983E+001
+180  61 -2.822981E+001
+181  62 -3.403291E+001 warning: hyperbolic dispersion
+182  62 -3.403291E+001 warning: hyperbolic dispersion
+183  62  8.575974E+000
+184  62  8.576008E+000
+185  63  8.587001E-001
+186  63  8.588544E-001
+187  63  2.062924E+001
+188  63  2.062925E+001
+189  64 -2.782982E+000
+190  64 -2.782981E+000
+191  65 -3.818718E+000
+192  65 -3.818716E+000
+193  65  7.502581E+000 warning: hyperbolic dispersion
+194  65  7.502582E+000 warning: hyperbolic dispersion
+195  66 -7.283834E+000
+196  66 -7.283832E+000
+197  67 -1.392579E+002
+198  67 -1.392579E+002
+199  68 -8.217794E+001 warning: hyperbolic dispersion
+200  68 -8.217792E+001 warning: hyperbolic dispersion
+201  68  2.955853E+001 warning: hyperbolic dispersion
+202  68  2.955848E+001 warning: hyperbolic dispersion
+203  69 -1.601896E+001
+204  69 -1.601895E+001
+205  69  7.696117E+001
+206  69  7.696119E+001
+207  70  4.910132E+000
+208  70  4.910134E+000
+209  71 -1.330443E+001 warning: hyperbolic dispersion
+210  71 -1.330443E+001 warning: hyperbolic dispersion
+211  71  2.458762E+001
+212  71  2.458762E+001
+213  72 -1.042737E+001 warning: hyperbolic dispersion
+214  72 -1.042737E+001 warning: hyperbolic dispersion
+215  72  1.097030E+001 warning: hyperbolic dispersion
+216  72  1.097031E+001 warning: hyperbolic dispersion
+217  73  4.093879E+001
+218  73  4.093879E+001
+219  74 -8.972688E+001
+220  74 -8.972686E+001
+221  74  6.143937E+001 warning: hyperbolic dispersion
+222  74  6.143938E+001 warning: hyperbolic dispersion
+223  75  1.251638E+002
+224  75  1.251638E+002
+225  76 -6.806699E+000
+226  76 -6.806698E+000
+227  77 -1.321274E+003
+228  77 -1.321273E+003
+229  77  8.653912E+002 warning: hyperbolic dispersion
+230  77  8.653918E+002 warning: hyperbolic dispersion
+231  78  1.513339E+003
+232  78  1.513340E+003
+233  79  3.019821E+000
+234  79  3.019827E+000
+235  80 -1.399901E+001 warning: hyperbolic dispersion
+236  80 -1.399900E+001 warning: hyperbolic dispersion
+237  80  4.166417E+001
+238  80  4.166418E+001
+239  81 -1.782338E+001
+240  81 -1.782338E+001
+241  81  1.199417E+001
+242  81  1.199417E+001
+243  82 -2.421359E+002
+244  82 -2.421358E+002
+245  83 -1.240138E+002 warning: hyperbolic dispersion
+246  83 -1.240137E+002 warning: hyperbolic dispersion
+247  83  1.875173E+002
+248  83  1.875174E+002
+249  84 -8.073177E+003
+250  84 -8.073150E+003
+251  85 -4.408478E+003 warning: hyperbolic dispersion
+252  85 -4.408460E+003 warning: hyperbolic dispersion
+253  85  6.824215E+003
+254  85  6.824238E+003
+255  86  4.005626E+000
+256  86  4.005626E+000
+257  87 -5.465870E+001
+258  87 -5.465869E+001
+259  88 -1.122011E+001 warning: hyperbolic dispersion
+260  88 -1.122011E+001 warning: hyperbolic dispersion
+261  88  2.397752E+001 warning: hyperbolic dispersion
+262  88  2.397752E+001 warning: hyperbolic dispersion
+263  89 -5.888026E-001 warning: hyperbolic dispersion
+264  89 -5.887978E-001 warning: hyperbolic dispersion
+265  89  5.810359E+001
+266  89  5.810359E+001
+267  90 -1.331767E+002
+268  90 -1.331767E+002
+269  91 -6.549769E+001 warning: hyperbolic dispersion
+270  91 -6.549768E+001 warning: hyperbolic dispersion
+271  91  1.042384E+002
+272  91  1.042384E+002
+273  92 -6.442041E+002
+274  92 -6.442038E+002
+275  93 -3.649322E+002 warning: hyperbolic dispersion
+276  93 -3.649321E+002 warning: hyperbolic dispersion
+277  93  5.591696E+002
+278  93  5.591698E+002
+279  94 -1.017898E+001
+280  94 -1.017897E+001
+281  94 -8.546865E+000
+282  94 -8.546864E+000
+283  94  1.019547E+001 warning: hyperbolic dispersion
+284  94  1.019547E+001 warning: hyperbolic dispersion
+285  95 -4.037261E+002
+286  95 -4.037260E+002
+287  95 -6.767688E+000
+288  95 -6.767685E+000
+289  96 -1.339653E+002
+290  96 -1.339652E+002
+291  97 -7.267973E+001 warning: hyperbolic dispersion
+292  97 -7.267971E+001 warning: hyperbolic dispersion
+293  97  5.377294E+002
+294  97  5.377295E+002
+295  98  1.478748E+000
+296  98  1.478750E+000
+297  99 -1.544387E+001
+298  99 -1.544387E+001
+299  99 -9.891716E+000
+300  99 -9.891712E+000
+301 100 -1.299625E+001
+302 100 -1.299625E+001
+303 101  1.565782E+001
+304 101  1.565782E+001
+305 102 -3.253289E+000
+306 102 -3.253288E+000
+307 102  7.368335E+000
+308 102  7.368338E+000
+309 103 -1.408071E+002
+310 103 -1.408071E+002
+311 103  9.184832E+001 warning: hyperbolic dispersion
+312 103  9.184833E+001 warning: hyperbolic dispersion
+313 104  1.938885E+002
+314 104  1.938885E+002
+315 105 -5.297894E+002
+316 105 -5.297893E+002
+317 106 -2.973481E+002 warning: hyperbolic dispersion
+318 106 -2.973481E+002 warning: hyperbolic dispersion
+319 106  4.682050E+002
+320 106  4.682051E+002
+321 107 -1.086723E+001
+322 107 -1.086723E+001
+323 108 -8.246877E+000 warning: hyperbolic dispersion
+324 108 -8.246876E+000 warning: hyperbolic dispersion
+325 108  1.618997E+001
+326 108  1.618998E+001
+327 109 -1.236395E+001
+328 109 -1.236395E+001
+329 110 -2.080152E+001
+330 110 -2.080152E+001
+331 110  9.701502E+000 warning: hyperbolic dispersion
+332 110  9.701504E+000 warning: hyperbolic dispersion
+333 111  1.589992E+001
+334 111  1.589992E+001
+335 112 -3.733882E+002
+336 112 -3.733881E+002
+337 113 -2.129209E+002 warning: hyperbolic dispersion
+338 113 -2.129208E+002 warning: hyperbolic dispersion
+339 113  3.253825E+002
+340 113  3.253826E+002
+341 114 -7.161957E+001
+342 114 -7.161955E+001
+343 115 -1.236659E+002
+344 115 -1.236659E+002
+345 115  3.155789E+001 warning: hyperbolic dispersion
+346 115  3.155790E+001 warning: hyperbolic dispersion
+347 116  1.882384E+001
+348 116  1.882386E+001
+349 117 -5.870804E+001 warning: hyperbolic dispersion
+350 117 -5.870803E+001 warning: hyperbolic dispersion
+351 117  1.243832E+002
+352 117  1.243832E+002
+353 118  3.135347E+000
+354 118  3.135348E+000
+355 118  3.525659E+001
+356 118  3.525660E+001
+357 119  3.339545E-002
+358 119  3.339966E-002
+359 120 -4.172614E+001
+360 120 -4.172613E+001
+361 120  2.384645E+001 warning: hyperbolic dispersion
+362 120  2.384645E+001 warning: hyperbolic dispersion
+363 121  8.136619E+000
+364 121  8.136628E+000
+365 122  4.142195E+001
+366 122  4.142196E+001
+367 123 -3.374653E+001
+368 123 -3.374653E+001
+369 123  2.641550E+000
+370 123  2.641551E+000
+371 124 -2.800166E+002
+372 124 -2.800166E+002
+373 124  2.069478E+002 warning: hyperbolic dispersion
+374 124  2.069478E+002 warning: hyperbolic dispersion
+375 125  3.345751E+002
+376 125  3.345752E+002
+377 126  4.108332E+001
+378 126  4.108332E+001
+379 127  8.922449E-001
+380 127  8.922463E-001
+381 128 -2.718828E+000
+382 128 -2.718827E+000
+383 128  1.332850E+001
+384 128  1.332850E+001
+385 129 -1.706075E+001
+386 129 -1.706074E+001
+387 130 -2.255801E+001
+388 130 -2.255801E+001
+389 130  3.110497E+000
+390 130  3.110496E+000
+391 131 -3.651916E+000
+392 131 -3.651913E+000
+393 131  1.935888E+001
+394 131  1.935888E+001
+395 132  2.022380E+001
+396 132  2.022380E+001
+397 133 -4.895942E+001
+398 133 -4.895940E+001
+399 134 -2.832253E+001 warning: hyperbolic dispersion
+400 134 -2.832252E+001 warning: hyperbolic dispersion
+401 134  6.173784E+001
+402 134  6.173786E+001
+403 135  7.136106E+000
+404 135  7.136108E+000
+405 136  5.672490E+000
+406 136  5.672491E+000
+407 136  1.358438E+001
+408 136  1.358438E+001
+409 137 -1.013745E+002
+410 137 -1.013745E+002
+411 138 -5.779604E+001
+412 138 -5.779604E+001
+413 138  3.983474E+001
+414 138  3.983474E+001
+415 139 -1.137959E+002
+416 139 -1.137959E+002
+417 140 -9.572080E+001 warning: hyperbolic dispersion
+418 140 -9.572077E+001 warning: hyperbolic dispersion
+419 140  1.546561E+002
+420 140  1.546562E+002
+421 141 -2.927087E+001
+422 141 -2.927086E+001
+423 141  2.667568E+001
+424 141  2.667568E+001
+425 142  1.595621E+001
+426 142  1.595622E+001
+427 143  7.726334E+001
+428 143  7.726335E+001
 # KP: 2 NBCDER: 428 NEMAX: 428
-  1  3.324629E-001
-  2  2.961741E-001
-  3  3.820195E-001
-  4  3.591249E-001
-  5  3.390067E-001
-  6  3.565385E-001
-  7  3.404034E-001
-  8  3.404458E-001
-  9  2.776029E-001
- 10  3.833276E-001
- 11  2.633405E-001
- 12  3.074657E-001
- 13  3.546768E-001
- 14  3.701522E-001
- 15  3.251134E-001
- 16  3.257963E-001
- 17  3.108338E-001
- 18  9.306866E-002
- 19  4.995587E-001
- 20  3.650965E-001
- 21  3.182852E-001
- 22  2.532365E-001
- 23  3.903081E-001
- 24  3.394544E-001
- 25  9.383015E-001
- 26  9.383113E-001
- 27 -4.028283E+000
- 28 -3.958988E+000
- 29  2.797038E+000 warning: hyperbolic dispersion
- 30  2.631618E+000 warning: hyperbolic dispersion
- 31 -4.923761E+000 warning: hyperbolic dispersion
- 32 -4.794190E+000 warning: hyperbolic dispersion
- 33  4.341239E+000 warning: hyperbolic dispersion
- 34  4.423507E+000 warning: hyperbolic dispersion
- 35  1.666445E+000
- 36  1.861342E+000
- 37  3.440997E+000
- 38  3.450812E+000
- 39  3.617830E+000 warning: hyperbolic dispersion
- 40  2.307357E+000 warning: hyperbolic dispersion
- 41 -4.291538E+000 warning: hyperbolic dispersion
- 42 -2.950367E+000 warning: hyperbolic dispersion
- 43 -2.197121E-001 warning: hyperbolic dispersion
- 44  2.060038E+000
- 45 -1.425429E+000 warning: hyperbolic dispersion
- 46 -1.204190E+000 warning: hyperbolic dispersion
- 47 -6.262204E-001 warning: hyperbolic dispersion
- 48  9.913725E-001
- 49 -1.014490E+000 warning: hyperbolic dispersion
- 50  1.026472E+000
- 51 -1.996636E-001 warning: hyperbolic dispersion
- 52  3.983650E-001
- 53  3.335841E-001
- 54  3.983045E-001
- 55  3.985684E-001
- 56  4.694311E-001
- 57  1.610164E+000 warning: hyperbolic dispersion
- 58  1.317357E+000 warning: hyperbolic dispersion
- 59  2.955246E-001
- 60  5.883619E-001
- 61  2.125831E+000
- 62  2.179640E+000
- 63  1.143750E+000 warning: hyperbolic dispersion
- 64  2.142054E+000 warning: hyperbolic dispersion
- 65 -1.258652E+000 warning: hyperbolic dispersion
- 66 -9.203930E-001 warning: hyperbolic dispersion
- 67  1.228997E+000
- 68  1.396156E+000
- 69  5.800552E-001
- 70  2.067729E-001 warning: hyperbolic dispersion
- 71  1.145937E+000
- 72  8.556064E-001
- 73  1.667105E+000 warning: hyperbolic dispersion
- 74  2.129379E+000 warning: hyperbolic dispersion
- 75 -1.309088E+000 warning: hyperbolic dispersion
- 76  1.233603E+000
- 77  2.604598E+000
- 78  2.826485E+000
- 79 -2.797516E+000
- 80 -5.638822E+000
- 81 -4.314456E+000 warning: hyperbolic dispersion
- 82 -8.779851E-001
- 83 -4.179829E-001 warning: hyperbolic dispersion
- 84 -2.827768E+000 warning: hyperbolic dispersion
- 85 -3.283570E+000 warning: hyperbolic dispersion
- 86 -3.385758E+000 warning: hyperbolic dispersion
- 87  4.731607E+000 warning: hyperbolic dispersion
- 88  1.065423E+000 warning: hyperbolic dispersion
- 89  4.541234E+000 warning: hyperbolic dispersion
- 90 -4.557179E+000 warning: hyperbolic dispersion
- 91  6.777310E+000
- 92  3.862228E+000 warning: hyperbolic dispersion
- 93  4.244792E+000
- 94  1.048093E+001
- 95  4.087046E+000
- 96  4.139241E+000
- 97  6.740385E+000 warning: hyperbolic dispersion
- 98  6.527577E+000 warning: hyperbolic dispersion
- 99  3.264147E+000 warning: hyperbolic dispersion
-100  4.247526E+000 warning: hyperbolic dispersion
-101  8.826017E+000
-102  8.112038E+000
-103 -4.727221E+001
-104 -6.090414E+001
-105  2.978012E+001 warning: hyperbolic dispersion
-106 -5.424324E+001 warning: hyperbolic dispersion
-107 -2.433124E+001 warning: hyperbolic dispersion
-108 -1.790320E+001 warning: hyperbolic dispersion
-109  1.116990E+000
-110  8.193817E-001
-111  4.741143E+000
-112  4.465046E+000
-113 -6.502924E+000 warning: hyperbolic dispersion
-114 -7.748128E+000 warning: hyperbolic dispersion
-115 -6.547099E+000 warning: hyperbolic dispersion
-116 -4.784724E+000 warning: hyperbolic dispersion
-117  1.273315E+001
-118  1.266020E+001
-119 -4.364674E+000
-120 -4.151417E+000
-121  3.441382E+000 warning: hyperbolic dispersion
-122  3.335469E+000 warning: hyperbolic dispersion
-123 -1.445543E+001
-124 -1.254352E+001
-125 -1.672154E+000 warning: hyperbolic dispersion
-126 -1.816464E+000 warning: hyperbolic dispersion
-127 -4.569321E+000 warning: hyperbolic dispersion
-128 -4.519016E+000 warning: hyperbolic dispersion
-129 -1.394084E+001 warning: hyperbolic dispersion
-130 -1.366799E+001 warning: hyperbolic dispersion
-131  5.456188E+000 warning: hyperbolic dispersion
-132  3.536310E+000 warning: hyperbolic dispersion
-133  1.530035E+001 warning: hyperbolic dispersion
-134  1.511073E+001 warning: hyperbolic dispersion
-135 -1.286079E+001 warning: hyperbolic dispersion
-136 -1.220388E+001 warning: hyperbolic dispersion
-137  6.922988E+000 warning: hyperbolic dispersion
-138  6.330681E+000 warning: hyperbolic dispersion
-139 -4.048183E+000 warning: hyperbolic dispersion
-140 -3.531660E+000 warning: hyperbolic dispersion
-141 -5.894827E+000 warning: hyperbolic dispersion
-142 -5.720918E+000 warning: hyperbolic dispersion
-143  4.940366E+000 warning: hyperbolic dispersion
-144  1.800169E+000 warning: hyperbolic dispersion
-145  1.073048E+001 warning: hyperbolic dispersion
-146 -6.438056E+000 warning: hyperbolic dispersion
-147  3.006716E+001 warning: hyperbolic dispersion
-148  2.702497E+001 warning: hyperbolic dispersion
-149 -2.039232E+001 warning: hyperbolic dispersion
-150 -5.865918E+001 warning: hyperbolic dispersion
-151 -8.949557E+000
-152 -9.228458E+000
-153 -5.889084E+000 warning: hyperbolic dispersion
-154 -5.254705E+000 warning: hyperbolic dispersion
-155  4.035661E+000 warning: hyperbolic dispersion
-156  3.904413E+000 warning: hyperbolic dispersion
-157  1.045268E+001
-158  1.001739E+001
-159  6.842896E+000 warning: hyperbolic dispersion
-160  5.493717E+000 warning: hyperbolic dispersion
-161  1.629034E+001
-162  1.434352E+001
-163  1.086684E+000 warning: hyperbolic dispersion
-164  2.802850E+000 warning: hyperbolic dispersion
-165 -5.340714E+000
-166 -7.790584E+000
-167 -9.648791E+000 warning: hyperbolic dispersion
-168 -9.185493E+000 warning: hyperbolic dispersion
-169  5.529739E+000
-170  5.694415E+000
-171 -2.655975E+000
-172 -4.398483E+000
-173 -3.299990E+001
-174 -3.194736E+001
-175 -5.151488E+000 warning: hyperbolic dispersion
-176  1.831038E+001
-177  4.685081E-001 warning: hyperbolic dispersion
-178  3.928181E+000
-179 -4.602049E+001
-180 -3.627334E+001
-181  8.048129E+001
-182  3.875297E+001
-183  8.048265E+000 warning: hyperbolic dispersion
-184  5.019945E+000 warning: hyperbolic dispersion
-185  2.486540E+000 warning: hyperbolic dispersion
-186  3.291200E+000 warning: hyperbolic dispersion
-187  1.559257E+001
-188  1.300968E+001
-189  2.513475E+000 warning: hyperbolic dispersion
-190 -1.382288E+001
-191 -2.959232E+000
-192 -3.508742E+001
-193 -1.649251E+001 warning: hyperbolic dispersion
-194 -2.292687E+001 warning: hyperbolic dispersion
-195  3.300994E+000 warning: hyperbolic dispersion
-196 -7.820904E-001 warning: hyperbolic dispersion
-197 -1.625405E+002
-198 -8.411922E+001 warning: hyperbolic dispersion
-199 -7.251413E+001 warning: hyperbolic dispersion
-200  6.968686E+001
-201  5.712626E+000 warning: hyperbolic dispersion
-202  6.293598E+000 warning: hyperbolic dispersion
-203  1.050172E+001 warning: hyperbolic dispersion
-204  1.054494E+001 warning: hyperbolic dispersion
-205 -1.000952E+001
-206 -7.136417E+000
-207  1.564483E+001
-208  2.179491E+001
-209  2.569517E+001 warning: hyperbolic dispersion
-210 -1.501548E+001 warning: hyperbolic dispersion
-211  2.418839E+001
-212  2.574678E+001
-213  1.423803E+001
-214  1.463564E+001
-215  3.319137E+000 warning: hyperbolic dispersion
-216 -5.593395E+000 warning: hyperbolic dispersion
-217  2.130963E+001
-218  2.142686E+001
-219  2.769900E+000 warning: hyperbolic dispersion
-220  1.227060E+000 warning: hyperbolic dispersion
-221  8.216541E+000 warning: hyperbolic dispersion
-222  3.139703E+000 warning: hyperbolic dispersion
-223  1.477546E+001
-224  1.514334E+001
-225 -6.634001E+000
-226 -6.620237E+000
-227 -1.191938E+001
-228 -1.162992E+001
-229 -1.932856E+002
-230 -1.189475E+002 warning: hyperbolic dispersion
-231 -4.922556E+001 warning: hyperbolic dispersion
-232 -5.042012E+001 warning: hyperbolic dispersion
-233  6.220555E+000 warning: hyperbolic dispersion
-234  4.528161E+000 warning: hyperbolic dispersion
-235  4.505532E+000 warning: hyperbolic dispersion
-236 -5.921219E+000 warning: hyperbolic dispersion
-237 -6.842561E+000
-238 -6.195576E+000
-239 -1.149088E+001
-240 -7.172295E+000
-241  9.638956E+000 warning: hyperbolic dispersion
-242  1.153258E+001 warning: hyperbolic dispersion
-243  1.143663E+001 warning: hyperbolic dispersion
-244  1.071511E+001 warning: hyperbolic dispersion
-245 -1.322949E+001
-246 -1.243946E+001
-247 -3.686471E+001 warning: hyperbolic dispersion
-248 -3.780358E+001 warning: hyperbolic dispersion
-249  1.113361E+001 warning: hyperbolic dispersion
-250  1.008254E+001 warning: hyperbolic dispersion
-251  4.243212E+000 warning: hyperbolic dispersion
-252  4.256069E+000 warning: hyperbolic dispersion
-253 -1.586452E+001 warning: hyperbolic dispersion
-254 -1.776723E+001 warning: hyperbolic dispersion
-255  3.010013E+000
-256  3.035640E+000
-257 -4.150397E+000
-258 -4.889812E+000
-259 -4.945771E+000 warning: hyperbolic dispersion
-260 -4.723385E+000 warning: hyperbolic dispersion
-261  1.229754E+001 warning: hyperbolic dispersion
-262  9.298877E+000 warning: hyperbolic dispersion
-263  8.704322E+000
-264  8.919632E+000
-265  3.903343E+000
-266  3.886730E+000
-267 -1.780737E+001
-268 -1.735708E+001
-269  3.709922E+001 warning: hyperbolic dispersion
-270  2.779273E+001 warning: hyperbolic dispersion
-271 -2.278720E+001 warning: hyperbolic dispersion
-272 -2.285972E+001 warning: hyperbolic dispersion
-273 -2.489303E+002
-274 -6.450203E+002
-275  5.784741E+002
-276  3.017851E+002
-277 -5.400408E+000 warning: hyperbolic dispersion
-278 -5.857585E+000 warning: hyperbolic dispersion
-279  5.776659E+000 warning: hyperbolic dispersion
-280  5.318767E+000 warning: hyperbolic dispersion
-281 -1.173150E+001 warning: hyperbolic dispersion
-282 -1.148898E+001 warning: hyperbolic dispersion
-283 -1.957991E+001
-284 -1.938062E+001
-285  1.631130E+001
-286  1.608077E+001
-287 -5.741268E+001
-288 -5.469301E+001
-289  3.746231E+001
-290  4.928259E+001
-291 -1.348977E+001 warning: hyperbolic dispersion
-292 -1.374216E+001 warning: hyperbolic dispersion
-293 -1.867608E+001 warning: hyperbolic dispersion
-294 -1.843306E+001 warning: hyperbolic dispersion
-295 -1.051210E+000
-296 -9.069066E-001
-297 -1.155894E+001
-298 -1.205496E+001
-299 -4.224443E+000 warning: hyperbolic dispersion
-300 -5.692687E+000 warning: hyperbolic dispersion
-301  9.718198E+000 warning: hyperbolic dispersion
-302  9.655984E+000 warning: hyperbolic dispersion
-303 -1.150609E+001 warning: hyperbolic dispersion
-304 -1.159538E+001 warning: hyperbolic dispersion
-305 -4.069053E+000 warning: hyperbolic dispersion
-306 -3.981729E+000 warning: hyperbolic dispersion
-307  8.214297E+000 warning: hyperbolic dispersion
-308  8.230427E+000 warning: hyperbolic dispersion
-309 -3.075519E+000 warning: hyperbolic dispersion
-310 -2.208543E+000 warning: hyperbolic dispersion
-311  9.168617E+000
-312  9.976055E+000
-313  1.608886E+001
-314  1.664194E+001
-315  7.774831E+000
-316  7.826772E+000
-317  1.276443E+001 warning: hyperbolic dispersion
-318  1.786747E+001 warning: hyperbolic dispersion
-319  3.103475E+001
-320  3.449593E+001
-321 -8.555085E-001 warning: hyperbolic dispersion
-322  4.217078E-001 warning: hyperbolic dispersion
-323 -2.396879E+000 warning: hyperbolic dispersion
-324 -4.081715E+000 warning: hyperbolic dispersion
-325  3.363498E+000
-326  3.312094E+000
-327 -1.325213E+001
-328 -1.292624E+001
-329  6.221687E+000 warning: hyperbolic dispersion
-330  6.099707E+000 warning: hyperbolic dispersion
-331 -8.638347E-001
-332 -1.183591E+000
-333 -7.598042E+000
-334  2.256588E+001 warning: hyperbolic dispersion
-335  1.920232E+001 warning: hyperbolic dispersion
-336 -2.933318E+001 warning: hyperbolic dispersion
-337 -9.215424E+000
-338 -9.925530E+000
-339  3.354457E+001
-340  3.124502E+001
-341  8.839896E+000 warning: hyperbolic dispersion
-342  9.043766E+000 warning: hyperbolic dispersion
-343 -1.424929E+002
-344  1.284923E+002 warning: hyperbolic dispersion
-345 -5.320645E+001 warning: hyperbolic dispersion
-346 -2.325190E+001 warning: hyperbolic dispersion
-347 -8.085567E+000 warning: hyperbolic dispersion
-348 -7.716480E+000 warning: hyperbolic dispersion
-349  1.348290E+001
-350  1.403039E+001
-351 -4.918090E+000 warning: hyperbolic dispersion
-352  3.206648E+000
-353  6.513564E+000 warning: hyperbolic dispersion
-354  6.548794E+000 warning: hyperbolic dispersion
-355  1.410893E+001
-356  1.368864E+001
-357  2.214705E+000 warning: hyperbolic dispersion
-358  1.979469E+000 warning: hyperbolic dispersion
-359 -1.235702E+001
-360 -1.362314E+001
-361 -5.799157E+000 warning: hyperbolic dispersion
-362  1.038534E+001
-363  3.876442E+000 warning: hyperbolic dispersion
-364  4.054484E+000 warning: hyperbolic dispersion
-365  7.940100E+000
-366  9.199684E+000
-367  3.608857E+000 warning: hyperbolic dispersion
-368  2.138727E+000 warning: hyperbolic dispersion
-369  2.377807E+001 warning: hyperbolic dispersion
-370 -1.129388E+001 warning: hyperbolic dispersion
-371 -6.865036E+000 warning: hyperbolic dispersion
-372  4.601104E+000 warning: hyperbolic dispersion
-373  2.229061E+001 warning: hyperbolic dispersion
-374 -1.898522E+001 warning: hyperbolic dispersion
-375  7.295659E+000 warning: hyperbolic dispersion
-376 -2.079151E+001 warning: hyperbolic dispersion
-377  3.145742E+000 warning: hyperbolic dispersion
-378  3.005942E+000 warning: hyperbolic dispersion
-379 -5.138887E+000 warning: hyperbolic dispersion
-380 -4.800715E+000 warning: hyperbolic dispersion
-381  3.763530E+000 warning: hyperbolic dispersion
-382  2.933371E+000 warning: hyperbolic dispersion
-383 -4.037301E+000 warning: hyperbolic dispersion
-384  3.324133E+000
-385 -4.193646E+000 warning: hyperbolic dispersion
-386 -3.865630E+000 warning: hyperbolic dispersion
-387  5.732997E+000 warning: hyperbolic dispersion
-388  1.135691E+001 warning: hyperbolic dispersion
-389 -1.376977E+001
-390 -1.330707E+001
-391 -1.349731E+001 warning: hyperbolic dispersion
-392 -1.397859E+001 warning: hyperbolic dispersion
-393 -1.569678E+001 warning: hyperbolic dispersion
-394 -1.611734E+001 warning: hyperbolic dispersion
-395 -7.984235E+000 warning: hyperbolic dispersion
-396 -7.897105E+000 warning: hyperbolic dispersion
-397 -2.766711E+000 warning: hyperbolic dispersion
-398 -4.402878E+000 warning: hyperbolic dispersion
-399  6.712418E+000 warning: hyperbolic dispersion
-400  5.303422E+000 warning: hyperbolic dispersion
-401 -3.988563E+000 warning: hyperbolic dispersion
-402 -3.435114E+000 warning: hyperbolic dispersion
-403  6.453630E+000
-404  6.983425E+000
-405  6.555386E+000
-406  6.697767E+000
-407 -2.230134E+000 warning: hyperbolic dispersion
-408 -2.910000E+000 warning: hyperbolic dispersion
-409 -8.738283E+000 warning: hyperbolic dispersion
-410 -8.788630E+000 warning: hyperbolic dispersion
-411  1.406349E+001 warning: hyperbolic dispersion
-412  1.034360E+001 warning: hyperbolic dispersion
-413  2.011486E+001 warning: hyperbolic dispersion
-414  2.010056E+001 warning: hyperbolic dispersion
-415 -1.080194E+001 warning: hyperbolic dispersion
-416 -1.025802E+001 warning: hyperbolic dispersion
-417  3.256841E+001
-418  3.444408E+001
-419 -5.144934E+000 warning: hyperbolic dispersion
-420 -5.201974E+000 warning: hyperbolic dispersion
-421  1.862027E+001
-422  2.233048E+001
-423 -8.781271E+000 warning: hyperbolic dispersion
-424 -1.104559E+001 warning: hyperbolic dispersion
-425 -1.306018E+001 warning: hyperbolic dispersion
-426  1.607903E+001
-427  2.943245E+001
-428  2.932818E+001
+  1   1  3.324629E-001
+  2   2  2.961741E-001
+  3   3  3.820195E-001
+  4   4  3.591249E-001
+  5   5  3.390067E-001
+  6   6  3.565385E-001
+  7   7  3.404034E-001
+  8   7  3.404458E-001
+  9   8  2.776029E-001
+ 10   9  3.833276E-001
+ 11  10  2.633405E-001
+ 12  11  3.074657E-001
+ 13  12  3.546768E-001
+ 14  13  3.701522E-001
+ 15  14  3.251134E-001
+ 16  15  3.257963E-001
+ 17  16  3.108338E-001
+ 18  17  9.306866E-002
+ 19  18  4.995587E-001
+ 20  19  3.650965E-001
+ 21  20  3.182852E-001
+ 22  21  2.532365E-001
+ 23  22  3.903081E-001
+ 24  23  3.394544E-001
+ 25  24  9.383015E-001
+ 26  24  9.383113E-001
+ 27  25 -4.028283E+000
+ 28  26 -3.958988E+000
+ 29  27  2.797038E+000 warning: hyperbolic dispersion
+ 30  27  2.631618E+000 warning: hyperbolic dispersion
+ 31  28 -4.923761E+000 warning: hyperbolic dispersion
+ 32  29 -4.794190E+000 warning: hyperbolic dispersion
+ 33  30  4.341239E+000 warning: hyperbolic dispersion
+ 34  31  4.423507E+000 warning: hyperbolic dispersion
+ 35  32  1.666445E+000
+ 36  32  1.861342E+000
+ 37  33  3.440997E+000
+ 38  34  3.450812E+000
+ 39  35  3.617830E+000 warning: hyperbolic dispersion
+ 40  36  2.307357E+000 warning: hyperbolic dispersion
+ 41  37 -4.291538E+000 warning: hyperbolic dispersion
+ 42  38 -2.950367E+000 warning: hyperbolic dispersion
+ 43  39 -2.197121E-001 warning: hyperbolic dispersion
+ 44  40  2.060038E+000
+ 45  41 -1.425429E+000 warning: hyperbolic dispersion
+ 46  42 -1.204190E+000 warning: hyperbolic dispersion
+ 47  43 -6.262204E-001 warning: hyperbolic dispersion
+ 48  44  9.913725E-001
+ 49  45 -1.014490E+000 warning: hyperbolic dispersion
+ 50  46  1.026472E+000
+ 51  47 -1.996636E-001 warning: hyperbolic dispersion
+ 52  48  3.983650E-001
+ 53  49  3.335841E-001
+ 54  50  3.983045E-001
+ 55  51  3.985684E-001
+ 56  52  4.694311E-001
+ 57  53  1.610164E+000 warning: hyperbolic dispersion
+ 58  54  1.317357E+000 warning: hyperbolic dispersion
+ 59  55  2.955246E-001
+ 60  56  5.883619E-001
+ 61  57  2.125831E+000
+ 62  58  2.179640E+000
+ 63  59  1.143750E+000 warning: hyperbolic dispersion
+ 64  60  2.142054E+000 warning: hyperbolic dispersion
+ 65  61 -1.258652E+000 warning: hyperbolic dispersion
+ 66  62 -9.203930E-001 warning: hyperbolic dispersion
+ 67  63  1.228997E+000
+ 68  64  1.396156E+000
+ 69  65  5.800552E-001
+ 70  66  2.067729E-001 warning: hyperbolic dispersion
+ 71  67  1.145937E+000
+ 72  68  8.556064E-001
+ 73  69  1.667105E+000 warning: hyperbolic dispersion
+ 74  70  2.129379E+000 warning: hyperbolic dispersion
+ 75  71 -1.309088E+000 warning: hyperbolic dispersion
+ 76  72  1.233603E+000
+ 77  73  2.604598E+000
+ 78  74  2.826485E+000
+ 79  75 -2.797516E+000
+ 80  76 -5.638822E+000
+ 81  77 -4.314456E+000 warning: hyperbolic dispersion
+ 82  78 -8.779851E-001
+ 83  79 -4.179829E-001 warning: hyperbolic dispersion
+ 84  80 -2.827768E+000 warning: hyperbolic dispersion
+ 85  81 -3.283570E+000 warning: hyperbolic dispersion
+ 86  82 -3.385758E+000 warning: hyperbolic dispersion
+ 87  83  4.731607E+000 warning: hyperbolic dispersion
+ 88  84  1.065423E+000 warning: hyperbolic dispersion
+ 89  85  4.541234E+000 warning: hyperbolic dispersion
+ 90  86 -4.557179E+000 warning: hyperbolic dispersion
+ 91  87  6.777310E+000
+ 92  88  3.862228E+000 warning: hyperbolic dispersion
+ 93  89  4.244792E+000
+ 94  90  1.048093E+001
+ 95  91  4.087046E+000
+ 96  91  4.139241E+000
+ 97  92  6.740385E+000 warning: hyperbolic dispersion
+ 98  93  6.527577E+000 warning: hyperbolic dispersion
+ 99  94  3.264147E+000 warning: hyperbolic dispersion
+100  95  4.247526E+000 warning: hyperbolic dispersion
+101  96  8.826017E+000
+102  97  8.112038E+000
+103  98 -4.727221E+001
+104  99 -6.090414E+001
+105 100  2.978012E+001 warning: hyperbolic dispersion
+106 101 -5.424324E+001 warning: hyperbolic dispersion
+107 102 -2.433124E+001 warning: hyperbolic dispersion
+108 103 -1.790320E+001 warning: hyperbolic dispersion
+109 104  1.116990E+000
+110 105  8.193817E-001
+111 106  4.741143E+000
+112 107  4.465046E+000
+113 108 -6.502924E+000 warning: hyperbolic dispersion
+114 109 -7.748128E+000 warning: hyperbolic dispersion
+115 110 -6.547099E+000 warning: hyperbolic dispersion
+116 111 -4.784724E+000 warning: hyperbolic dispersion
+117 112  1.273315E+001
+118 113  1.266020E+001
+119 114 -4.364674E+000
+120 115 -4.151417E+000
+121 116  3.441382E+000 warning: hyperbolic dispersion
+122 117  3.335469E+000 warning: hyperbolic dispersion
+123 118 -1.445543E+001
+124 119 -1.254352E+001
+125 120 -1.672154E+000 warning: hyperbolic dispersion
+126 120 -1.816464E+000 warning: hyperbolic dispersion
+127 121 -4.569321E+000 warning: hyperbolic dispersion
+128 122 -4.519016E+000 warning: hyperbolic dispersion
+129 123 -1.394084E+001 warning: hyperbolic dispersion
+130 124 -1.366799E+001 warning: hyperbolic dispersion
+131 125  5.456188E+000 warning: hyperbolic dispersion
+132 126  3.536310E+000 warning: hyperbolic dispersion
+133 127  1.530035E+001 warning: hyperbolic dispersion
+134 128  1.511073E+001 warning: hyperbolic dispersion
+135 129 -1.286079E+001 warning: hyperbolic dispersion
+136 130 -1.220388E+001 warning: hyperbolic dispersion
+137 131  6.922988E+000 warning: hyperbolic dispersion
+138 132  6.330681E+000 warning: hyperbolic dispersion
+139 133 -4.048183E+000 warning: hyperbolic dispersion
+140 134 -3.531660E+000 warning: hyperbolic dispersion
+141 135 -5.894827E+000 warning: hyperbolic dispersion
+142 136 -5.720918E+000 warning: hyperbolic dispersion
+143 137  4.940366E+000 warning: hyperbolic dispersion
+144 138  1.800169E+000 warning: hyperbolic dispersion
+145 139  1.073048E+001 warning: hyperbolic dispersion
+146 140 -6.438056E+000 warning: hyperbolic dispersion
+147 141  3.006716E+001 warning: hyperbolic dispersion
+148 142  2.702497E+001 warning: hyperbolic dispersion
+149 143 -2.039232E+001 warning: hyperbolic dispersion
+150 144 -5.865918E+001 warning: hyperbolic dispersion
+151 145 -8.949557E+000
+152 146 -9.228458E+000
+153 147 -5.889084E+000 warning: hyperbolic dispersion
+154 148 -5.254705E+000 warning: hyperbolic dispersion
+155 149  4.035661E+000 warning: hyperbolic dispersion
+156 150  3.904413E+000 warning: hyperbolic dispersion
+157 151  1.045268E+001
+158 152  1.001739E+001
+159 153  6.842896E+000 warning: hyperbolic dispersion
+160 154  5.493717E+000 warning: hyperbolic dispersion
+161 155  1.629034E+001
+162 156  1.434352E+001
+163 157  1.086684E+000 warning: hyperbolic dispersion
+164 158  2.802850E+000 warning: hyperbolic dispersion
+165 159 -5.340714E+000
+166 160 -7.790584E+000
+167 161 -9.648791E+000 warning: hyperbolic dispersion
+168 162 -9.185493E+000 warning: hyperbolic dispersion
+169 163  5.529739E+000
+170 164  5.694415E+000
+171 165 -2.655975E+000
+172 166 -4.398483E+000
+173 167 -3.299990E+001
+174 168 -3.194736E+001
+175 169 -5.151488E+000 warning: hyperbolic dispersion
+176 170  1.831038E+001
+177 171  4.685081E-001 warning: hyperbolic dispersion
+178 172  3.928181E+000
+179 173 -4.602049E+001
+180 174 -3.627334E+001
+181 175  8.048129E+001
+182 176  3.875297E+001
+183 177  8.048265E+000 warning: hyperbolic dispersion
+184 178  5.019945E+000 warning: hyperbolic dispersion
+185 179  2.486540E+000 warning: hyperbolic dispersion
+186 180  3.291200E+000 warning: hyperbolic dispersion
+187 181  1.559257E+001
+188 182  1.300968E+001
+189 183  2.513475E+000 warning: hyperbolic dispersion
+190 184 -1.382288E+001
+191 185 -2.959232E+000
+192 186 -3.508742E+001
+193 187 -1.649251E+001 warning: hyperbolic dispersion
+194 188 -2.292687E+001 warning: hyperbolic dispersion
+195 189  3.300994E+000 warning: hyperbolic dispersion
+196 190 -7.820904E-001 warning: hyperbolic dispersion
+197 191 -1.625405E+002
+198 192 -8.411922E+001 warning: hyperbolic dispersion
+199 193 -7.251413E+001 warning: hyperbolic dispersion
+200 194  6.968686E+001
+201 195  5.712626E+000 warning: hyperbolic dispersion
+202 196  6.293598E+000 warning: hyperbolic dispersion
+203 197  1.050172E+001 warning: hyperbolic dispersion
+204 198  1.054494E+001 warning: hyperbolic dispersion
+205 199 -1.000952E+001
+206 200 -7.136417E+000
+207 201  1.564483E+001
+208 202  2.179491E+001
+209 203  2.569517E+001 warning: hyperbolic dispersion
+210 204 -1.501548E+001 warning: hyperbolic dispersion
+211 205  2.418839E+001
+212 205  2.574678E+001
+213 206  1.423803E+001
+214 206  1.463564E+001
+215 207  3.319137E+000 warning: hyperbolic dispersion
+216 208 -5.593395E+000 warning: hyperbolic dispersion
+217 209  2.130963E+001
+218 210  2.142686E+001
+219 211  2.769900E+000 warning: hyperbolic dispersion
+220 212  1.227060E+000 warning: hyperbolic dispersion
+221 213  8.216541E+000 warning: hyperbolic dispersion
+222 214  3.139703E+000 warning: hyperbolic dispersion
+223 215  1.477546E+001
+224 216  1.514334E+001
+225 217 -6.634001E+000
+226 218 -6.620237E+000
+227 219 -1.191938E+001
+228 219 -1.162992E+001
+229 220 -1.932856E+002
+230 221 -1.189475E+002 warning: hyperbolic dispersion
+231 222 -4.922556E+001 warning: hyperbolic dispersion
+232 222 -5.042012E+001 warning: hyperbolic dispersion
+233 223  6.220555E+000 warning: hyperbolic dispersion
+234 224  4.528161E+000 warning: hyperbolic dispersion
+235 225  4.505532E+000 warning: hyperbolic dispersion
+236 226 -5.921219E+000 warning: hyperbolic dispersion
+237 227 -6.842561E+000
+238 228 -6.195576E+000
+239 229 -1.149088E+001
+240 230 -7.172295E+000
+241 231  9.638956E+000 warning: hyperbolic dispersion
+242 232  1.153258E+001 warning: hyperbolic dispersion
+243 233  1.143663E+001 warning: hyperbolic dispersion
+244 234  1.071511E+001 warning: hyperbolic dispersion
+245 235 -1.322949E+001
+246 236 -1.243946E+001
+247 237 -3.686471E+001 warning: hyperbolic dispersion
+248 238 -3.780358E+001 warning: hyperbolic dispersion
+249 239  1.113361E+001 warning: hyperbolic dispersion
+250 240  1.008254E+001 warning: hyperbolic dispersion
+251 241  4.243212E+000 warning: hyperbolic dispersion
+252 242  4.256069E+000 warning: hyperbolic dispersion
+253 243 -1.586452E+001 warning: hyperbolic dispersion
+254 244 -1.776723E+001 warning: hyperbolic dispersion
+255 245  3.010013E+000
+256 246  3.035640E+000
+257 247 -4.150397E+000
+258 248 -4.889812E+000
+259 249 -4.945771E+000 warning: hyperbolic dispersion
+260 250 -4.723385E+000 warning: hyperbolic dispersion
+261 251  1.229754E+001 warning: hyperbolic dispersion
+262 252  9.298877E+000 warning: hyperbolic dispersion
+263 253  8.704322E+000
+264 254  8.919632E+000
+265 255  3.903343E+000
+266 256  3.886730E+000
+267 257 -1.780737E+001
+268 258 -1.735708E+001
+269 259  3.709922E+001 warning: hyperbolic dispersion
+270 260  2.779273E+001 warning: hyperbolic dispersion
+271 261 -2.278720E+001 warning: hyperbolic dispersion
+272 262 -2.285972E+001 warning: hyperbolic dispersion
+273 263 -2.489303E+002
+274 264 -6.450203E+002
+275 265  5.784741E+002
+276 266  3.017851E+002
+277 267 -5.400408E+000 warning: hyperbolic dispersion
+278 268 -5.857585E+000 warning: hyperbolic dispersion
+279 269  5.776659E+000 warning: hyperbolic dispersion
+280 270  5.318767E+000 warning: hyperbolic dispersion
+281 271 -1.173150E+001 warning: hyperbolic dispersion
+282 272 -1.148898E+001 warning: hyperbolic dispersion
+283 273 -1.957991E+001
+284 274 -1.938062E+001
+285 275  1.631130E+001
+286 276  1.608077E+001
+287 277 -5.741268E+001
+288 278 -5.469301E+001
+289 279  3.746231E+001
+290 280  4.928259E+001
+291 281 -1.348977E+001 warning: hyperbolic dispersion
+292 282 -1.374216E+001 warning: hyperbolic dispersion
+293 283 -1.867608E+001 warning: hyperbolic dispersion
+294 284 -1.843306E+001 warning: hyperbolic dispersion
+295 285 -1.051210E+000
+296 286 -9.069066E-001
+297 287 -1.155894E+001
+298 288 -1.205496E+001
+299 289 -4.224443E+000 warning: hyperbolic dispersion
+300 290 -5.692687E+000 warning: hyperbolic dispersion
+301 291  9.718198E+000 warning: hyperbolic dispersion
+302 292  9.655984E+000 warning: hyperbolic dispersion
+303 293 -1.150609E+001 warning: hyperbolic dispersion
+304 294 -1.159538E+001 warning: hyperbolic dispersion
+305 295 -4.069053E+000 warning: hyperbolic dispersion
+306 296 -3.981729E+000 warning: hyperbolic dispersion
+307 297  8.214297E+000 warning: hyperbolic dispersion
+308 298  8.230427E+000 warning: hyperbolic dispersion
+309 299 -3.075519E+000 warning: hyperbolic dispersion
+310 300 -2.208543E+000 warning: hyperbolic dispersion
+311 301  9.168617E+000
+312 302  9.976055E+000
+313 303  1.608886E+001
+314 304  1.664194E+001
+315 305  7.774831E+000
+316 305  7.826772E+000
+317 306  1.276443E+001 warning: hyperbolic dispersion
+318 306  1.786747E+001 warning: hyperbolic dispersion
+319 307  3.103475E+001
+320 307  3.449593E+001
+321 308 -8.555085E-001 warning: hyperbolic dispersion
+322 309  4.217078E-001 warning: hyperbolic dispersion
+323 310 -2.396879E+000 warning: hyperbolic dispersion
+324 311 -4.081715E+000 warning: hyperbolic dispersion
+325 312  3.363498E+000
+326 313  3.312094E+000
+327 314 -1.325213E+001
+328 315 -1.292624E+001
+329 316  6.221687E+000 warning: hyperbolic dispersion
+330 317  6.099707E+000 warning: hyperbolic dispersion
+331 318 -8.638347E-001
+332 319 -1.183591E+000
+333 320 -7.598042E+000
+334 321  2.256588E+001 warning: hyperbolic dispersion
+335 322  1.920232E+001 warning: hyperbolic dispersion
+336 323 -2.933318E+001 warning: hyperbolic dispersion
+337 324 -9.215424E+000
+338 325 -9.925530E+000
+339 326  3.354457E+001
+340 327  3.124502E+001
+341 328  8.839896E+000 warning: hyperbolic dispersion
+342 329  9.043766E+000 warning: hyperbolic dispersion
+343 330 -1.424929E+002
+344 331  1.284923E+002 warning: hyperbolic dispersion
+345 332 -5.320645E+001 warning: hyperbolic dispersion
+346 333 -2.325190E+001 warning: hyperbolic dispersion
+347 334 -8.085567E+000 warning: hyperbolic dispersion
+348 335 -7.716480E+000 warning: hyperbolic dispersion
+349 336  1.348290E+001
+350 337  1.403039E+001
+351 338 -4.918090E+000 warning: hyperbolic dispersion
+352 339  3.206648E+000
+353 340  6.513564E+000 warning: hyperbolic dispersion
+354 341  6.548794E+000 warning: hyperbolic dispersion
+355 342  1.410893E+001
+356 343  1.368864E+001
+357 344  2.214705E+000 warning: hyperbolic dispersion
+358 345  1.979469E+000 warning: hyperbolic dispersion
+359 346 -1.235702E+001
+360 347 -1.362314E+001
+361 348 -5.799157E+000 warning: hyperbolic dispersion
+362 349  1.038534E+001
+363 350  3.876442E+000 warning: hyperbolic dispersion
+364 351  4.054484E+000 warning: hyperbolic dispersion
+365 352  7.940100E+000
+366 353  9.199684E+000
+367 354  3.608857E+000 warning: hyperbolic dispersion
+368 355  2.138727E+000 warning: hyperbolic dispersion
+369 356  2.377807E+001 warning: hyperbolic dispersion
+370 357 -1.129388E+001 warning: hyperbolic dispersion
+371 358 -6.865036E+000 warning: hyperbolic dispersion
+372 359  4.601104E+000 warning: hyperbolic dispersion
+373 360  2.229061E+001 warning: hyperbolic dispersion
+374 361 -1.898522E+001 warning: hyperbolic dispersion
+375 362  7.295659E+000 warning: hyperbolic dispersion
+376 363 -2.079151E+001 warning: hyperbolic dispersion
+377 364  3.145742E+000 warning: hyperbolic dispersion
+378 365  3.005942E+000 warning: hyperbolic dispersion
+379 366 -5.138887E+000 warning: hyperbolic dispersion
+380 367 -4.800715E+000 warning: hyperbolic dispersion
+381 368  3.763530E+000 warning: hyperbolic dispersion
+382 369  2.933371E+000 warning: hyperbolic dispersion
+383 370 -4.037301E+000 warning: hyperbolic dispersion
+384 371  3.324133E+000
+385 372 -4.193646E+000 warning: hyperbolic dispersion
+386 373 -3.865630E+000 warning: hyperbolic dispersion
+387 374  5.732997E+000 warning: hyperbolic dispersion
+388 375  1.135691E+001 warning: hyperbolic dispersion
+389 376 -1.376977E+001
+390 377 -1.330707E+001
+391 378 -1.349731E+001 warning: hyperbolic dispersion
+392 379 -1.397859E+001 warning: hyperbolic dispersion
+393 380 -1.569678E+001 warning: hyperbolic dispersion
+394 381 -1.611734E+001 warning: hyperbolic dispersion
+395 382 -7.984235E+000 warning: hyperbolic dispersion
+396 383 -7.897105E+000 warning: hyperbolic dispersion
+397 384 -2.766711E+000 warning: hyperbolic dispersion
+398 385 -4.402878E+000 warning: hyperbolic dispersion
+399 386  6.712418E+000 warning: hyperbolic dispersion
+400 387  5.303422E+000 warning: hyperbolic dispersion
+401 388 -3.988563E+000 warning: hyperbolic dispersion
+402 389 -3.435114E+000 warning: hyperbolic dispersion
+403 390  6.453630E+000
+404 390  6.983425E+000
+405 391  6.555386E+000
+406 392  6.697767E+000
+407 393 -2.230134E+000 warning: hyperbolic dispersion
+408 394 -2.910000E+000 warning: hyperbolic dispersion
+409 395 -8.738283E+000 warning: hyperbolic dispersion
+410 396 -8.788630E+000 warning: hyperbolic dispersion
+411 397  1.406349E+001 warning: hyperbolic dispersion
+412 398  1.034360E+001 warning: hyperbolic dispersion
+413 399  2.011486E+001 warning: hyperbolic dispersion
+414 399  2.010056E+001 warning: hyperbolic dispersion
+415 400 -1.080194E+001 warning: hyperbolic dispersion
+416 401 -1.025802E+001 warning: hyperbolic dispersion
+417 402  3.256841E+001
+418 403  3.444408E+001
+419 404 -5.144934E+000 warning: hyperbolic dispersion
+420 405 -5.201974E+000 warning: hyperbolic dispersion
+421 406  1.862027E+001
+422 407  2.233048E+001
+423 408 -8.781271E+000 warning: hyperbolic dispersion
+424 409 -1.104559E+001 warning: hyperbolic dispersion
+425 410 -1.306018E+001 warning: hyperbolic dispersion
+426 411  1.607903E+001
+427 412  2.943245E+001
+428 413  2.932818E+001
 # KP: 3 NBCDER: 428 NEMAX: 428
-  1  3.383007E-001
-  2  3.370137E-001
-  3  3.477991E-001
-  4  3.425011E-001
-  5  3.554535E-001
-  6  3.504665E-001
-  7  3.404280E-001
-  8  3.405069E-001
-  9  3.091515E-001
- 10  3.549901E-001
- 11  2.971459E-001
- 12  3.254317E-001
- 13  3.422322E-001
- 14  3.455589E-001
- 15  3.258764E-001
- 16  3.253087E-001
- 17  3.161279E-001
- 18  3.106949E-001
- 19  3.485678E-001
- 20  3.591615E-001
- 21  3.218358E-001
- 22  3.148738E-001
- 23  3.321885E-001
- 24  3.403957E-001
- 25  9.366658E-001
- 26  9.366900E-001
- 27 -1.381951E+000
- 28 -1.380735E+000
- 29  2.159305E+000 warning: hyperbolic dispersion
- 30  2.127329E+000 warning: hyperbolic dispersion
- 31 -1.957281E+000 warning: hyperbolic dispersion
- 32 -1.972438E+000 warning: hyperbolic dispersion
- 33  2.205525E+000 warning: hyperbolic dispersion
- 34  2.194365E+000 warning: hyperbolic dispersion
- 35  7.492079E-001
- 36  7.930530E-001
- 37 -6.987402E-001 warning: hyperbolic dispersion
- 38 -7.745852E-001 warning: hyperbolic dispersion
- 39  1.285085E+000 warning: hyperbolic dispersion
- 40  1.280349E+000 warning: hyperbolic dispersion
- 41  9.056032E-001 warning: hyperbolic dispersion
- 42 -3.105228E-001 warning: hyperbolic dispersion
- 43 -1.190012E+000 warning: hyperbolic dispersion
- 44 -1.578052E+000 warning: hyperbolic dispersion
- 45 -9.558626E-001 warning: hyperbolic dispersion
- 46 -9.426313E-001 warning: hyperbolic dispersion
- 47 -6.501115E-001 warning: hyperbolic dispersion
- 48  8.461837E-001
- 49  1.046331E+000
- 50  1.056877E+000
- 51  1.621060E-001
- 52  2.236885E-001
- 53  3.624169E-001
- 54  3.726785E-001
- 55  5.319569E-001
- 56  4.758059E-001
- 57  3.599743E-001 warning: hyperbolic dispersion
- 58 -2.480315E-001 warning: hyperbolic dispersion
- 59  3.679630E-001
- 60  3.848132E-001
- 61  1.277968E+000
- 62  1.247130E+000
- 63 -2.748567E-001 warning: hyperbolic dispersion
- 64 -5.465798E-001 warning: hyperbolic dispersion
- 65 -4.431781E-001 warning: hyperbolic dispersion
- 66 -7.984996E-001 warning: hyperbolic dispersion
- 67 -8.268649E-001 warning: hyperbolic dispersion
- 68 -6.715363E-001 warning: hyperbolic dispersion
- 69  7.069790E-001
- 70 -2.301935E-001 warning: hyperbolic dispersion
- 71  8.619956E-001
- 72  1.331980E+000
- 73  7.220340E-001 warning: hyperbolic dispersion
- 74  7.442148E-001 warning: hyperbolic dispersion
- 75 -5.696832E-001 warning: hyperbolic dispersion
- 76  4.442435E-001
- 77  1.783393E+000
- 78  1.871852E+000
- 79  2.049796E+000 warning: hyperbolic dispersion
- 80  1.943963E+000 warning: hyperbolic dispersion
- 81 -1.043501E+000
- 82 -9.485618E-001
- 83  1.924842E+000 warning: hyperbolic dispersion
- 84  6.202820E+000 warning: hyperbolic dispersion
- 85 -5.694976E+000 warning: hyperbolic dispersion
- 86  1.970148E+000 warning: hyperbolic dispersion
- 87  2.652718E+000 warning: hyperbolic dispersion
- 88  2.171874E+000 warning: hyperbolic dispersion
- 89 -2.179949E+000 warning: hyperbolic dispersion
- 90 -1.771822E+000 warning: hyperbolic dispersion
- 91 -1.625078E+000 warning: hyperbolic dispersion
- 92  2.246614E+000
- 93 -3.345708E+000 warning: hyperbolic dispersion
- 94 -2.909932E+000 warning: hyperbolic dispersion
- 95  2.582475E+000
- 96  2.579794E+000
- 97  3.255777E+000 warning: hyperbolic dispersion
- 98  3.148187E+000 warning: hyperbolic dispersion
- 99 -2.048754E+000 warning: hyperbolic dispersion
-100 -2.382800E+000 warning: hyperbolic dispersion
-101 -5.388309E+000 warning: hyperbolic dispersion
-102 -5.587504E+000 warning: hyperbolic dispersion
-103  2.450467E+000 warning: hyperbolic dispersion
-104  2.177151E+000 warning: hyperbolic dispersion
-105  5.008558E+000 warning: hyperbolic dispersion
-106  5.056745E+000 warning: hyperbolic dispersion
-107  3.942189E+000 warning: hyperbolic dispersion
-108  3.878991E+000 warning: hyperbolic dispersion
-109  2.242606E+000 warning: hyperbolic dispersion
-110  1.943691E+000 warning: hyperbolic dispersion
-111  4.446139E+000
-112  4.663164E+000
-113 -7.266032E+000 warning: hyperbolic dispersion
-114 -7.353152E+000 warning: hyperbolic dispersion
-115 -8.329206E+000 warning: hyperbolic dispersion
-116 -8.556268E+000 warning: hyperbolic dispersion
-117  6.068830E+000
-118  6.013056E+000
-119 -2.846646E+000
-120 -2.792458E+000
-121  4.207965E+000 warning: hyperbolic dispersion
-122  4.268966E+000 warning: hyperbolic dispersion
-123  1.091797E+000 warning: hyperbolic dispersion
-124 -6.631256E-001
-125 -4.055560E+000
-126 -4.071146E+000
-127  2.089478E+000 warning: hyperbolic dispersion
-128  2.240948E+000 warning: hyperbolic dispersion
-129 -2.080103E+000 warning: hyperbolic dispersion
-130 -2.018679E+000 warning: hyperbolic dispersion
-131 -2.306019E+001
-132 -2.017079E+001
-133 -2.487105E+001 warning: hyperbolic dispersion
-134 -2.129557E+001 warning: hyperbolic dispersion
-135 -1.839514E+001
-136  2.228248E+001 warning: hyperbolic dispersion
-137 -7.466251E+000 warning: hyperbolic dispersion
-138  3.733483E+001
-139  5.091316E+000 warning: hyperbolic dispersion
-140  4.919847E+000 warning: hyperbolic dispersion
-141 -5.905356E+000 warning: hyperbolic dispersion
-142 -6.149111E+000 warning: hyperbolic dispersion
-143 -2.388143E+000 warning: hyperbolic dispersion
-144 -2.802641E+000 warning: hyperbolic dispersion
-145 -4.396422E+000 warning: hyperbolic dispersion
-146 -4.465698E+000 warning: hyperbolic dispersion
-147  2.616650E+000 warning: hyperbolic dispersion
-148  2.464912E+000 warning: hyperbolic dispersion
-149 -1.038760E+001
-150 -9.973350E+000
-151  4.607790E+000 warning: hyperbolic dispersion
-152  4.782656E+000 warning: hyperbolic dispersion
-153  9.252909E+000
-154  8.344764E+000
-155  5.547059E+000 warning: hyperbolic dispersion
-156  5.807144E+000 warning: hyperbolic dispersion
-157  9.793259E+000 warning: hyperbolic dispersion
-158  9.085827E+000 warning: hyperbolic dispersion
-159 -4.214635E+000 warning: hyperbolic dispersion
-160 -3.115938E+000 warning: hyperbolic dispersion
-161 -3.631310E+000 warning: hyperbolic dispersion
-162 -3.596472E+000 warning: hyperbolic dispersion
-163 -3.549961E+000 warning: hyperbolic dispersion
-164 -3.420778E+000 warning: hyperbolic dispersion
-165 -3.106840E+000 warning: hyperbolic dispersion
-166 -2.885432E+000 warning: hyperbolic dispersion
-167 -5.475274E+000 warning: hyperbolic dispersion
-168 -5.398574E+000 warning: hyperbolic dispersion
-169  8.303434E+000 warning: hyperbolic dispersion
-170  8.551399E+000 warning: hyperbolic dispersion
-171  5.704654E+000 warning: hyperbolic dispersion
-172  6.911598E+000 warning: hyperbolic dispersion
-173 -4.561637E+000 warning: hyperbolic dispersion
-174 -8.032951E+000 warning: hyperbolic dispersion
-175  8.858419E-001
-176 -2.104268E+000 warning: hyperbolic dispersion
-177  2.580339E+000 warning: hyperbolic dispersion
-178  4.919976E+000 warning: hyperbolic dispersion
-179 -8.768402E+000 warning: hyperbolic dispersion
-180 -4.679061E+000 warning: hyperbolic dispersion
-181  1.088848E+001 warning: hyperbolic dispersion
-182  1.021411E+001 warning: hyperbolic dispersion
-183  3.834762E+000 warning: hyperbolic dispersion
-184  3.921424E+000 warning: hyperbolic dispersion
-185  3.319420E+000 warning: hyperbolic dispersion
-186  4.792121E+000 warning: hyperbolic dispersion
-187 -6.791770E+000 warning: hyperbolic dispersion
-188 -6.249756E+000 warning: hyperbolic dispersion
-189  6.377919E+000 warning: hyperbolic dispersion
-190  8.405587E+000 warning: hyperbolic dispersion
-191 -5.663908E+000 warning: hyperbolic dispersion
-192  1.952447E+000 warning: hyperbolic dispersion
-193  3.115303E+000 warning: hyperbolic dispersion
-194  5.058570E+000 warning: hyperbolic dispersion
-195  4.590975E+000 warning: hyperbolic dispersion
-196 -5.725129E+000 warning: hyperbolic dispersion
-197 -5.022909E+000 warning: hyperbolic dispersion
-198  3.117227E+000 warning: hyperbolic dispersion
-199 -1.128800E+001 warning: hyperbolic dispersion
-200 -1.198914E+001 warning: hyperbolic dispersion
-201  2.809896E+000
-202  3.300245E+000
-203  2.638094E+000 warning: hyperbolic dispersion
-204  2.750828E+000 warning: hyperbolic dispersion
-205  3.757246E+000 warning: hyperbolic dispersion
-206  4.415085E+000 warning: hyperbolic dispersion
-207 -5.970740E+000 warning: hyperbolic dispersion
-208 -6.089887E+000 warning: hyperbolic dispersion
-209  1.899117E+000
-210 -9.267065E-001 warning: hyperbolic dispersion
-211  9.984952E+000 warning: hyperbolic dispersion
-212  9.443538E+000 warning: hyperbolic dispersion
-213  1.003469E+001
-214  7.934028E+000
-215 -6.448716E+000 warning: hyperbolic dispersion
-216 -7.037559E+000 warning: hyperbolic dispersion
-217  6.764639E+000
-218  6.093759E+000
-219  4.100690E+000
-220  3.853791E+000
-221 -6.447008E+000 warning: hyperbolic dispersion
-222 -6.978835E+000 warning: hyperbolic dispersion
-223  8.418451E+000
-224  8.176427E+000
-225 -5.713052E+000
-226 -5.712225E+000
-227 -5.843538E+000
-228 -5.650339E+000
-229  5.497277E+000 warning: hyperbolic dispersion
-230  5.395574E+000 warning: hyperbolic dispersion
-231 -1.473671E+001
-232 -1.562514E+001
-233  1.591098E+001 warning: hyperbolic dispersion
-234  1.697752E+001 warning: hyperbolic dispersion
-235 -1.861779E+001 warning: hyperbolic dispersion
-236 -1.761441E+001 warning: hyperbolic dispersion
-237 -1.769512E+000
-238 -5.955290E+000
-239  1.161941E+001 warning: hyperbolic dispersion
-240  1.288408E+001 warning: hyperbolic dispersion
-241 -1.845877E+001 warning: hyperbolic dispersion
-242 -1.854827E+001 warning: hyperbolic dispersion
-243  1.359041E+001 warning: hyperbolic dispersion
-244  1.380171E+001 warning: hyperbolic dispersion
-245  6.238859E+000 warning: hyperbolic dispersion
-246  6.077386E+000 warning: hyperbolic dispersion
-247 -1.581866E+001 warning: hyperbolic dispersion
-248 -1.597967E+001 warning: hyperbolic dispersion
-249 -3.610308E+000
-250 -3.554235E+000
-251  2.739696E+000 warning: hyperbolic dispersion
-252  2.893440E+000 warning: hyperbolic dispersion
-253 -6.433066E+000 warning: hyperbolic dispersion
-254 -6.170723E+000 warning: hyperbolic dispersion
-255  8.652444E-001 warning: hyperbolic dispersion
-256 -5.167430E-001 warning: hyperbolic dispersion
-257  7.518241E+000 warning: hyperbolic dispersion
-258  7.466283E+000 warning: hyperbolic dispersion
-259 -2.798747E+000 warning: hyperbolic dispersion
-260 -2.745035E+000 warning: hyperbolic dispersion
-261 -7.314335E+000 warning: hyperbolic dispersion
-262 -7.645810E+000 warning: hyperbolic dispersion
-263 -1.205032E+001
-264 -1.366035E+001
-265 -1.909606E+001 warning: hyperbolic dispersion
-266 -1.836237E+001 warning: hyperbolic dispersion
-267  5.746855E+000 warning: hyperbolic dispersion
-268  5.618958E+000 warning: hyperbolic dispersion
-269 -8.010955E+000 warning: hyperbolic dispersion
-270 -8.518871E+000 warning: hyperbolic dispersion
-271 -1.047437E+001 warning: hyperbolic dispersion
-272 -1.052361E+001 warning: hyperbolic dispersion
-273  1.029049E+001 warning: hyperbolic dispersion
-274  1.042562E+001 warning: hyperbolic dispersion
-275 -3.450908E+000 warning: hyperbolic dispersion
-276 -3.388534E+000 warning: hyperbolic dispersion
-277  3.194820E+000 warning: hyperbolic dispersion
-278  3.138738E+000 warning: hyperbolic dispersion
-279  7.667268E+000 warning: hyperbolic dispersion
-280  7.685705E+000 warning: hyperbolic dispersion
-281 -5.647173E+000 warning: hyperbolic dispersion
-282 -5.726882E+000 warning: hyperbolic dispersion
-283 -1.633984E+001
-284 -1.654428E+001
-285  1.187591E+001
-286  1.175753E+001
-287 -8.681030E+000 warning: hyperbolic dispersion
-288 -8.312478E+000 warning: hyperbolic dispersion
-289 -2.943005E+001
-290 -3.069924E+001
-291 -1.836576E+001 warning: hyperbolic dispersion
-292 -1.750872E+001 warning: hyperbolic dispersion
-293  7.819484E+000 warning: hyperbolic dispersion
-294  7.048170E+000 warning: hyperbolic dispersion
-295 -1.239920E+001 warning: hyperbolic dispersion
-296 -1.130471E+001 warning: hyperbolic dispersion
-297  2.845207E+000 warning: hyperbolic dispersion
-298  3.875141E+000 warning: hyperbolic dispersion
-299  2.129920E+000 warning: hyperbolic dispersion
-300  2.113741E+000 warning: hyperbolic dispersion
-301 -4.166871E+000
-302 -3.942870E+000
-303  2.797329E+001 warning: hyperbolic dispersion
-304  3.710434E+001 warning: hyperbolic dispersion
-305  8.225894E+001
-306  5.842500E+001
-307  6.022290E+000 warning: hyperbolic dispersion
-308  6.072346E+000 warning: hyperbolic dispersion
-309 -4.325219E+000 warning: hyperbolic dispersion
-310 -4.353491E+000 warning: hyperbolic dispersion
-311  8.521349E+000
-312  8.634098E+000
-313 -3.372190E+000 warning: hyperbolic dispersion
-314 -3.275141E+000 warning: hyperbolic dispersion
-315  9.299954E+000
-316  9.581752E+000
-317  1.930195E+000 warning: hyperbolic dispersion
-318  1.470726E+000 warning: hyperbolic dispersion
-319  3.773265E+000
-320  3.780369E+000
-321 -8.289435E+000
-322 -8.997988E+000
-323 -9.999436E+000 warning: hyperbolic dispersion
-324 -1.130146E+001 warning: hyperbolic dispersion
-325  6.147773E+000
-326  5.515139E+000
-327 -1.511751E-001 warning: hyperbolic dispersion
-328 -4.736473E-001 warning: hyperbolic dispersion
-329  4.730859E+000 warning: hyperbolic dispersion
-330  4.743672E+000 warning: hyperbolic dispersion
-331 -3.819044E+000 warning: hyperbolic dispersion
-332 -3.628514E+000 warning: hyperbolic dispersion
-333  1.091812E+001 warning: hyperbolic dispersion
-334  1.139081E+001 warning: hyperbolic dispersion
-335  7.193689E+000
-336  1.295506E+001
-337  2.712140E+000 warning: hyperbolic dispersion
-338  2.703341E+000 warning: hyperbolic dispersion
-339 -1.983582E+001 warning: hyperbolic dispersion
-340 -1.965584E+001 warning: hyperbolic dispersion
-341  1.454091E+001 warning: hyperbolic dispersion
-342  1.670710E+001 warning: hyperbolic dispersion
-343 -5.728031E+000 warning: hyperbolic dispersion
-344 -6.242522E+000 warning: hyperbolic dispersion
-345 -9.821055E+000
-346 -1.003765E+001
-347 -1.387153E+001 warning: hyperbolic dispersion
-348 -1.258476E+001 warning: hyperbolic dispersion
-349  1.781213E+001 warning: hyperbolic dispersion
-350  1.741615E+001 warning: hyperbolic dispersion
-351  1.430483E+001
-352  1.422472E+001
-353  1.009576E+001 warning: hyperbolic dispersion
-354  1.029018E+001 warning: hyperbolic dispersion
-355 -3.130308E+000 warning: hyperbolic dispersion
-356 -3.019085E+000 warning: hyperbolic dispersion
-357  8.093014E+000 warning: hyperbolic dispersion
-358  7.296393E+000 warning: hyperbolic dispersion
-359  6.747453E+000 warning: hyperbolic dispersion
-360  6.268200E+000 warning: hyperbolic dispersion
-361 -1.025420E+001 warning: hyperbolic dispersion
-362 -9.845724E+000 warning: hyperbolic dispersion
-363 -5.119722E+000 warning: hyperbolic dispersion
-364 -5.152847E+000 warning: hyperbolic dispersion
-365  1.021373E+001 warning: hyperbolic dispersion
-366  1.181200E+001 warning: hyperbolic dispersion
-367  3.152847E+000 warning: hyperbolic dispersion
-368  7.717438E+000 warning: hyperbolic dispersion
-369 -8.329552E+000 warning: hyperbolic dispersion
-370 -6.978634E+000 warning: hyperbolic dispersion
-371 -2.698510E+000 warning: hyperbolic dispersion
-372 -2.545494E+000 warning: hyperbolic dispersion
-373  9.619816E+000 warning: hyperbolic dispersion
-374 -5.581763E+000 warning: hyperbolic dispersion
-375 -1.928299E+001 warning: hyperbolic dispersion
-376 -1.632401E+001 warning: hyperbolic dispersion
-377 -2.078364E+000 warning: hyperbolic dispersion
-378 -2.866720E+000 warning: hyperbolic dispersion
-379 -5.591404E+000 warning: hyperbolic dispersion
-380 -6.015785E+000 warning: hyperbolic dispersion
-381 -6.612730E+000 warning: hyperbolic dispersion
-382 -5.194266E+000 warning: hyperbolic dispersion
-383 -3.420262E+000 warning: hyperbolic dispersion
-384 -5.200776E+000 warning: hyperbolic dispersion
-385  7.236833E+000 warning: hyperbolic dispersion
-386  6.717210E+000 warning: hyperbolic dispersion
-387 -5.387529E+000 warning: hyperbolic dispersion
-388 -5.537559E+000 warning: hyperbolic dispersion
-389 -9.839853E+000 warning: hyperbolic dispersion
-390 -1.007007E+001 warning: hyperbolic dispersion
-391 -7.487116E+000 warning: hyperbolic dispersion
-392 -7.540757E+000 warning: hyperbolic dispersion
-393  2.135280E+001
-394  1.597591E+001
-395  6.738191E+000 warning: hyperbolic dispersion
-396  6.525744E+000 warning: hyperbolic dispersion
-397 -3.600269E+000 warning: hyperbolic dispersion
-398  4.580232E+000
-399 -7.090347E+000
-400 -8.715308E+000
-401 -5.204238E+000 warning: hyperbolic dispersion
-402 -5.387361E+000 warning: hyperbolic dispersion
-403  9.068556E+000
-404  9.093497E+000
-405 -4.325335E+000 warning: hyperbolic dispersion
-406 -5.399680E+000 warning: hyperbolic dispersion
-407 -4.791744E+000 warning: hyperbolic dispersion
-408 -4.679272E+000 warning: hyperbolic dispersion
-409  8.333657E+000 warning: hyperbolic dispersion
-410  7.906495E+000 warning: hyperbolic dispersion
-411  2.479668E+001 warning: hyperbolic dispersion
-412  2.523728E+001 warning: hyperbolic dispersion
-413 -1.381146E+001 warning: hyperbolic dispersion
-414 -1.415116E+001 warning: hyperbolic dispersion
-415 -4.288221E+000 warning: hyperbolic dispersion
-416 -5.472218E+000 warning: hyperbolic dispersion
-417 -1.582427E+001 warning: hyperbolic dispersion
-418 -1.608084E+001 warning: hyperbolic dispersion
-419  9.134542E+000
-420  9.096461E+000
-421  1.299429E+001
-422  1.231926E+001
-423  3.090383E+001 warning: hyperbolic dispersion
-424  2.976012E+001 warning: hyperbolic dispersion
-425  5.926109E+001
-426  5.390038E+001
-427  1.433276E+001
-428  1.434236E+001
+  1   1  3.383007E-001
+  2   2  3.370137E-001
+  3   3  3.477991E-001
+  4   4  3.425011E-001
+  5   5  3.554535E-001
+  6   6  3.504665E-001
+  7   7  3.404280E-001
+  8   7  3.405069E-001
+  9   8  3.091515E-001
+ 10   9  3.549901E-001
+ 11  10  2.971459E-001
+ 12  11  3.254317E-001
+ 13  12  3.422322E-001
+ 14  13  3.455589E-001
+ 15  14  3.258764E-001
+ 16  15  3.253087E-001
+ 17  16  3.161279E-001
+ 18  17  3.106949E-001
+ 19  18  3.485678E-001
+ 20  19  3.591615E-001
+ 21  20  3.218358E-001
+ 22  21  3.148738E-001
+ 23  22  3.321885E-001
+ 24  23  3.403957E-001
+ 25  24  9.366658E-001
+ 26  24  9.366900E-001
+ 27  25 -1.381951E+000
+ 28  26 -1.380735E+000
+ 29  27  2.159305E+000 warning: hyperbolic dispersion
+ 30  28  2.127329E+000 warning: hyperbolic dispersion
+ 31  29 -1.957281E+000 warning: hyperbolic dispersion
+ 32  30 -1.972438E+000 warning: hyperbolic dispersion
+ 33  31  2.205525E+000 warning: hyperbolic dispersion
+ 34  32  2.194365E+000 warning: hyperbolic dispersion
+ 35  33  7.492079E-001
+ 36  34  7.930530E-001
+ 37  35 -6.987402E-001 warning: hyperbolic dispersion
+ 38  36 -7.745852E-001 warning: hyperbolic dispersion
+ 39  37  1.285085E+000 warning: hyperbolic dispersion
+ 40  38  1.280349E+000 warning: hyperbolic dispersion
+ 41  39  9.056032E-001 warning: hyperbolic dispersion
+ 42  40 -3.105228E-001 warning: hyperbolic dispersion
+ 43  41 -1.190012E+000 warning: hyperbolic dispersion
+ 44  42 -1.578052E+000 warning: hyperbolic dispersion
+ 45  43 -9.558626E-001 warning: hyperbolic dispersion
+ 46  44 -9.426313E-001 warning: hyperbolic dispersion
+ 47  45 -6.501115E-001 warning: hyperbolic dispersion
+ 48  46  8.461837E-001
+ 49  47  1.046331E+000
+ 50  48  1.056877E+000
+ 51  49  1.621060E-001
+ 52  50  2.236885E-001
+ 53  51  3.624169E-001
+ 54  52  3.726785E-001
+ 55  53  5.319569E-001
+ 56  54  4.758059E-001
+ 57  55  3.599743E-001 warning: hyperbolic dispersion
+ 58  56 -2.480315E-001 warning: hyperbolic dispersion
+ 59  57  3.679630E-001
+ 60  58  3.848132E-001
+ 61  59  1.277968E+000
+ 62  60  1.247130E+000
+ 63  61 -2.748567E-001 warning: hyperbolic dispersion
+ 64  62 -5.465798E-001 warning: hyperbolic dispersion
+ 65  63 -4.431781E-001 warning: hyperbolic dispersion
+ 66  64 -7.984996E-001 warning: hyperbolic dispersion
+ 67  65 -8.268649E-001 warning: hyperbolic dispersion
+ 68  66 -6.715363E-001 warning: hyperbolic dispersion
+ 69  67  7.069790E-001
+ 70  68 -2.301935E-001 warning: hyperbolic dispersion
+ 71  69  8.619956E-001
+ 72  70  1.331980E+000
+ 73  71  7.220340E-001 warning: hyperbolic dispersion
+ 74  72  7.442148E-001 warning: hyperbolic dispersion
+ 75  73 -5.696832E-001 warning: hyperbolic dispersion
+ 76  74  4.442435E-001
+ 77  75  1.783393E+000
+ 78  76  1.871852E+000
+ 79  77  2.049796E+000 warning: hyperbolic dispersion
+ 80  78  1.943963E+000 warning: hyperbolic dispersion
+ 81  79 -1.043501E+000
+ 82  80 -9.485618E-001
+ 83  81  1.924842E+000 warning: hyperbolic dispersion
+ 84  82  6.202820E+000 warning: hyperbolic dispersion
+ 85  83 -5.694976E+000 warning: hyperbolic dispersion
+ 86  84  1.970148E+000 warning: hyperbolic dispersion
+ 87  85  2.652718E+000 warning: hyperbolic dispersion
+ 88  86  2.171874E+000 warning: hyperbolic dispersion
+ 89  87 -2.179949E+000 warning: hyperbolic dispersion
+ 90  88 -1.771822E+000 warning: hyperbolic dispersion
+ 91  89 -1.625078E+000 warning: hyperbolic dispersion
+ 92  90  2.246614E+000
+ 93  91 -3.345708E+000 warning: hyperbolic dispersion
+ 94  92 -2.909932E+000 warning: hyperbolic dispersion
+ 95  93  2.582475E+000
+ 96  94  2.579794E+000
+ 97  95  3.255777E+000 warning: hyperbolic dispersion
+ 98  96  3.148187E+000 warning: hyperbolic dispersion
+ 99  97 -2.048754E+000 warning: hyperbolic dispersion
+100  98 -2.382800E+000 warning: hyperbolic dispersion
+101  99 -5.388309E+000 warning: hyperbolic dispersion
+102 100 -5.587504E+000 warning: hyperbolic dispersion
+103 101  2.450467E+000 warning: hyperbolic dispersion
+104 102  2.177151E+000 warning: hyperbolic dispersion
+105 103  5.008558E+000 warning: hyperbolic dispersion
+106 104  5.056745E+000 warning: hyperbolic dispersion
+107 105  3.942189E+000 warning: hyperbolic dispersion
+108 106  3.878991E+000 warning: hyperbolic dispersion
+109 107  2.242606E+000 warning: hyperbolic dispersion
+110 108  1.943691E+000 warning: hyperbolic dispersion
+111 109  4.446139E+000
+112 110  4.663164E+000
+113 111 -7.266032E+000 warning: hyperbolic dispersion
+114 112 -7.353152E+000 warning: hyperbolic dispersion
+115 113 -8.329206E+000 warning: hyperbolic dispersion
+116 114 -8.556268E+000 warning: hyperbolic dispersion
+117 115  6.068830E+000
+118 116  6.013056E+000
+119 117 -2.846646E+000
+120 118 -2.792458E+000
+121 119  4.207965E+000 warning: hyperbolic dispersion
+122 120  4.268966E+000 warning: hyperbolic dispersion
+123 121  1.091797E+000 warning: hyperbolic dispersion
+124 122 -6.631256E-001
+125 123 -4.055560E+000
+126 124 -4.071146E+000
+127 125  2.089478E+000 warning: hyperbolic dispersion
+128 126  2.240948E+000 warning: hyperbolic dispersion
+129 127 -2.080103E+000 warning: hyperbolic dispersion
+130 128 -2.018679E+000 warning: hyperbolic dispersion
+131 129 -2.306019E+001
+132 130 -2.017079E+001
+133 131 -2.487105E+001 warning: hyperbolic dispersion
+134 132 -2.129557E+001 warning: hyperbolic dispersion
+135 133 -1.839514E+001
+136 134  2.228248E+001 warning: hyperbolic dispersion
+137 135 -7.466251E+000 warning: hyperbolic dispersion
+138 136  3.733483E+001
+139 137  5.091316E+000 warning: hyperbolic dispersion
+140 138  4.919847E+000 warning: hyperbolic dispersion
+141 139 -5.905356E+000 warning: hyperbolic dispersion
+142 140 -6.149111E+000 warning: hyperbolic dispersion
+143 141 -2.388143E+000 warning: hyperbolic dispersion
+144 142 -2.802641E+000 warning: hyperbolic dispersion
+145 143 -4.396422E+000 warning: hyperbolic dispersion
+146 144 -4.465698E+000 warning: hyperbolic dispersion
+147 145  2.616650E+000 warning: hyperbolic dispersion
+148 146  2.464912E+000 warning: hyperbolic dispersion
+149 147 -1.038760E+001
+150 148 -9.973350E+000
+151 149  4.607790E+000 warning: hyperbolic dispersion
+152 150  4.782656E+000 warning: hyperbolic dispersion
+153 151  9.252909E+000
+154 152  8.344764E+000
+155 153  5.547059E+000 warning: hyperbolic dispersion
+156 154  5.807144E+000 warning: hyperbolic dispersion
+157 155  9.793259E+000 warning: hyperbolic dispersion
+158 156  9.085827E+000 warning: hyperbolic dispersion
+159 157 -4.214635E+000 warning: hyperbolic dispersion
+160 158 -3.115938E+000 warning: hyperbolic dispersion
+161 159 -3.631310E+000 warning: hyperbolic dispersion
+162 160 -3.596472E+000 warning: hyperbolic dispersion
+163 161 -3.549961E+000 warning: hyperbolic dispersion
+164 162 -3.420778E+000 warning: hyperbolic dispersion
+165 163 -3.106840E+000 warning: hyperbolic dispersion
+166 164 -2.885432E+000 warning: hyperbolic dispersion
+167 165 -5.475274E+000 warning: hyperbolic dispersion
+168 166 -5.398574E+000 warning: hyperbolic dispersion
+169 167  8.303434E+000 warning: hyperbolic dispersion
+170 168  8.551399E+000 warning: hyperbolic dispersion
+171 169  5.704654E+000 warning: hyperbolic dispersion
+172 170  6.911598E+000 warning: hyperbolic dispersion
+173 171 -4.561637E+000 warning: hyperbolic dispersion
+174 172 -8.032951E+000 warning: hyperbolic dispersion
+175 173  8.858419E-001
+176 174 -2.104268E+000 warning: hyperbolic dispersion
+177 175  2.580339E+000 warning: hyperbolic dispersion
+178 176  4.919976E+000 warning: hyperbolic dispersion
+179 177 -8.768402E+000 warning: hyperbolic dispersion
+180 178 -4.679061E+000 warning: hyperbolic dispersion
+181 179  1.088848E+001 warning: hyperbolic dispersion
+182 180  1.021411E+001 warning: hyperbolic dispersion
+183 181  3.834762E+000 warning: hyperbolic dispersion
+184 182  3.921424E+000 warning: hyperbolic dispersion
+185 183  3.319420E+000 warning: hyperbolic dispersion
+186 184  4.792121E+000 warning: hyperbolic dispersion
+187 185 -6.791770E+000 warning: hyperbolic dispersion
+188 186 -6.249756E+000 warning: hyperbolic dispersion
+189 187  6.377919E+000 warning: hyperbolic dispersion
+190 188  8.405587E+000 warning: hyperbolic dispersion
+191 189 -5.663908E+000 warning: hyperbolic dispersion
+192 190  1.952447E+000 warning: hyperbolic dispersion
+193 191  3.115303E+000 warning: hyperbolic dispersion
+194 192  5.058570E+000 warning: hyperbolic dispersion
+195 193  4.590975E+000 warning: hyperbolic dispersion
+196 194 -5.725129E+000 warning: hyperbolic dispersion
+197 195 -5.022909E+000 warning: hyperbolic dispersion
+198 196  3.117227E+000 warning: hyperbolic dispersion
+199 197 -1.128800E+001 warning: hyperbolic dispersion
+200 198 -1.198914E+001 warning: hyperbolic dispersion
+201 199  2.809896E+000
+202 200  3.300245E+000
+203 201  2.638094E+000 warning: hyperbolic dispersion
+204 202  2.750828E+000 warning: hyperbolic dispersion
+205 203  3.757246E+000 warning: hyperbolic dispersion
+206 204  4.415085E+000 warning: hyperbolic dispersion
+207 205 -5.970740E+000 warning: hyperbolic dispersion
+208 206 -6.089887E+000 warning: hyperbolic dispersion
+209 207  1.899117E+000
+210 208 -9.267065E-001 warning: hyperbolic dispersion
+211 209  9.984952E+000 warning: hyperbolic dispersion
+212 210  9.443538E+000 warning: hyperbolic dispersion
+213 211  1.003469E+001
+214 212  7.934028E+000
+215 213 -6.448716E+000 warning: hyperbolic dispersion
+216 214 -7.037559E+000 warning: hyperbolic dispersion
+217 215  6.764639E+000
+218 216  6.093759E+000
+219 217  4.100690E+000
+220 218  3.853791E+000
+221 219 -6.447008E+000 warning: hyperbolic dispersion
+222 220 -6.978835E+000 warning: hyperbolic dispersion
+223 221  8.418451E+000
+224 222  8.176427E+000
+225 223 -5.713052E+000
+226 224 -5.712225E+000
+227 225 -5.843538E+000
+228 226 -5.650339E+000
+229 227  5.497277E+000 warning: hyperbolic dispersion
+230 228  5.395574E+000 warning: hyperbolic dispersion
+231 229 -1.473671E+001
+232 230 -1.562514E+001
+233 231  1.591098E+001 warning: hyperbolic dispersion
+234 232  1.697752E+001 warning: hyperbolic dispersion
+235 233 -1.861779E+001 warning: hyperbolic dispersion
+236 234 -1.761441E+001 warning: hyperbolic dispersion
+237 235 -1.769512E+000
+238 236 -5.955290E+000
+239 237  1.161941E+001 warning: hyperbolic dispersion
+240 238  1.288408E+001 warning: hyperbolic dispersion
+241 239 -1.845877E+001 warning: hyperbolic dispersion
+242 240 -1.854827E+001 warning: hyperbolic dispersion
+243 241  1.359041E+001 warning: hyperbolic dispersion
+244 242  1.380171E+001 warning: hyperbolic dispersion
+245 243  6.238859E+000 warning: hyperbolic dispersion
+246 244  6.077386E+000 warning: hyperbolic dispersion
+247 245 -1.581866E+001 warning: hyperbolic dispersion
+248 246 -1.597967E+001 warning: hyperbolic dispersion
+249 247 -3.610308E+000
+250 248 -3.554235E+000
+251 249  2.739696E+000 warning: hyperbolic dispersion
+252 250  2.893440E+000 warning: hyperbolic dispersion
+253 251 -6.433066E+000 warning: hyperbolic dispersion
+254 252 -6.170723E+000 warning: hyperbolic dispersion
+255 253  8.652444E-001 warning: hyperbolic dispersion
+256 254 -5.167430E-001 warning: hyperbolic dispersion
+257 255  7.518241E+000 warning: hyperbolic dispersion
+258 256  7.466283E+000 warning: hyperbolic dispersion
+259 257 -2.798747E+000 warning: hyperbolic dispersion
+260 258 -2.745035E+000 warning: hyperbolic dispersion
+261 259 -7.314335E+000 warning: hyperbolic dispersion
+262 260 -7.645810E+000 warning: hyperbolic dispersion
+263 261 -1.205032E+001
+264 262 -1.366035E+001
+265 263 -1.909606E+001 warning: hyperbolic dispersion
+266 264 -1.836237E+001 warning: hyperbolic dispersion
+267 265  5.746855E+000 warning: hyperbolic dispersion
+268 266  5.618958E+000 warning: hyperbolic dispersion
+269 267 -8.010955E+000 warning: hyperbolic dispersion
+270 268 -8.518871E+000 warning: hyperbolic dispersion
+271 269 -1.047437E+001 warning: hyperbolic dispersion
+272 270 -1.052361E+001 warning: hyperbolic dispersion
+273 271  1.029049E+001 warning: hyperbolic dispersion
+274 272  1.042562E+001 warning: hyperbolic dispersion
+275 273 -3.450908E+000 warning: hyperbolic dispersion
+276 274 -3.388534E+000 warning: hyperbolic dispersion
+277 275  3.194820E+000 warning: hyperbolic dispersion
+278 276  3.138738E+000 warning: hyperbolic dispersion
+279 277  7.667268E+000 warning: hyperbolic dispersion
+280 278  7.685705E+000 warning: hyperbolic dispersion
+281 279 -5.647173E+000 warning: hyperbolic dispersion
+282 280 -5.726882E+000 warning: hyperbolic dispersion
+283 281 -1.633984E+001
+284 282 -1.654428E+001
+285 283  1.187591E+001
+286 284  1.175753E+001
+287 285 -8.681030E+000 warning: hyperbolic dispersion
+288 286 -8.312478E+000 warning: hyperbolic dispersion
+289 287 -2.943005E+001
+290 288 -3.069924E+001
+291 289 -1.836576E+001 warning: hyperbolic dispersion
+292 290 -1.750872E+001 warning: hyperbolic dispersion
+293 291  7.819484E+000 warning: hyperbolic dispersion
+294 292  7.048170E+000 warning: hyperbolic dispersion
+295 293 -1.239920E+001 warning: hyperbolic dispersion
+296 294 -1.130471E+001 warning: hyperbolic dispersion
+297 295  2.845207E+000 warning: hyperbolic dispersion
+298 296  3.875141E+000 warning: hyperbolic dispersion
+299 297  2.129920E+000 warning: hyperbolic dispersion
+300 298  2.113741E+000 warning: hyperbolic dispersion
+301 299 -4.166871E+000
+302 300 -3.942870E+000
+303 301  2.797329E+001 warning: hyperbolic dispersion
+304 302  3.710434E+001 warning: hyperbolic dispersion
+305 303  8.225894E+001
+306 304  5.842500E+001
+307 305  6.022290E+000 warning: hyperbolic dispersion
+308 306  6.072346E+000 warning: hyperbolic dispersion
+309 307 -4.325219E+000 warning: hyperbolic dispersion
+310 308 -4.353491E+000 warning: hyperbolic dispersion
+311 309  8.521349E+000
+312 310  8.634098E+000
+313 311 -3.372190E+000 warning: hyperbolic dispersion
+314 312 -3.275141E+000 warning: hyperbolic dispersion
+315 313  9.299954E+000
+316 313  9.581752E+000
+317 314  1.930195E+000 warning: hyperbolic dispersion
+318 315  1.470726E+000 warning: hyperbolic dispersion
+319 316  3.773265E+000
+320 317  3.780369E+000
+321 318 -8.289435E+000
+322 319 -8.997988E+000
+323 320 -9.999436E+000 warning: hyperbolic dispersion
+324 321 -1.130146E+001 warning: hyperbolic dispersion
+325 322  6.147773E+000
+326 323  5.515139E+000
+327 324 -1.511751E-001 warning: hyperbolic dispersion
+328 325 -4.736473E-001 warning: hyperbolic dispersion
+329 326  4.730859E+000 warning: hyperbolic dispersion
+330 327  4.743672E+000 warning: hyperbolic dispersion
+331 328 -3.819044E+000 warning: hyperbolic dispersion
+332 329 -3.628514E+000 warning: hyperbolic dispersion
+333 330  1.091812E+001 warning: hyperbolic dispersion
+334 331  1.139081E+001 warning: hyperbolic dispersion
+335 332  7.193689E+000
+336 333  1.295506E+001
+337 334  2.712140E+000 warning: hyperbolic dispersion
+338 335  2.703341E+000 warning: hyperbolic dispersion
+339 336 -1.983582E+001 warning: hyperbolic dispersion
+340 337 -1.965584E+001 warning: hyperbolic dispersion
+341 338  1.454091E+001 warning: hyperbolic dispersion
+342 339  1.670710E+001 warning: hyperbolic dispersion
+343 340 -5.728031E+000 warning: hyperbolic dispersion
+344 341 -6.242522E+000 warning: hyperbolic dispersion
+345 342 -9.821055E+000
+346 343 -1.003765E+001
+347 344 -1.387153E+001 warning: hyperbolic dispersion
+348 345 -1.258476E+001 warning: hyperbolic dispersion
+349 346  1.781213E+001 warning: hyperbolic dispersion
+350 347  1.741615E+001 warning: hyperbolic dispersion
+351 348  1.430483E+001
+352 349  1.422472E+001
+353 350  1.009576E+001 warning: hyperbolic dispersion
+354 351  1.029018E+001 warning: hyperbolic dispersion
+355 352 -3.130308E+000 warning: hyperbolic dispersion
+356 353 -3.019085E+000 warning: hyperbolic dispersion
+357 354  8.093014E+000 warning: hyperbolic dispersion
+358 355  7.296393E+000 warning: hyperbolic dispersion
+359 356  6.747453E+000 warning: hyperbolic dispersion
+360 357  6.268200E+000 warning: hyperbolic dispersion
+361 358 -1.025420E+001 warning: hyperbolic dispersion
+362 359 -9.845724E+000 warning: hyperbolic dispersion
+363 360 -5.119722E+000 warning: hyperbolic dispersion
+364 361 -5.152847E+000 warning: hyperbolic dispersion
+365 362  1.021373E+001 warning: hyperbolic dispersion
+366 363  1.181200E+001 warning: hyperbolic dispersion
+367 364  3.152847E+000 warning: hyperbolic dispersion
+368 365  7.717438E+000 warning: hyperbolic dispersion
+369 366 -8.329552E+000 warning: hyperbolic dispersion
+370 367 -6.978634E+000 warning: hyperbolic dispersion
+371 368 -2.698510E+000 warning: hyperbolic dispersion
+372 369 -2.545494E+000 warning: hyperbolic dispersion
+373 370  9.619816E+000 warning: hyperbolic dispersion
+374 371 -5.581763E+000 warning: hyperbolic dispersion
+375 372 -1.928299E+001 warning: hyperbolic dispersion
+376 373 -1.632401E+001 warning: hyperbolic dispersion
+377 374 -2.078364E+000 warning: hyperbolic dispersion
+378 375 -2.866720E+000 warning: hyperbolic dispersion
+379 376 -5.591404E+000 warning: hyperbolic dispersion
+380 377 -6.015785E+000 warning: hyperbolic dispersion
+381 378 -6.612730E+000 warning: hyperbolic dispersion
+382 379 -5.194266E+000 warning: hyperbolic dispersion
+383 380 -3.420262E+000 warning: hyperbolic dispersion
+384 381 -5.200776E+000 warning: hyperbolic dispersion
+385 382  7.236833E+000 warning: hyperbolic dispersion
+386 383  6.717210E+000 warning: hyperbolic dispersion
+387 384 -5.387529E+000 warning: hyperbolic dispersion
+388 385 -5.537559E+000 warning: hyperbolic dispersion
+389 386 -9.839853E+000 warning: hyperbolic dispersion
+390 387 -1.007007E+001 warning: hyperbolic dispersion
+391 388 -7.487116E+000 warning: hyperbolic dispersion
+392 389 -7.540757E+000 warning: hyperbolic dispersion
+393 390  2.135280E+001
+394 391  1.597591E+001
+395 392  6.738191E+000 warning: hyperbolic dispersion
+396 393  6.525744E+000 warning: hyperbolic dispersion
+397 394 -3.600269E+000 warning: hyperbolic dispersion
+398 395  4.580232E+000
+399 396 -7.090347E+000
+400 397 -8.715308E+000
+401 398 -5.204238E+000 warning: hyperbolic dispersion
+402 399 -5.387361E+000 warning: hyperbolic dispersion
+403 400  9.068556E+000
+404 401  9.093497E+000
+405 402 -4.325335E+000 warning: hyperbolic dispersion
+406 403 -5.399680E+000 warning: hyperbolic dispersion
+407 404 -4.791744E+000 warning: hyperbolic dispersion
+408 405 -4.679272E+000 warning: hyperbolic dispersion
+409 406  8.333657E+000 warning: hyperbolic dispersion
+410 407  7.906495E+000 warning: hyperbolic dispersion
+411 408  2.479668E+001 warning: hyperbolic dispersion
+412 409  2.523728E+001 warning: hyperbolic dispersion
+413 410 -1.381146E+001 warning: hyperbolic dispersion
+414 411 -1.415116E+001 warning: hyperbolic dispersion
+415 412 -4.288221E+000 warning: hyperbolic dispersion
+416 413 -5.472218E+000 warning: hyperbolic dispersion
+417 414 -1.582427E+001 warning: hyperbolic dispersion
+418 415 -1.608084E+001 warning: hyperbolic dispersion
+419 416  9.134542E+000
+420 417  9.096461E+000
+421 418  1.299429E+001
+422 419  1.231926E+001
+423 420  3.090383E+001 warning: hyperbolic dispersion
+424 421  2.976012E+001 warning: hyperbolic dispersion
+425 422  5.926109E+001
+426 423  5.390038E+001
+427 424  1.433276E+001
+428 425  1.434236E+001
