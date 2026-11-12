@@ -8,13 +8,13 @@ USE is_hermitian_mod, ONLY: is_hermitian
 USE, INTRINSIC :: ieee_arithmetic, ONLY: ieee_is_finite
 IMPLICIT NONE
 PRIVATE
-PUBLIC :: degenmass
+PUBLIC :: degenmass, block_inconsistency
 
 CONTAINS
 
 SUBROUTINE degenmass( &
     idg1, idg2, alpha, beta, pij, dEij, & ! in
-    minv)                                 ! out
+    minv, Mout)                           ! out
 ! Effective-matrix contribution to the inverse effective mass m0/m*_ab for
 ! the degenerate block D = {idg1, ..., idg2}. The free-electron term
 ! delta_ab is NOT included; it is added by the caller.
@@ -60,6 +60,8 @@ REAL(KIND=sp), INTENT(IN) :: &
     dEij(:,:)     ! E_l - E_i [Ha] (target band, all bands)
 REAL(KIND=dp), ALLOCATABLE, INTENT(OUT) :: &
     minv(:)       ! eigenvalues of M (m0/m* without delta_ab)
+COMPLEX(KIND=dp), INTENT(OUT), OPTIONAL :: &
+    Mout(:,:)     ! (optional) the effective matrix M, size (ndg,ndg)
 
 COMPLEX(KIND=dp), ALLOCATABLE :: &
     M(:,:), &     ! effective matrix
@@ -154,6 +156,14 @@ DO i = 1, ndg
     END DO
 END DO
 
+IF (PRESENT(Mout)) THEN
+    IF (SIZE(Mout,1) /= ndg .OR. SIZE(Mout,2) /= ndg) THEN
+        WRITE(*,'(A)') ' ERROR in degenmass: inconsistent shape of Mout'
+        ERROR STOP 1
+    END IF
+    Mout = M
+END IF
+
 !! Inverse masses are the eigenvalues of M
 IF (ndg > 1) THEN
     IF (.NOT. is_hermitian(M)) THEN
@@ -172,5 +182,75 @@ END IF
 DEALLOCATE( M, Mcorr )
 
 END SUBROUTINE degenmass
+
+
+
+FUNCTION block_inconsistency(Mall) RESULT(r)
+! Relative part of the effective matrices of a degenerate block that cannot
+! be attributed to individual states:
+!
+!   r = MAX_p ||offdiag(U^+ M_p U)||_F / MAX_p ||M_p||_F ,
+!
+! where p runs over the Voigt components, ||.||_F is the Frobenius norm,
+! and U are the eigenvectors of a generic linear combination
+! G = SUM_p w_p M_p.
+!
+! If all M_p commute, they share eigenvectors, U diagonalizes every M_p, and
+! r = 0 up to rounding. Every state of the block then has a well-defined
+! inverse effective mass tensor. This is the case, e.g., for a Kramers pair
+! that remains degenerate in the vicinity of k, where every M_p is
+! proportional to the identity. Otherwise (band warping), the eigenvalues of
+! different M_p belong to different states, and r estimates the relative
+! error of a per-band tensor assembled from the separately sorted
+! eigenvalues of the M_p. Only the diagonal components xx, yy, zz
+! (directional inverse masses along the Cartesian axes) remain meaningful
+! for individual bands. See Sec. III of Laflamme Janssen et al.,
+! Phys. Rev. B 93, 205147 (2016).
+!
+! In the CoSi tests, commuting blocks give r = 1e-6 to 1e-5 (rounding of the
+! single-precision matrix elements), weakly warped blocks up to about 7e-4,
+! and strongly warped blocks 1e-3 to above 0.1.
+COMPLEX(KIND=dp), INTENT(IN) :: Mall(:,:,:) ! (ndg, ndg, Voigt component)
+REAL(KIND=dp) :: r
+! generic weights (no symmetry relation between them)
+REAL(KIND=dp), PARAMETER :: w(6) = [1.000_dp, 0.618_dp, 0.414_dp, &
+    0.302_dp, 0.259_dp, 0.177_dp]
+COMPLEX(KIND=dp), ALLOCATABLE :: G(:,:), B(:,:), work(:)
+REAL(KIND=dp), ALLOCATABLE :: ev(:), rwork(:)
+REAL(KIND=dp) :: scale, off
+INTEGER :: n, p, i, lwork, info
+EXTERNAL :: zheev
+n = SIZE(Mall,1)
+r = 0.0_dp
+scale = 0.0_dp
+DO p = 1, SIZE(Mall,3)
+    scale = MAX(scale, NORM2(ABS(Mall(:,:,p))))
+END DO
+IF (n < 2 .OR. scale <= TINY(1.0_dp)) RETURN
+ALLOCATE( G(n,n), B(n,n), ev(n), rwork(MAX(1,3*n-2)) )
+G = (0.0_dp, 0.0_dp)
+DO p = 1, SIZE(Mall,3)
+    G = G + w(p)*Mall(:,:,p)
+END DO
+lwork = -1
+ALLOCATE( work(1) )
+CALL zheev('V', 'U', n, G, n, ev, work, lwork, rwork, info)
+lwork = MAX(1, INT(work(1)))
+DEALLOCATE( work ); ALLOCATE( work(lwork) )
+CALL zheev('V', 'U', n, G, n, ev, work, lwork, rwork, info)
+IF (info /= 0) THEN
+    WRITE(*,*) 'ERROR in block_inconsistency: zheev info = ', info
+    ERROR STOP 1
+END IF
+DO p = 1, SIZE(Mall,3)
+    B = MATMUL(CONJG(TRANSPOSE(G)), MATMUL(Mall(:,:,p), G))
+    DO i = 1, n
+        B(i,i) = (0.0_dp, 0.0_dp)
+    END DO
+    off = NORM2(ABS(B))
+    r = MAX(r, off)
+END DO
+r = r/scale
+END FUNCTION block_inconsistency
 
 END MODULE degenmass_mod

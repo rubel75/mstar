@@ -7,165 +7,171 @@
 # together by degenerate perturbation theory (Eqs. 6 and 7 of the
 # reference); adjacent bands belong to one block when their energies
 # differ by no more than the degeneracy tolerance.
+# A block is marked "# non-commuting block" when the effective matrices
+# of its tensor components (Eq. 6) do not share eigenvectors (band
+# warping). Each component is diagonalized separately and its eigenvalues
+# are listed in ascending order, so a record then combines values that
+# belong to different states [Phys. Rev. B 93, 205147 (2016), Sec. III].
+# The values in such blocks are not defined for individual bands.
 # columns correspond to
 # band block m0/m_c
 # KP: 1 NBCDER: 156 NEMAX: 422
-  1   1  1.592007E-001
-  2   1  1.592759E-001
-  3   1  1.683144E-001
-  4   1  1.684010E-001
+  1   1  1.592007E-001  # non-commuting block
+  2   1  1.592759E-001  # non-commuting block
+  3   1  1.683144E-001  # non-commuting block
+  4   1  1.684010E-001  # non-commuting block
   5   2  1.782170E-001
   6   2  1.782429E-001
   7   3  1.609913E-001
   8   3  1.613590E-001
   9   4  1.728724E-001
  10   4  1.729541E-001
- 11   5  6.072521E-002
- 12   5  6.083246E-002
- 13   5  2.792500E-001
- 14   5  2.794294E-001
+ 11   5  6.072521E-002  # non-commuting block
+ 12   5  6.083246E-002  # non-commuting block
+ 13   5  2.792500E-001  # non-commuting block
+ 14   5  2.794294E-001  # non-commuting block
  15   6  1.621541E-001
  16   6  1.621885E-001
- 17   7  1.733204E-001
- 18   7  1.734956E-001
- 19   7  1.800628E-001
- 20   7  1.800965E-001
- 21   8  6.021265E-002
- 22   8  6.070546E-002
- 23   8  2.695105E-001
- 24   8  2.695605E-001
- 25   9  1.009123E+000
- 26   9  1.009213E+000
- 27  10 -6.961011E+001
- 28  10 -6.960762E+001
- 29  10 -8.726182E-001
- 30  10 -8.715935E-001
+ 17   7  1.733204E-001  # non-commuting block
+ 18   7  1.734956E-001  # non-commuting block
+ 19   7  1.800628E-001  # non-commuting block
+ 20   7  1.800965E-001  # non-commuting block
+ 21   8  6.021265E-002  # non-commuting block
+ 22   8  6.070546E-002  # non-commuting block
+ 23   8  2.695105E-001  # non-commuting block
+ 24   8  2.695605E-001  # non-commuting block
+ 25   9  1.009123E+000  # non-commuting block
+ 26   9  1.009213E+000  # non-commuting block
+ 27  10 -6.961011E+001  # non-commuting block
+ 28  10 -6.960762E+001  # non-commuting block
+ 29  10 -8.726182E-001  # non-commuting block
+ 30  10 -8.715935E-001  # non-commuting block
  31  11  6.943229E+001
  32  11  6.943460E+001
  33  12 -4.336814E+001
  34  12 -4.336801E+001
- 35  13  8.780916E-001
- 36  13  8.785139E-001
- 37  13  4.504213E+001
- 38  13  4.504231E+001
- 39  14 -1.993453E+001
- 40  14 -1.993437E+001
- 41  14  2.145165E-001
- 42  14  2.149800E-001
+ 35  13  8.780916E-001  # non-commuting block
+ 36  13  8.785139E-001  # non-commuting block
+ 37  13  4.504213E+001  # non-commuting block
+ 38  13  4.504231E+001  # non-commuting block
+ 39  14 -1.993453E+001  # non-commuting block
+ 40  14 -1.993437E+001  # non-commuting block
+ 41  14  2.145165E-001  # non-commuting block
+ 42  14  2.149800E-001  # non-commuting block
  43  15  1.779713E+001
  44  15  1.779732E+001
- 45  16  8.889796E-001
- 46  16  8.897020E-001
- 47  17  2.713308E-001
- 48  17  2.717021E-001
- 49  17  1.685110E+000
- 50  17  1.685774E+000
- 51  18  3.636085E-001
- 52  18  3.642839E-001
- 53  18  5.998436E-001
- 54  18  6.009546E-001
+ 45  16  8.889796E-001  # non-commuting block
+ 46  16  8.897020E-001  # non-commuting block
+ 47  17  2.713308E-001  # non-commuting block
+ 48  17  2.717021E-001  # non-commuting block
+ 49  17  1.685110E+000  # non-commuting block
+ 50  17  1.685774E+000  # non-commuting block
+ 51  18  3.636085E-001  # non-commuting block
+ 52  18  3.642839E-001  # non-commuting block
+ 53  18  5.998436E-001  # non-commuting block
+ 54  18  6.009546E-001  # non-commuting block
  55  19  4.749922E-001
  56  19  4.758528E-001
- 57  20 -1.158553E+000
- 58  20 -1.158239E+000
- 59  20  9.886377E-001
- 60  20  9.891326E-001
+ 57  20 -1.158553E+000  # non-commuting block
+ 58  20 -1.158239E+000  # non-commuting block
+ 59  20  9.886377E-001  # non-commuting block
+ 60  20  9.891326E-001  # non-commuting block
  61  21  2.514831E+000
  62  21  2.515173E+000
  63  22 -1.930898E-001
  64  22 -1.924404E-001
- 65  23  8.315002E-001
- 66  23  8.324809E-001
- 67  23  9.082513E-001
- 68  23  9.091917E-001
- 69  24  7.113999E-001
- 70  24  7.133014E-001
- 71  24  8.356431E-001
- 72  24  8.373291E-001
+ 65  23  8.315002E-001  # non-commuting block
+ 66  23  8.324809E-001  # non-commuting block
+ 67  23  9.082513E-001  # non-commuting block
+ 68  23  9.091917E-001  # non-commuting block
+ 69  24  7.113999E-001  # non-commuting block
+ 70  24  7.133014E-001  # non-commuting block
+ 71  24  8.356431E-001  # non-commuting block
+ 72  24  8.373291E-001  # non-commuting block
  73  25 -7.496936E-001
  74  25 -7.488705E-001
- 75  26  1.113397E+000
- 76  26  1.114640E+000
- 77  26  2.397276E+000
- 78  26  2.397579E+000
- 79  27 -1.296949E+001
- 80  27 -1.296841E+001
- 81  27 -1.699481E+000
- 82  27 -1.697069E+000
+ 75  26  1.113397E+000  # non-commuting block
+ 76  26  1.114640E+000  # non-commuting block
+ 77  26  2.397276E+000  # non-commuting block
+ 78  26  2.397579E+000  # non-commuting block
+ 79  27 -1.296949E+001  # non-commuting block
+ 80  27 -1.296841E+001  # non-commuting block
+ 81  27 -1.699481E+000  # non-commuting block
+ 82  27 -1.697069E+000  # non-commuting block
  83  28  5.445799E+000
  84  28  5.446955E+000
- 85  29 -5.688377E+000
- 86  29 -5.687377E+000
- 87  29  6.007892E+000
- 88  29  6.011188E+000
- 89  30  2.379577E+000
- 90  30  2.380312E+000
- 91  30  3.481919E+000
- 92  30  3.483117E+000
+ 85  29 -5.688377E+000  # non-commuting block
+ 86  29 -5.687377E+000  # non-commuting block
+ 87  29  6.007892E+000  # non-commuting block
+ 88  29  6.011188E+000  # non-commuting block
+ 89  30  2.379577E+000  # non-commuting block
+ 90  30  2.380312E+000  # non-commuting block
+ 91  30  3.481919E+000  # non-commuting block
+ 92  30  3.483117E+000  # non-commuting block
  93  31  4.910475E+000
  94  31  4.911488E+000
  95  32  4.511156E+000
  96  32  4.513032E+000
  97  33 -5.046333E+001
  98  33 -5.046249E+001
- 99  34  2.171723E+000
-100  34  2.171816E+000
-101  34  5.676911E+001
-102  34  5.676993E+001
-103  35 -9.154712E+000
-104  35 -9.154667E+000
-105  35 -7.041825E+000
-106  35 -7.041755E+000
+ 99  34  2.171723E+000  # non-commuting block
+100  34  2.171816E+000  # non-commuting block
+101  34  5.676911E+001  # non-commuting block
+102  34  5.676993E+001  # non-commuting block
+103  35 -9.154712E+000  # non-commuting block
+104  35 -9.154667E+000  # non-commuting block
+105  35 -7.041825E+000  # non-commuting block
+106  35 -7.041755E+000  # non-commuting block
 107  36 -7.421774E+000
 108  36 -7.421642E+000
 109  37  7.052489E+000
 110  37  7.054381E+000
 111  38  2.426508E+000
 112  38  2.428085E+000
-113  39 -3.418465E+000
-114  39 -3.417485E+000
-115  39  9.799461E+000
-116  39  9.801275E+000
+113  39 -3.418465E+000  # non-commuting block
+114  39 -3.417485E+000  # non-commuting block
+115  39  9.799461E+000  # non-commuting block
+116  39  9.801275E+000  # non-commuting block
 117  40  1.651263E+001
 118  40  1.651445E+001
-119  41 -1.438059E+001
-120  41 -1.437997E+001
-121  41  4.141640E-001
-122  41  4.155184E-001
-123  42 -9.349002E+000
-124  42 -9.348852E+000
-125  42 -1.599248E+000
-126  42 -1.598776E+000
-127  42 -6.454568E-001
-128  42 -6.450898E-001
+119  41 -1.438059E+001  # non-commuting block
+120  41 -1.437997E+001  # non-commuting block
+121  41  4.141640E-001  # non-commuting block
+122  41  4.155184E-001  # non-commuting block
+123  42 -9.349002E+000  # non-commuting block
+124  42 -9.348852E+000  # non-commuting block
+125  42 -1.599248E+000  # non-commuting block
+126  42 -1.598776E+000  # non-commuting block
+127  42 -6.454568E-001  # non-commuting block
+128  42 -6.450898E-001  # non-commuting block
 129  43  1.326773E+001
 130  43  1.326798E+001
-131  44 -3.075314E+001
-132  44 -3.075251E+001
-133  44  2.029870E+000
-134  44  2.030019E+000
+131  44 -3.075314E+001  # non-commuting block
+132  44 -3.075251E+001  # non-commuting block
+133  44  2.029870E+000  # non-commuting block
+134  44  2.030019E+000  # non-commuting block
 135  45  3.972094E+000
 136  45  3.973418E+000
-137  46 -5.445104E+000
-138  46 -5.443920E+000
-139  46  2.373280E+001
-140  46  2.373320E+001
-141  47 -8.263658E+000
-142  47 -8.263112E+000
-143  47  2.270325E+000
-144  47  2.270825E+000
+137  46 -5.445104E+000  # non-commuting block
+138  46 -5.443920E+000  # non-commuting block
+139  46  2.373280E+001  # non-commuting block
+140  46  2.373320E+001  # non-commuting block
+141  47 -8.263658E+000  # non-commuting block
+142  47 -8.263112E+000  # non-commuting block
+143  47  2.270325E+000  # non-commuting block
+144  47  2.270825E+000  # non-commuting block
 145  48 -3.692388E-001
 146  48 -3.689001E-001
 147  49 -1.014965E+002
 148  49 -1.014835E+002
-149  50 -1.103175E+000
-150  50 -1.102094E+000
-151  50  8.705225E+001
-152  50  8.706576E+001
-153  51 -2.218406E+001
-154  51 -2.218339E+001
-155  51  9.437276E+000
-156  51  9.438588E+000
+149  50 -1.103175E+000  # non-commuting block
+150  50 -1.102094E+000  # non-commuting block
+151  50  8.705225E+001  # non-commuting block
+152  50  8.706576E+001  # non-commuting block
+153  51 -2.218406E+001  # non-commuting block
+154  51 -2.218339E+001  # non-commuting block
+155  51  9.437276E+000  # non-commuting block
+156  51  9.438588E+000  # non-commuting block
 # KP: 2 NBCDER: 156 NEMAX: 422
   1   1  1.691468E-001
   2   2  1.689357E-001
@@ -191,12 +197,12 @@
  22  21  1.650437E-001
  23  22  1.649969E-001
  24  23  1.648582E-001
- 25  24  1.008633E+000
- 26  24  1.008710E+000
+ 25  24  1.008633E+000  # non-commuting block
+ 26  24  1.008710E+000  # non-commuting block
  27  25 -5.862967E+000
  28  26 -5.683553E+000
- 29  27 -3.551451E+000
- 30  27 -3.125722E+000
+ 29  27 -3.551451E+000  # non-commuting block
+ 30  27 -3.125722E+000  # non-commuting block
  31  28  8.193663E+000
  32  29  7.946106E+000
  33  30 -5.288422E+000
@@ -348,8 +354,8 @@
  22  21  1.655191E-001
  23  22  1.652897E-001
  24  23  1.650740E-001
- 25  24  1.006612E+000
- 26  24  1.006704E+000
+ 25  24  1.006612E+000  # non-commuting block
+ 26  24  1.006704E+000  # non-commuting block
  27  25 -2.901756E+000
  28  26 -2.877151E+000
  29  27 -9.939034E-001
@@ -505,8 +511,8 @@
  22  21  1.444550E-001
  23  22  1.793502E-001
  24  23  1.797217E-001
- 25  24  9.897038E-001
- 26  24  9.900263E-001
+ 25  24  9.897038E-001  # non-commuting block
+ 26  24  9.900263E-001  # non-commuting block
  27  25  9.966326E-002
  28  26  1.100703E-001
  29  27 -3.050817E+000
@@ -2373,8 +2379,8 @@
   6   6  1.737626E-001
   7   7  1.716798E-001
   8   8  1.703534E-001
-  9   9  1.750841E-001
- 10   9  1.768407E-001
+  9   9  1.750841E-001  # non-commuting block
+ 10   9  1.768407E-001  # non-commuting block
  11  10  1.673403E-001
  12  11  1.683405E-001
  13  12  1.647931E-001
@@ -2530,8 +2536,8 @@
   6   6  1.737538E-001
   7   7  1.716964E-001
   8   8  1.705365E-001
-  9   9  1.749758E-001
- 10   9  1.769038E-001
+  9   9  1.749758E-001  # non-commuting block
+ 10   9  1.769038E-001  # non-commuting block
  11  10  1.673032E-001
  12  11  1.682510E-001
  13  12  1.648038E-001

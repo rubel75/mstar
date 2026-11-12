@@ -9,7 +9,9 @@ the same name in RESULT_DIR. Records are matched by k-point and band index.
 Numerical columns agree when |a - b| <= atol + rtol * max(|a|, |b|).
 Comment lines other than the "# KP:" headers are ignored, so changes in the
 descriptive file header do not cause a failure. Text annotations on a data
-line (for example the hyperbolic-dispersion warning in minv_d.dat) must match.
+line (the trailing comments "# non-commuting block, r = ..." and
+"# hyperbolic dispersion") must match; a number inside an annotation (r) is
+compared with the numerical tolerance.
 
 The defaults (rtol = 1e-5, atol = 1e-6) allow for rounding in the last
 printed digit (7 significant digits) and for differences between compilers

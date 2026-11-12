@@ -63,7 +63,7 @@ PROGRAM mstar
 
 USE precision_mod, ONLY: sp, dp
 USE dgenen_mod, ONLY: dgenen
-USE degenmass_mod, ONLY: degenmass
+USE degenmass_mod, ONLY: degenmass, block_inconsistency
 USE eigvs_mod, ONLY: eigvs
 USE read_waveder_header_mod, ONLY: read_waveder_header
 USE read_eigenvalues_vasp_mod, ONLY: read_eigenvalues_vasp
@@ -75,7 +75,7 @@ CHARACTER(len=256) :: &
     fnameinp, fnameout2, &
     fnameout3, fnameout4, fnameout5, & ! input/output file names
     wformat2, wformat3, &
-    wformat4, wformat5, wformat5w, & ! format for writing/reading data
+    wformat4, wformat5, & ! format for writing/reading data
     charspin ! spin component for spin-polarized calculations
 INTEGER :: &
     nltot, & ! total number of lines in mommat file
@@ -106,6 +106,10 @@ COMPLEX(kind=sp), ALLOCATABLE :: &
     pij(:,:,:), & ! momentum matrix elements [at.u.] (WIEN2k, one k-point)
     pijks(:,:,:,:,:) ! k- and spin-dependent velocity matrix elements
                      ! [at.u.] (VASP), rectangular (3,nbcder,nb,nktot,nstot)
+INTEGER :: &
+    nflagged = 0 ! number of non-commuting degenerate blocks
+REAL(kind=dp), PARAMETER :: &
+    block_tol = 1.0e-3_dp ! threshold on block_inconsistency for flagging
 LOGICAL :: &
     fmommatend, & ! end of mommat file
     file_exists, &
@@ -266,6 +270,15 @@ DO ispin = 1, nstot
     write(2,'(A)') '# together by degenerate perturbation theory (Eqs. 6 and 7 of the'
     write(2,'(A)') '# reference); adjacent bands belong to one block when their energies'
     write(2,'(A)') '# differ by no more than the degeneracy tolerance.'
+    write(2,'(A)') '# A block is marked "# non-commuting block" when the effective matrices'
+    write(2,'(A)') '# of its tensor components (Eq. 6) do not share eigenvectors (band'
+    write(2,'(A)') '# warping). Each component is diagonalized separately and its eigenvalues'
+    write(2,'(A)') '# are listed in ascending order, so a record then combines values that'
+    write(2,'(A)') '# belong to different states [Phys. Rev. B 93, 205147 (2016), Sec. III].'
+    write(2,'(A)') '# In such blocks, xx, yy, zz are the inverse masses along the Cartesian'
+    write(2,'(A)') '# axes, while yz, xz, xy are not defined for individual bands. r is the'
+    write(2,'(A)') '# estimated relative error of a per-band tensor (blocks are marked if'
+    write(2,'(A)') '# r > 1e-3).'
     write(2,'(A53)') '# columns correspond to Cartesian directions for m_ij'
     write(2,'(A)') '# band block 1=xx;     2=yy;      3=zz;     4=yz;'//&!...
         '       5=xz;      6=xy'
@@ -281,6 +294,12 @@ DO ispin = 1, nstot
     write(3,'(A)') '# together by degenerate perturbation theory (Eqs. 6 and 7 of the'
     write(3,'(A)') '# reference); adjacent bands belong to one block when their energies'
     write(3,'(A)') '# differ by no more than the degeneracy tolerance.'
+    write(3,'(A)') '# A block is marked "# non-commuting block" when the effective matrices'
+    write(3,'(A)') '# of its tensor components (Eq. 6) do not share eigenvectors (band'
+    write(3,'(A)') '# warping). Each component is diagonalized separately and its eigenvalues'
+    write(3,'(A)') '# are listed in ascending order, so a record then combines values that'
+    write(3,'(A)') '# belong to different states [Phys. Rev. B 93, 205147 (2016), Sec. III].'
+    write(3,'(A)') '# The values in such blocks are not defined for individual bands.'
     write(3,'(A)') '# columns correspond to'
     write(3,'(A)') '# band block m0/m_c'
 
@@ -295,6 +314,12 @@ DO ispin = 1, nstot
     write(4,'(A)') '# together by degenerate perturbation theory (Eqs. 6 and 7 of the'
     write(4,'(A)') '# reference); adjacent bands belong to one block when their energies'
     write(4,'(A)') '# differ by no more than the degeneracy tolerance.'
+    write(4,'(A)') '# A block is marked "# non-commuting block" when the effective matrices'
+    write(4,'(A)') '# of its tensor components (Eq. 6) do not share eigenvectors (band'
+    write(4,'(A)') '# warping). Each component is diagonalized separately and its eigenvalues'
+    write(4,'(A)') '# are listed in ascending order, so a record then combines values that'
+    write(4,'(A)') '# belong to different states [Phys. Rev. B 93, 205147 (2016), Sec. III].'
+    write(4,'(A)') '# The values in such blocks are not defined for individual bands.'
     write(4,'(A)') '# columns correspond to'
     write(4,'(A)') '# band block m0/m_1  m0/m_2  m0/m_3'
 
@@ -311,6 +336,15 @@ DO ispin = 1, nstot
     write(5,'(A)') '# together by degenerate perturbation theory (Eqs. 6 and 7 of the'
     write(5,'(A)') '# reference); adjacent bands belong to one block when their energies'
     write(5,'(A)') '# differ by no more than the degeneracy tolerance.'
+    write(5,'(A)') '# A block is marked "# non-commuting block" when the effective matrices'
+    write(5,'(A)') '# of its tensor components (Eq. 6) do not share eigenvectors (band'
+    write(5,'(A)') '# warping). Each component is diagonalized separately and its eigenvalues'
+    write(5,'(A)') '# are listed in ascending order, so a record then combines values that'
+    write(5,'(A)') '# belong to different states [Phys. Rev. B 93, 205147 (2016), Sec. III].'
+    write(5,'(A)') '# The values in such blocks are not defined for individual bands.'
+    write(5,'(A)') '# Records with principal components of different signs are marked'
+    write(5,'(A)') '# "# hyperbolic dispersion", where the geometric average is of limited'
+    write(5,'(A)') '# validity.'
     write(5,'(A)') '# Columns correspond to'
     write(5,'(A)') '# band block m0/m_d'
 
@@ -408,10 +442,17 @@ write(*,*) '(4) Density of states inverse effective mass'
 write(*,*) '    m0/m*_d = m0/(m_1*m_2*m_3)**(1/3) are stored in file ', &!...
     TRIM(fnameout5)
 IF (warnHyperb) THEN
-    write(*,*) '    There was a warning about hyperbolic band dispersion in the output file.'
+    write(*,*) '    Some records are marked "# hyperbolic dispersion" in this file.'
     write(*,*) '    This indicates a limited validity of the geometric average'
     write(*,*) '    (m_1*m_2*m_3)**(1/3) for the DOS effective mass in the situations when'
     write(*,*) '    the band dispersion is _not_ parabolic.'
+END IF
+IF (nflagged > 0) THEN
+    write(*,'(A,I0,A)') '  Records of ', nflagged, ' degenerate blocks are marked'
+    write(*,*) '    "# non-commuting block". In these blocks, only the diagonal'
+    write(*,*) '    components xx, yy, zz in minv_ij are defined for individual bands'
+    write(*,*) '    (directional masses along the Cartesian axes). The off-diagonal'
+    write(*,*) '    components and the values in minv_c, minv_pr, and minv_d are not.'
 END IF
 write(*,*) 'See the file header for the description'
 write(*,*) 'Suggested reference:'
@@ -516,6 +557,12 @@ REAL(kind=dp) :: &
 REAL(kind=dp), ALLOCATABLE :: &
     eigv(:), & ! eigenvalues of the effective matrix M
     minv(:,:) ! inverse masses of a degenerate block (band, Voigt index)
+COMPLEX(kind=dp), ALLOCATABLE :: &
+    Mall(:,:,:) ! effective matrices M^(ab) of a block (band, band, Voigt)
+REAL(kind=dp) :: &
+    rblock ! inconsistency of the block (see block_inconsistency)
+CHARACTER(len=64) :: &
+    flag_ij, flag ! annotations of records in non-commuting blocks
 CHARACTER(len=16) :: cw ! width of the band-index field
 ! Cartesian pairs for Voigt indices 1=xx; 2=yy; 3=zz; 4=yz; 5=xz; 6=xy
 INTEGER, PARAMETER :: &
@@ -560,11 +607,11 @@ write(5,'(A,I0,1X,A,I0,1X,A,I0)') & !...
 write(cw,'(I0)') nbt ! band index field as wide as the largest target band
 write(cw,'(I0)') LEN_TRIM(cw)
 ! band index and block ID use the same field width
-wformat2 = '(I' // TRIM(cw) // ',1X,I' // TRIM(cw) // ',6(1X,ES14.6E3))'
-wformat3 = '(I' // TRIM(cw) // ',1X,I' // TRIM(cw) // ',1X,ES14.6E3)'
-wformat4 = '(I' // TRIM(cw) // ',1X,I' // TRIM(cw) // ',3(1X,ES14.6E3))'
-wformat5 = '(I' // TRIM(cw) // ',1X,I' // TRIM(cw) // ',1X,ES14.6E3)'
-wformat5w = '(I' // TRIM(cw) // ',1X,I' // TRIM(cw) // ',1X,ES14.6E3,1X,A)'
+! a trailing annotation (comment starting with #) may follow the values
+wformat2 = '(I' // TRIM(cw) // ',1X,I' // TRIM(cw) // ',6(1X,ES14.6E3),A)'
+wformat3 = '(I' // TRIM(cw) // ',1X,I' // TRIM(cw) // ',1X,ES14.6E3,A)'
+wformat4 = '(I' // TRIM(cw) // ',1X,I' // TRIM(cw) // ',3(1X,ES14.6E3),A)'
+wformat5 = '(I' // TRIM(cw) // ',1X,I' // TRIM(cw) // ',1X,ES14.6E3,A)'
 
 !! Loop through blocks of degenerate states
 
@@ -572,7 +619,7 @@ DO id = 1, ndblen
     ! number of degenerate states in the block
     nd = nmlist(id,2) - nmlist(id,1) + 1
     ! array to store inverse masses; size 6 is because of 6 Voigt indices
-    ALLOCATE( minv(nd,6) )
+    ALLOCATE( minv(nd,6), Mall(nd,nd,6) )
     ! loop over Voigt indices: 1=xx; 2=yy; 3=zz; 4=yz; 5=xz; 6=xy
     DO ivoigt = 1, 6
         alpha = alpha_voigt(ivoigt)
@@ -580,18 +627,28 @@ DO id = 1, ndblen
         ! eigenvalues of the effective matrix M, Eqs. (6) and (7)
         CALL degenmass(nmlist(id,1), nmlist(id,2), alpha, beta, & ! in
             pij_k, dEij_k, & ! in
-            eigv) ! out
+            eigv, Mall(:,:,ivoigt)) ! out
         ! store the inverse effective masses (+ 1 if alpha=beta)
         minv(:,ivoigt) = eigv + REAL(kdelta(alpha,beta), dp)
         DEALLOCATE( eigv )
     END DO ! loop over 'ivoigt'
+    ! non-commuting (warped) degenerate block?
+    rblock = block_inconsistency(Mall)
+    IF (rblock > block_tol) THEN
+        nflagged = nflagged + 1
+        write(flag_ij,'(A,ES9.2)') '  # non-commuting block, r =', rblock
+        flag = '  # non-commuting block'
+    ELSE
+        flag_ij = ''
+        flag = ''
+    END IF
     ! store the inverse effective masses
     DO j = 1, nd
         n = nmlist(id,1) + j - 1
-        write(2,TRIM(wformat2)) n, id, minv(j,1:6)
+        write(2,TRIM(wformat2)) n, id, minv(j,1:6), TRIM(flag_ij)
         ! the trace of the matrix does not change after diagonalization
         ! so the sum of eigenvalues will be just a trace
-        write(3,TRIM(wformat3)) n, id, SUM(minv(j,1:3))/3.0_dp
+        write(3,TRIM(wformat3)) n, id, SUM(minv(j,1:3))/3.0_dp, TRIM(flag)
         ! determine principal components of the eff. mass tensor
         minv_U = 0.0_dp
         minv_U(1,1) = minv(j,1) ! the upper triangular part of minv tensor
@@ -602,22 +659,27 @@ DO id = 1, ndblen
         minv_U(1,2) = minv(j,6)
         CALL eigvs(3, minv_U, & ! <- args in
                 eigv_pr) ! -> args out
-        write(4,TRIM(wformat4)) n, id, eigv_pr(1:3)
+        write(4,TRIM(wformat4)) n, id, eigv_pr(1:3), TRIM(flag)
         ! DOS effective mass
         ! determinant of inv. eff. mass tensor
         minv_det = eigv_pr(1)*eigv_pr(2)*eigv_pr(3)
         minv_d = SIGN(ABS(minv_det)**(1.0_dp/3.0_dp), minv_det)
         IF (ALL(eigv_pr < 0.0_dp) .OR. ALL(eigv_pr > 0.0_dp)) THEN
             ! parabolic band dispersion
-            write(5,TRIM(wformat5)) n, id, minv_d
+            write(5,TRIM(wformat5)) n, id, minv_d, TRIM(flag)
         ELSE
             ! hyperbolic band dispersion (signs of masses are different)
-            write(5,TRIM(wformat5w)) n, id, minv_d, &!...
-                'warning: hyperbolic dispersion'
+            IF (LEN_TRIM(flag) > 0) THEN
+                write(5,TRIM(wformat5)) n, id, minv_d, &
+                    TRIM(flag)//', hyperbolic dispersion'
+            ELSE
+                write(5,TRIM(wformat5)) n, id, minv_d, &
+                    '  # hyperbolic dispersion'
+            END IF
             warnHyperb = .true.
         END IF
     END DO
-    DEALLOCATE( minv )
+    DEALLOCATE( minv, Mall )
 END DO ! loop over 'id'
 DEALLOCATE( nmlist )
 

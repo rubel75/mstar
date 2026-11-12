@@ -36,6 +36,10 @@ libraries. The tolerances can be changed with `--rtol` and `--atol`.
 
 ## History of the reference outputs
 
+- 2026-11-12 (pass 3b): regenerated after adding the `# non-commuting block`
+  annotation (84 blocks in the WIEN2k test, 34 in the VASP test) and changing
+  `warning: hyperbolic dispersion` to `# hyperbolic dispersion`. All numerical
+  values are identical to the pass-3 references.
 - 2026-11-12 (pass 3): regenerated after adding the degenerate-block ID
   column and changing to chain grouping of degenerate bands. All values are
   identical to the pass-2 references; the groups are the same for these
