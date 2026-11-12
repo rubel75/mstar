@@ -141,7 +141,7 @@ ELSEIF (iargc() == 2) THEN ! for 2 arguments
         write(*,*) '$ ./mstar mass.mommat2up 1e-6'
         write(*,*) 'or'
         write(*,*) '$ ./mstar mass.mommat2up'
-        STOP
+        ERROR STOP 1
     END IF
     write (*,'(A,es12.5,A)') & !...
         ' Confirming text-to-number conversion dEtol = ', dEtol, ' [Ha]'
@@ -173,14 +173,14 @@ IF ( file_exists ) THEN
     write(*,*) 'The input file ', TRIM(fnameinp), ' was found.'
 ELSE IF ( .not.(file_exists) ) THEN
     write(*,*) 'The input file ', TRIM(fnameinp), ' does not exist. Exiting'
-    STOP
+    ERROR STOP 1
 END IF
 IF ( file_exists .AND. (.not.(wien2k)) ) THEN ! check EIGENVAL for VASP
     INQUIRE(FILE='EIGENVAL', EXIST=file_exists)
     IF ( .not.(file_exists) ) THEN
         write(*,*) 'The file EIVENVAL is also required, but it ', &
             'does not exist. Exiting'
-        STOP
+        ERROR STOP 1
     ELSE
         write(*,*) 'The file EIVENVAL is also required. ', &
             'It is found.'
@@ -193,7 +193,7 @@ IF (wien2k) THEN
     IF (nltot < 10) THEN
         write(*,*) 'The file ', TRIM(fnameinp), ' is too short ', & !...
             'and most likely useless. Stopping'
-        STOP
+        ERROR STOP 1
     END IF
     ! assume 1 spin since case.momat2up and case.momat2dn files should be
     ! read one after the other any way
@@ -449,7 +449,7 @@ DO ispin = 1, nstot
                                     write(*,*) 'dM = ', dM
                                     write(*,*) 'dE = ', dE
                                     write(*,*) 'p2 = ', p2
-                                    STOP 'Error: dM is not finite'
+                                    ERROR STOP 'Error: dM is not finite'
                                 END IF
                                 ! update Mnm array
                                 Mnm(in,im) = Mnm(in,im) + dM
@@ -638,6 +638,6 @@ write(*,*) 'Suggested execution (VASP):'
 write(*,*) '$ ./mstar WAVEDER 1e-6'
 write(*,*) 'or'
 write(*,*) '$ ./mstar WAVEDER'
-STOP
+ERROR STOP 1
 
 END PROGRAM mstar

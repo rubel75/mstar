@@ -28,9 +28,26 @@ INTEGER :: ispin, ikpt, iband, idim, im, in, i ! counters
 INTEGER(kind=4) :: dum1, dum2, dum3, dum4 ! not used
 REAL(kind=8) :: NODES_IN_DIELECTRIC_FUNCTION, WPLASMON(3,3) ! not used
 REAL(kind=4) :: occup(nstot) ! not used
-REAL(kind=8) :: ene(nb,nktot,nstot) ! energy eigenvalues (eV)
-COMPLEX(kind=4) ::  rijks(nb,nbcder,nktot,nstot,3) ! dipole matrix elements (Ang)
+! The two large arrays below are allocated on the heap. As automatic arrays
+! they were placed on the stack by some compilers (e.g., ifort), which can
+! crash for large WAVEDER files.
+REAL(kind=8), ALLOCATABLE :: ene(:,:,:) ! energy eigenvalues (eV)
+COMPLEX(kind=4), ALLOCATABLE :: rijks(:,:,:,:,:) ! dipole matrix elements (Ang)
+INTEGER :: ierr ! allocation status
+CHARACTER(len=256) :: errmsg ! allocation error message
 
+
+!! Allocate work arrays
+
+ALLOCATE( rijks(nb,nbcder,nktot,nstot,3), ene(nb,nktot,nstot), &
+    STAT=ierr, ERRMSG=errmsg )
+IF (ierr /= 0) THEN
+    write(*,*) 'ERROR: unable to allocate memory for WAVEDER matrix elements'
+    write(*,'(A,F8.2,A)') ' requested ', &
+        REAL(nb,8)*nbcder*nktot*nstot*3*8/1024.0**3, ' GiB for rijks'
+    write(*,*) TRIM(errmsg)
+    ERROR STOP 1
+END IF
 
 !! Read dipole matrix element from WAVEDER file
 
@@ -81,7 +98,7 @@ ELSE
         ' k-points found in EIGENVAL file, while expecting ', nktot
     write(*,'(I0,A,I0)') iband-1, &
         ' bands found in EIGENVAL file, while expecting ', nb
-    STOP
+    ERROR STOP 1
 END IF
 
 !! Determine energy difference between pairs of states in [Ha]
@@ -106,7 +123,10 @@ END DO
 pijks = (0.0, 0.0)
 DO ispin = 1, nstot ! loop over spins
     DO ikpt = 1, nktot ! loop over k-points
-        DO im = 1,nbcder-1
+        ! im runs up to and including nbcder (the last band with derivative
+        ! matrix elements in WAVEDER). Stopping at nbcder-1 dropped the
+        ! couplings of band nbcder to all bands above it (bug before 2026-11).
+        DO im = 1,nbcder
             DO in = im+1,nb
                 DO idim = 1, 3
                     ! 1.88972623847507 [Ang -> bohr]
@@ -124,6 +144,7 @@ DO ispin = 1, nstot ! loop over spins
         END DO
     END DO
 END DO
+DEALLOCATE( rijks, ene )
 RETURN
 
 !! Read error handling
@@ -135,7 +156,7 @@ write(*,'(A)') TRIM(cline)
 write(*,*) 'while expected'
 write(*,'(A)') ' 9999       20.826607   0.000000'
 write(*,*) 'Execution terminated'
-STOP
+ERROR STOP 1
 
 30 & ! read error in EIGENVAL (spin up & down)
 write(*,*) 'ERROR while reading EIGENVAL (2 spins mode)'
@@ -144,6 +165,6 @@ write(*,'(A)') TRIM(cline)
 write(*,*) 'while expected'
 write(*,'(A)') ' 9999       20.826607        20.826607   0.000000     0.000000'
 write(*,*) 'Execution terminated'
-STOP
+ERROR STOP 1
 
 END SUBROUTINE read_mommat_pij_vasp

@@ -62,14 +62,14 @@ DO WHILE ( .true. )
             write(*,*) 'error reading mommat file'
             write(*,*) 'expected bii=bjj=1, but got', bii, ' and', bjj
             write(*,'(A,I0)') 'line number ', iline
-            STOP
+            ERROR STOP 1
         END IF
     ELSEIF (row==nbb) THEN ! end of the record bii=bjj=nb
         IF (bii/=bjj .or. bii/=nb .or. bjj /=nb) THEN
             write(*,*) 'error reading mommat file'
             write(*,*) 'expected bii=bjj, but got', bii, ' /=', bjj
             write(*,'(A,I0)') 'line number ', iline
-            STOP
+            ERROR STOP 1
         END IF
         RETURN ! done
     END IF
@@ -80,7 +80,7 @@ END DO
 write(*,'(A,I0,A,I0)') 'expected bii=bjj, but got ', bii, ' /= ', bjj
 write(*,'(A,I0)') 'line number ', iline
 CLOSE(fid)
-STOP
+ERROR STOP 1
 
 ! error reading the line (old format)
 20 write(*,*) 'ERROR reading the line from mommat file containing'
@@ -90,7 +90,7 @@ write(*,*) 'while expecting a _fixed_ format line like this'
 write(*,'(A)')  '      1  32 0.270604E-02 0.659085E-03 0.555417E-03'//&
     '-0.308709E-02-0.132694E-11-0.600436E-11   2.35217055'
 CLOSE(fid)
-STOP
+ERROR STOP 1
 
 ! error reading the line (new format)
 30 write(*,*) 'ERROR reading the line from mommat file containing'
@@ -100,6 +100,6 @@ write(*,*) 'while expecting a _free_ format line like this'
 write(*,'(A)')  '  1  32 0.270604E-02 0.659085E-03 0.555417E-03'//&
     ' -0.308709E-02 -0.132694E-11 -0.600436E-11 2.35217055'
 CLOSE(fid)
-STOP
+ERROR STOP 1
 
 END SUBROUTINE read_mommat_pij

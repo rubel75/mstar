@@ -18,7 +18,7 @@ INTEGER, intent(out) :: &
 OPEN (fid, file = TRIM(fname), status = 'old')
 nltot = 0
 DO
-    READ (1,*, END=10)
+    READ (fid,*, END=10)
     nltot = nltot + 1
 END DO
 10 CLOSE (fid)

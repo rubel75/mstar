@@ -53,7 +53,7 @@ IF (info .ne. 0) THEN
     write (*,*) "If info = i, and jobz = 'V', then the algorithm failed to"
     write (*,*) "compute an eigenvalue while working on the submatrix lying"
     write (*,*) "in rows and columns info/(n+1) through mod(info,n+1)."
-    stop
+    error stop 1
 END IF
 lwork = INT( work(1) )
 lrwork = INT( rwork(1) )
@@ -72,7 +72,7 @@ IF (info .ne. 0) THEN
     write (*,*) "If info = i, and jobz = 'V', then the algorithm failed to"
     write (*,*) "compute an eigenvalue while working on the submatrix lying"
     write (*,*) "in rows and columns info/(n+1) through mod(info,n+1)."
-    stop
+    error stop 1
 END IF
 EIGF = A ! eigenvectors are returned through A-matrix
 
