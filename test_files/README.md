@@ -1,20 +1,19 @@
 # mstar regression tests
 
-Two tests use CoSi, with the same DFT inputs as the BerryCPT tests
-(https://github.com/rubel75/berrycpt, folder `test_files`). The inputs are
-not duplicated here. By default the scripts expect the BerryCPT repository
-next to the mstar repository:
+Two tests use CoSi (space group P2_13, PBE with spin-orbit coupling). The DFT
+calculations were done for the BerryCPT tests
+(https://github.com/rubel75/berrycpt), and the files are copied here so that
+mstar can be tested on its own.
 
-```
-<parent>/mstar
-<parent>/berrycpt/test_files/WIEN2k
-<parent>/berrycpt/test_files/VASP
-```
+| Folder | Input files | Background (`etc`) |
+|---|---|---|
+| `WIEN2k` | `CoSi-berrycpt.mommat2` (428 bands at the 3 k-points of `CoSi.klist_band`: Γ, (1/30,0,0), (1/15,1/30,0) in reciprocal-lattice units) | structure, k-point lists, `case.scf`, eigenvalues (`case.energyso`), and the `Makefile` that ran the calculation |
+| `VASP` | `WAVEDER`, `EIGENVAL` (17 k-points, 422 bands, NBANDS_CDER = 156) | `INCAR`, `KPOINTS`, `POSCAR`, `OUTCAR` (VASP 6.4.3) |
 
 | Test | Input files | Command |
 |---|---|---|
-| `WIEN2k` | `CoSi-berrycpt.mommat2` (SOC, 12 k-points) | `mstar CoSi-berrycpt.mommat2 1e-5` |
-| `VASP` | `WAVEDER`, `EIGENVAL` (17 k-points, 422 bands, NBANDS_CDER = 156) | `mstar WAVEDER` |
+| `WIEN2k` | `CoSi-berrycpt.mommat2` | `mstar CoSi-berrycpt.mommat2 1e-5` |
+| `VASP` | `WAVEDER`, `EIGENVAL` | `mstar WAVEDER` |
 | `WIEN2k_nbmax3` | as `WIEN2k` | `mstar CoSi-berrycpt.mommat2 1e-5 --nbmax 3` |
 | `VASP_nbmax1000` | as `VASP` (compared with the `VASP` reference) | `mstar --nbmax 1000 INPUT_DIR/VASP/WAVEDER` |
 
@@ -22,9 +21,6 @@ next to the mstar repository:
 (bands 1-4 at k-point 1 form one block, so no band is written there).
 `VASP_nbmax1000` checks that `--nbmax` above NBANDS_CDER changes nothing and
 that the input can be given with a path.
-
-The DFT input and output files used to generate these inputs are in the
-`etc` folders of the BerryCPT tests.
 
 ## Running
 
@@ -34,7 +30,8 @@ Build mstar in the repository root, then run
 test_files/run_tests.sh [INPUT_DIR]
 ```
 
-`INPUT_DIR` overrides the location of the input folders. Each test runs in
+`INPUT_DIR` overrides the location of the input folders (default:
+`test_files`). Each test runs in
 `test_files/<test>/run`, and its `minv_*.dat` files are compared with
 `test_files/<test>/expected_output` by `compare_outputs.py`. Values agree when
 `|a - b| <= 1e-6 + 1e-5 * max(|a|, |b|)`, which allows for rounding in the
@@ -43,6 +40,8 @@ libraries. The tolerances can be changed with `--rtol` and `--atol`.
 
 ## History of the reference outputs
 
+- 2026-11-12: input files copied from the BerryCPT tests into this folder.
+  References unchanged.
 - 2026-11-12 (pass 4): unchanged. The first header line now records the Git
   revision of the build, which is not compared.
 - 2026-11-12 (option --nbmax): added `WIEN2k_nbmax3`. Its records are

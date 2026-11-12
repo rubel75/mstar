@@ -1,0 +1,40 @@
+SYSTEM=CoSi
+ISTART=0     # 0-new job
+ICHARG=2    # 2-Take superposition of atomic charge densities
+
+LOPTICS = .TRUE.
+NBANDS = 422
+LPEAD =.FALSE.
+
+PREC=Normal # normal accuracy
+
+GGA=PE # PBE
+IVDW=11 # DFT+D3
+ALGO = A #N or A
+LREAL= Auto
+
+IBRION=2   # A conjugate-gradient algorithm is used to relax the ions into their instantaneous groundstate
+ISIF= 2 #3 #2 #7      # no NOT fully relax structure, shape volume.  
+NSW=0       # number of force optim. iterations
+EDIFF=1.0E-07
+EDIFFG=-0.05
+NELM=999 # maximum number of electronic SC (self-consistency) steps
+
+LCHARG=.FALSE.   # do NO store charge density
+LWAVE=.FALSE.     # store FWs
+LVTOT=.FALSE.     # write LOCPOT file contains the total local potential (in eV)
+
+ISMEAR=0; SIGMA=0.01          # smearing Blochel
+
+NCORE=2          # number of cores in parallel calc.
+KPAR=2           # number of cores per k-point
+
+#ISPIN=2 # magnetism
+#MAGMOM = 3 3 -3 -3 3 3 -3 -3 23*0
+
+# SOC
+LNONCOLLINEAR = .TRUE.
+NUPDOWN = 0
+LSORBIT = .TRUE.
+SAXIS =   0 0 1 # (quantisation axis for spin)
+GGA_COMPAT = .FALSE.

@@ -170,7 +170,7 @@ The script `utils/dat2csv.sh` combines band energies along a WIEN2k band-structu
 
 ## Tests
 
-The folder `test_files` contains regression tests for WIEN2k and VASP (CoSi), which use the input files of the [BerryCPT](https://github.com/rubel75/berrycpt) tests. With the BerryCPT repository cloned next to mstar, run
+The folder `test_files` contains regression tests for WIEN2k and VASP (CoSi with spin-orbit coupling), including the DFT input files and the calculation details in the `etc` folders. After compiling, run
 
 ```bash
 test_files/run_tests.sh

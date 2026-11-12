@@ -2,11 +2,15 @@ MODULE read_eigenvalues_vasp_mod
 
 ! Copied from BerryCPT (https://github.com/rubel75/berrycpt, commit 993047e)
 ! with one modification for mstar: eigenvalues are returned in double
-! precision. In single precision, the rounding of E (about 1e-7 Ha for
-! |E| ~ 1 Ha) is about three times coarser than the 1e-6 eV resolution of
-! EIGENVAL. It enters energy differences of nearly degenerate states and was
-! found to change m0/m_c by up to 4% in the CoSi test (k-point 4, band 101),
-! where the trace results from cancelling components of order 100.
+! precision. EIGENVAL gives eigenvalues in eV with 6 decimals. In single
+! precision, the spacing of representable numbers exceeds 1e-6 eV for
+! |E| > 8 eV (about 4e-6 eV at 40 eV), so the last printed digit is lost.
+! In the CoSi test, single precision changes m0/m_c by a median relative
+! amount of 4e-6 (99th percentile 6e-4), about 2-3 times the change caused
+! by perturbing the eigenvalues within their printed resolution of 1e-6 eV
+! (median 2e-6, 99th percentile 2e-4). The largest changes (several percent)
+! occur where the trace results from cancelling components of order 100 and
+! are limited by the resolution of EIGENVAL itself.
 
 USE precision_mod, ONLY: sp, dp
 

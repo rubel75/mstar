@@ -5,9 +5,7 @@
 #   test_files/run_tests.sh [INPUT_DIR]
 #
 # INPUT_DIR holds the DFT input files in the subfolders WIEN2k and VASP.
-# The CoSi inputs are shared with BerryCPT, so the default is the BerryCPT
-# test folder next to the mstar repository:
-#   ../berrycpt/test_files   (relative to the mstar repository root)
+# The default is the folder test_files of this repository.
 #
 # The mstar executable is taken from the repository root. Each test runs in
 # test_files/<test>/run, which is removed and recreated.
@@ -16,8 +14,8 @@ set -u
 here=$(cd "$(dirname "$0")" && pwd)
 root=$(cd "$here/.." && pwd)
 mstar="$root/mstar"
-inputs=$(cd "${1:-$root/../berrycpt/test_files}" 2>/dev/null && pwd) || {
-    echo "Input folder not found: ${1:-$root/../berrycpt/test_files}"
+inputs=$(cd "${1:-$here}" 2>/dev/null && pwd) || {
+    echo "Input folder not found: ${1:-$here}"
     exit 1
 }
 
