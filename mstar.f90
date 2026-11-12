@@ -1,13 +1,19 @@
 PROGRAM mstar
-! includes subprograms:
-!     dgenen.f90 -- Group degenerate states
-!     eigvz.f90 -- Solve a complex eigenvalue problem for a Hermitian matrix
+! includes modules and subprograms:
+!     degenmass_mod.f90 -- Effective-matrix inverse mass for a block of
+!       degenerate bands (double precision, Kahan summation)
+!     dgenen_mod.f90 -- Group degenerate states
+!     eigvs_mod.f90 -- Eigenvalues of a real symmetric matrix
 !     kdelta.f90 -- Kronecker delta function
-!     read_mommat_nb.f90 -- Determine number of bands in a k-point block of 
+!     read_mommat_nb.f90 -- Determine number of bands in a k-point block of
 !       mommat file
-!     read_mommat_pij.f90 -- Read momentum matrix elements <i|p_a|j> (a=x,y,z) 
+!     read_mommat_pij.f90 -- Read momentum matrix elements <i|p_a|j> (a=x,y,z)
 !       and energy differences E_i - E_j in a k-point block of mommat file
 !     read_numlines.f90 -- Read number of lines in a file
+!   shared with BerryCPT (https://github.com/rubel75/berrycpt):
+!     precision_mod.f90, eigvz_mod.f90, is_hermitian_mod.f90,
+!     read_waveder_header_mod.f90, read_eigenvalues_vasp_mod.f90,
+!     read_mommat_pij_vasp_mod.f90
 !
 ! (c) Oleg Rubel, Mar 2021
 !
@@ -52,9 +58,16 @@ PROGRAM mstar
 !      of the cell-periodic part of the orbitals LPEAD =.FALSE. Tests show 
 !      that m* values calculated with LPEAD =.TRUE. make no sense.
 
+
 !! Variables
 
-USE OMP_LIB
+USE precision_mod, ONLY: sp, dp
+USE dgenen_mod, ONLY: dgenen
+USE degenmass_mod, ONLY: degenmass
+USE eigvs_mod, ONLY: eigvs
+USE read_waveder_header_mod, ONLY: read_waveder_header
+USE read_eigenvalues_vasp_mod, ONLY: read_eigenvalues_vasp
+USE read_mommat_pij_vasp_mod, ONLY: read_mommat_pij_vasp
 
 implicit none
 CHARACTER(len=256) :: &
@@ -71,40 +84,28 @@ INTEGER :: &
     iline, & ! current line number during reading of mommat file
     ispin, & ! current spin (1/2)
     nb, & ! number of bands for a current k-point
-    nbb, & ! number of band-to-band transition 
+    nbb, & ! number of band-to-band transition
     nbcder, & ! the max number of bands for which m* is calculated
               ! In WIEN2k we set it = to the total number of bands
               ! In VASP it is set in WAVEDER file as NBANDS_CDER
-    id, in, im, i, j, ikpt, & ! counters
-    n, m, k, & ! band indices
-    ndblen, & ! length of the useful part in 'nmlist' array
-    nd, & ! number of degenerate states in the block
-    ivoigt, & ! Voigt index (1..6)
-    alpha, beta, & ! Cartesian directions 1,2,3 = x,y,z
-    kdelta, & ! Kronecker delta function
+    i, ikpt, & ! counters
     ierr ! error code
 INTEGER, ALLOCATABLE :: &
-    nmlist(:,:) ! list of degeneracy indices, e.g. [1 1; 2 4; ...]
-REAL(kind=4) :: &
-    dE, & ! energy difference [Ha]
-    dEtol, & ! max dE for 2 states to be considered as degenerate [Ha]
-    minv_det, & ! determinant of the inverse eff. mass tensor
-    minv_d, & ! density of states eff. mass
-    minv_U(3,3) ! the upper triangular part of the m0/m*_ij tensor
-REAL(kind=4), ALLOCATABLE :: &
-    dEij(:,:), & ! energy differences E_i-E_j [Ha]
-    dEijks(:,:,:,:), & ! k- and spin-dependent energy differences E_i-E_j [Ha]
-    EIGV(:), & ! eigenvalues of Mnm or 1/m*
-    EIGFR(:,:), & ! real eigenvectors of 1/m*
-    minv(:,:) ! array to store inverse masses
-COMPLEX(kind=4) :: &
-    dM, & ! contribution to the Mnm matrix
-    p2 ! product of momentum matrix elements
-COMPLEX(kind=4), ALLOCATABLE :: &
-    pij(:,:,:), & ! momentum matrix elements [at.u.]
-    pijks(:,:,:,:,:), & ! k- and spin-dependent momentum matrix elements [at.u.]
-    Mnm(:,:), & ! momentum matrix elements
-    EIGFC(:,:) ! complex eigenvectors of Mnm
+    nbk(:,:) ! number of bands at each k-point and spin (VASP)
+INTEGER, EXTERNAL :: &
+    kdelta ! Kronecker delta function
+REAL(kind=sp) :: &
+    dEtol ! max dE for 2 states to be considered as degenerate [Ha]
+REAL(kind=sp), ALLOCATABLE :: &
+    dEij(:,:), & ! energy differences E_j-E_i [Ha] (WIEN2k, one k-point)
+    dEijks(:,:,:,:), & ! k- and spin-dependent E_j-E_i [Ha] (VASP)
+    occup(:,:,:) ! occupations (VASP, not used)
+REAL(kind=dp), ALLOCATABLE :: &
+    ene(:,:,:) ! eigenvalues [Ha] (VASP)
+COMPLEX(kind=sp), ALLOCATABLE :: &
+    pij(:,:,:), & ! momentum matrix elements [at.u.] (WIEN2k, one k-point)
+    pijks(:,:,:,:,:) ! k- and spin-dependent velocity matrix elements
+                     ! [at.u.] (VASP), rectangular (3,nbcder,nb,nktot,nstot)
 LOGICAL :: &
     fmommatend, & ! end of mommat file
     file_exists, &
@@ -154,7 +155,7 @@ END IF
 IF ( TRIM(fnameinp) == 'WAVEDER' .OR. TRIM(fnameinp) == 'WAVEDERF' ) THEN ! VASP
     wien2k = .false.
     write (*,*) 'Assume VASP calculation'
-    ! change to a binary file in case it is pointed at the formatted 
+    ! change to a binary file in case it is pointed at the formatted
     ! file WAVEDER
     fnameinp = 'WAVEDER'
     write(*,*) 'Assumed VASP calculation based on the input file name.'
@@ -165,7 +166,7 @@ ELSE ! WIEN2k (default)
     write(*,*) 'have the exact name WAVEDER.)'
 END IF
 
-!! Determine number of lines in mommat file & read VASP WAVEDER header
+!! Determine number of lines in mommat file & read VASP input
 
 ! check if the file exists
 INQUIRE(FILE=fnameinp, EXIST=file_exists)
@@ -178,16 +179,16 @@ END IF
 IF ( file_exists .AND. (.not.(wien2k)) ) THEN ! check EIGENVAL for VASP
     INQUIRE(FILE='EIGENVAL', EXIST=file_exists)
     IF ( .not.(file_exists) ) THEN
-        write(*,*) 'The file EIVENVAL is also required, but it ', &
+        write(*,*) 'The file EIGENVAL is also required, but it ', &
             'does not exist. Exiting'
         ERROR STOP 1
     ELSE
-        write(*,*) 'The file EIVENVAL is also required. ', &
+        write(*,*) 'The file EIGENVAL is also required. ', &
             'It is found.'
     END IF
 END IF
 IF (wien2k) THEN
-    CALL read_numlines(fnameinp, 1, & ! <- args in 
+    CALL read_numlines(fnameinp, 1, & ! <- args in
                 nltot) ! -> args out
     write (*,'(A,I0)') '  number of lines in mommat file = ', nltot
     IF (nltot < 10) THEN
@@ -197,43 +198,31 @@ IF (wien2k) THEN
     END IF
     ! assume 1 spin since case.momat2up and case.momat2dn files should be
     ! read one after the other any way
-    nstot = 1 
-ELSE ! VASP
-    CALL read_numlines_vasp(fnameinp, 1, & ! <- args in 
-        nstot, nktot, nbcder, nb) ! -> args out
-    write (*,'(A,I0)') '  number of spins in WAVEDER file = ', nstot
-    write (*,'(A,I0)') '  number of k-points in WAVEDER file = ', nktot
-    write (*,'(A,I0)') '  smaller number of bands in WAVEDER file = ', nbcder
-    write (*,'(A,I0)') '  number of bands per k-point in EIGENVAL file = ', &
-        nb
-    ! Memory estimate: 
-    ! 4 bytes * 2 (complex) * 3 (3D x,y,z) * 10e9 (Bytes -> GB)
-    write (*,'(A,1X,F5.1,1X,A)') ' Memory required to store matrix elements'//&
-        ' from WAVEDER file', nstot*nktot*(nb**2.)*4*2*3/10.0**9., 'GB'
-    write (*,'(A,1X,F5.1,1X,A)') ' Memory required to store dE_ij'//&
-        ' from EIGENVAL file', nstot*nktot*(nb**2.)*4*1/10.0**9., 'GB'
-    write (*,'(A,1X,F5.1,1X,A)') ' It will take additional', &
-        1*1*(nb**2.)*4*(2*3+1)/10.0**9., 'GB overhead'//&
-        ' to run the calculation'
-    write (*,'(A,1X,F5.1,1X,A)') ' Overall, you will need at least', &
-        nstot*nktot*(nb**2.)*4*2*3/10.0**9. + &
-        nstot*nktot*(nb**2.)*4*1/10.0**9. + &
-        1*1*(nb**2.)*4*(2*3+1)/10.0**9., 'GB (+ 20% incidental) of RAM'//&
-        ' to run the calculation'
-END IF
-! open input mommat/WAVEDER file for reading (file ID=1)
-IF (wien2k) THEN
+    nstot = 1
+    ! open input mommat file for reading (file ID=1)
     OPEN (1, file = TRIM(fnameinp), status = 'old')
 ELSE ! VASP
-    OPEN (1, file = TRIM(fnameinp), form = 'unformatted', status = 'old')
-END IF
-
-!! Read VASP WAVEDER and EIGENVAL files to determine matrix elements
-
-IF (.not.(wien2k)) THEN
-    ALLOCATE( pijks(3,nb,nb,nktot,nstot), dEijks(nb,nb,nktot,nstot) )
-    CALL read_mommat_pij_vasp (1, nstot, nktot, nbcder, nb, & ! <- args in
-            pijks, dEijks) ! -> args out
+    ! WAVEDER header: NB_TOT, NBANDS_CDER, NKPTS, ISPIN
+    CALL read_waveder_header( &
+        fnameinp, &               ! in
+        nstot, nktot, nbcder, nb) ! out
+    ! eigenvalues [Ha] from EIGENVAL (occupations are not used)
+    CALL read_eigenvalues_vasp( &
+        'EIGENVAL', &             ! in
+        nstot, nktot, nb, &       ! in
+        nbk, ene, occup)          ! out
+    ! velocity matrix elements <i|v|j> [a.u.] and E_j-E_i [Ha] in
+    ! rectangular storage (3,nbcder,nb,nktot,nstot) and
+    ! (nbcder,nb,nktot,nstot). The VASP phase convention is documented in
+    ! read_mommat_pij_vasp_mod.f90. Only products of the form
+    ! p_a(i,l) p_b(l,j) enter the effective mass, and for bands i, j of one
+    ! contiguous degenerate block (l outside the block) the phase factors of
+    ! the two elements cancel. The effective masses therefore do not depend
+    ! on that convention.
+    CALL read_mommat_pij_vasp( &
+        fnameinp, nstot, nktot, nbcder, nb, ene, & ! in
+        pijks, dEijks)                             ! out
+    DEALLOCATE( ene, occup, nbk )
 END IF
 
 ! Loop over spins (for VASP only)
@@ -244,7 +233,7 @@ write(*,*) 'Entering the main loop...'
 DO ispin = 1, nstot
 
     !! Spin suffix
-    
+
     IF (wien2k) THEN
         ! take last two letters of the input file name
         charspin = fnameinp( LEN(TRIM(fnameinp))-1 : LEN(TRIM(fnameinp)) )
@@ -297,7 +286,7 @@ DO ispin = 1, nstot
     fnameout5 = 'minv_d'//TRIM(charspin)//'.dat'
     OPEN (5, file = TRIM(fnameout5), status = 'UNKNOWN') ! output file 4
     write(5,'(A)') '# This file is generated by mstar'
-    write(5,'(A)') '# the output contains density of states inverse effective mass' 
+    write(5,'(A)') '# the output contains density of states inverse effective mass'
     write(5,'(A)') '# m0/m_d = m0/(m_1*m_2*m_3)**(1/3) that'
     write(5,'(A)') '# are grouped by k-point index and then by the band index. Here'
     write(5,'(A)') '# m0/m_1  m0/m_2  m0/m_3 are principal components of the inverse'
@@ -306,7 +295,7 @@ DO ispin = 1, nstot
     write(5,'(A)') '# band m0/m_d'
 
     !! Main part nested loops
-    
+
     fmommatend = .false. ! end of mommat file is not reached
     ikpt = 0 ! initialize the counter for k-points
     nbb = 0 ! initialize the number of band-to-band transitions
@@ -315,200 +304,33 @@ DO ispin = 1, nstot
     DO WHILE (.not.(fmommatend)) ! loop over k-points until the file ends
         ikpt = ikpt + 1 ! count number of k-points
 
-        !! Determine number of bands in mommat file
+        IF (wien2k) THEN
 
-        IF (wien2k) THEN ! do for WIEN2k only (nb was read above in case of VASP)
+            !! Determine number of bands in mommat file
+
             CALL read_mommat_nb(1, & ! <- args in
                     iline, & ! <-> args in-out
                     nb) ! -> args out
             ! the max number of bands for which m* is calculated
             ! here (WIEN2k) we set it = to the total number of bands
             nbcder = nb
-        END IF
 
-        !! Read <b_i|p_a|b_j> from mommat file, a=1,2,3 (x,y,z)
+            !! Read <b_i|p_a|b_j> from mommat file, a=1,2,3 (x,y,z)
 
-        ALLOCATE( pij(3,nb,nb), dEij(nb,nb) )
-        IF (wien2k) THEN
+            ALLOCATE( pij(3,nb,nb), dEij(nb,nb) )
             nbb = (nb+nb**2)/2 ! number of band-to-band transitions
             CALL read_mommat_pij (1, nb, nbb, & ! <- args in
                     iline, & ! <-> args in-out
                     pij, dEij) ! -> args out
+            CALL process_kpoint(pij, dEij)
+            DEALLOCATE( pij, dEij )
         ELSE ! VASP
-            pij = pijks(:,:,:,ikpt,ispin)
-            dEij = dEijks(:,:,ikpt,ispin)
+            CALL process_kpoint(pijks(:,:,:,ikpt,ispin), &
+                dEijks(:,:,ikpt,ispin))
         END IF
-        
-        !! Find degenerate states within the energy tolerance
 
-        ALLOCATE( nmlist(nb,2) )
-        CALL dgenen(nb, nbcder, dEij, dEtol, & ! <- args in 
-                nmlist, ndblen) ! -> args out
-        ! NOTE: nbcder is not used from this point down the code
-        !       it is substituted by nmlist(ndblen,2). The reason is that
-        !       nbcder can cut through a degenerate group of states. Then we
-        !       have to exclude the entire group of bands from the output of m*
-
-        !! Write information about the current k-point
-
-        write(2,'(A,I0,1X,A,I0,1X,A,I0)') & !...
-            '# KP: ', ikpt, 'NBCDER: ', nmlist(ndblen,2), 'NEMAX: ', nb
-        write(3,'(A,I0,1X,A,I0,1X,A,I0)') & !...
-            '# KP: ', ikpt, 'NBCDER: ', nmlist(ndblen,2), 'NEMAX: ', nb
-        write(4,'(A,I0,1X,A,I0,1X,A,I0)') & !...
-            '# KP: ', ikpt, 'NBCDER: ', nmlist(ndblen,2), 'NEMAX: ', nb
-        write(5,'(A,I0,1X,A,I0,1X,A,I0)') & !...
-            '# KP: ', ikpt, 'NBCDER: ', nmlist(ndblen,2), 'NEMAX: ', nb
-        
-        !! prepare output formats for effective masses
-        
-        write(wformat2,'(I0)') nbcder ! make a character of the length 'nbcder'
-        ! format line to write inverse effective masses
-        write(wformat2,'(I0)') LEN(TRIM(wformat2))
-        wformat2 = '(I' // TRIM(wformat2) // ',1X,5(es10.3,1X),es10.3)'
-        write(wformat3,'(I0)') nbcder
-        write(wformat3,'(I0)') LEN(TRIM(wformat3))
-        wformat3 = '(I' // TRIM(wformat3) // ',1X,es10.3)'
-        write(wformat4,'(I0)') nbcder
-        write(wformat4,'(I0)') LEN(TRIM(wformat4))
-        wformat4 = '(I' // TRIM(wformat4) // ',1X,2(es10.3,1X),es10.3)'
-        write(wformat5,'(I0)') nbcder
-        write(wformat5,'(I0)') LEN(TRIM(wformat5))
-        wformat5 = '(I' // TRIM(wformat5) // ',1X,es10.3)'
-        write(wformat5w,'(I0)') nbcder
-        write(wformat5w,'(I0)') LEN(TRIM(wformat5w))
-        wformat5w = '(I' // TRIM(wformat5w) // ',1X,es10.3,1X,A)'
-            
-        !! Loop through blocks of degenerate states
-                
-        DO id = 1,ndblen
-            ! number of degenerate states in the block
-            nd = nmlist(id,2) - nmlist(id,1) + 1
-            ! array to store inverse masses; size 6 is because of 6 Voigt indices
-            ALLOCATE( minv(nd,6) ) 
-            
-            ! loop over Voigt indices: 1=xx; 2=yy; 3=zz; 4=yz; 5=xz; 6=xy
-            DO ivoigt = 1,6
-                ! handle Voigt notations
-                SELECT CASE (ivoigt) ; ; 
-                    CASE (1) ! 1=xx
-                        alpha = 1
-                        beta = 1
-                    CASE (2) ! 2=yy
-                        alpha = 2
-                        beta = 2
-                    CASE (3) ! 3=zz
-                        alpha = 3
-                        beta = 3
-                    CASE (4) ! 4=yz
-                        alpha = 2
-                        beta = 3
-                    CASE (5) ! 5=xz
-                        alpha = 1
-                        beta = 3
-                    CASE (6) ! 6=xy
-                        alpha = 1
-                        beta = 2
-                    CASE DEFAULT
-                END SELECT
-                ALLOCATE( Mnm(nd,nd) )
-                Mnm = (0.0, 0.0) ! initialize with complex 0's
-                DO in = 1,nd
-                    n = nmlist(id,1) + in - 1
-                    DO im = 1,nd
-                        m = nmlist(id,1) + im - 1
-                        !$OMP PARALLEL DO REDUCTION(+:Mnm) &
-                        !$OMP PRIVATE(dM,p2,dE,k)
-                        DO k = 1,nb ! all bands (also above nbcder) are included
-                            ! 'k' is outside of the degeneracy list
-                            IF (k<nmlist(id,1) .or. k > nmlist(id,2)) THEN
-                                p2 = pij(alpha,n,k)*pij(beta,k,m) + & !...
-                                    pij(beta,n,k)*pij(alpha,k,m)
-                                ! account for slight violation of degeneracy by
-                                ! taking an average energy difference
-                                dE = -dEij(n,k)/2 -dEij(m,k)/2
-                                dM = p2/dE
-                                ! make sure dM is finite (not NaN and not Inf)
-                                IF (dM /= dM .or. abs(dM) > HUGE(abs(dM))) THEN
-                                    write(*,*) 'ikpt =', ikpt
-                                    write(*,*) 'n =', n
-                                    write(*,*) 'k =', k
-                                    write(*,*) 'm =', m
-                                    write(*,*) 'alpha =', alpha
-                                    write(*,*) 'beta =', beta
-                                    write(*,*) 'pij(alpha,n,k) =', &
-                                        pij(alpha,n,k)
-                                    write(*,*) 'pij(beta,k,m) =', &
-                                        pij(beta,k,m)
-                                    write(*,*) 'pij(beta,n,k) =', &
-                                        pij(beta,n,k)
-                                    write(*,*) 'pij(alpha,k,m) =', &
-                                        pij(alpha,k,m)
-                                    write(*,*) 'dEij(n,k) =', dEij(n,k)
-                                    write(*,*) 'dEij(m,k) =', dEij(m,k)
-                                    write(*,*) 'dM = ', dM
-                                    write(*,*) 'dE = ', dE
-                                    write(*,*) 'p2 = ', p2
-                                    ERROR STOP 'Error: dM is not finite'
-                                END IF
-                                ! update Mnm array
-                                Mnm(in,im) = Mnm(in,im) + dM
-                            END IF
-                        END DO ! loop over 'ik'
-                        !$OMP END PARALLEL DO
-                    END DO ! loop over 'im'
-                END DO ! loop over 'in'
-                ! find eigenvalues of Mnm
-                ALLOCATE( EIGV(nd), EIGFC(nd,nd) )
-                CALL eigvz(nd, Mnm, & ! <- args in 
-                        EIGV, EIGFC) ! -> args out
-                ! store the inverse effective masses (+ 1 if alpha=beta)
-                minv(:,ivoigt) = EIGV + kdelta(alpha,beta)
-                DEALLOCATE( Mnm, EIGV, EIGFC ) ! EIGFC is not used
-            END DO ! loop over 'ivoigt'
-            ! store the inverse effective masses
-            DO i = 1,nd
-                write(2,TRIM(wformat2)) nmlist(id,1)+i-1, (minv(i,j), j=1,6)
-                ! the trace of the matrix does not change after diagonalization
-                ! so the sum of eigenvalues will be just a trace
-                write(3,TRIM(wformat3)) nmlist(id,1)+i-1, & !...
-                    (1.0/3.0)*SUM(minv(i,1:3))
-                ! determine principal components of the eff. mass tensor
-                minv_U(1,1) = minv(i,1) ! the upper triangular part of minv tensor
-                minv_U(2,2) = minv(i,2) ! 1=xx; 2=yy; 3=zz; 4=yz; 5=xz; 6=xy
-                minv_U(3,3) = minv(i,3)
-                minv_U(2,3) = minv(i,4)
-                minv_U(1,3) = minv(i,5)
-                minv_U(1,2) = minv(i,6)
-                ALLOCATE( EIGV(3), EIGFR(3,3) )
-                CALL eigvs(3, minv_U, & ! <- args in 
-                        EIGV, EIGFR) ! -> args out
-                write(4,TRIM(wformat4)) nmlist(id,1)+i-1, EIGV(1:3)
-                ! DOS effective mass
-                ! determinant of inv. eff. mass tensor
-                minv_det = EIGV(1)*EIGV(2)*EIGV(3)
-                minv_d = SIGN(abs(minv_det)**(1.0/3.0) , minv_det)
-                IF (((EIGV(1) .LT. 0.0) .AND. (EIGV(2) .LT. 0.0) &!...
-                        .AND. (EIGV(3) .LT. 0.0)) .OR. &!...
-                        ((EIGV(1) .GT. 0.0) .AND. (EIGV(2) .GT. 0.0) &!...
-                        .AND. (EIGV(3) .GT. 0.0))) THEN
-                    ! parabolic band dispersion
-                    write(5,TRIM(wformat5)) nmlist(id,1)+i-1, &!...
-                        minv_d
-                ELSE
-                    ! hyperbolic band dispersion (signs of masses are different)
-                    write(5,TRIM(wformat5w)) nmlist(id,1)+i-1, &!...
-                        minv_d, 'warning: hyperbolic dispersion'
-                    warnHyperb = .true.
-                END IF
-                DEALLOCATE( EIGV, EIGFR ) ! EIGFR is not used
-            END DO
-            DEALLOCATE( minv )
-        END DO ! loop over 'id'
-        DEALLOCATE( nmlist, pij, dEij ) ! all k-point specific variables
-        
         !! Output progress to screen
-        
+
         IF (wien2k) THEN
             write(*,'(A,I0,A,I0,A,I3,A)') & !...
                 ' KP: ', ikpt, ' bands: ', nb, & !...
@@ -528,9 +350,9 @@ DO ispin = 1, nstot
                     ' progress: ', INT(100*ikpt/nktot), '%'
             END IF
         END IF
-        
+
         !! Check if the end of file mommat is reached
-        
+
         IF (wien2k) THEN
             IF (iline == nltot) THEN ! end of mommat file, exit WHILE loop
                 fmommatend = .true.
@@ -542,17 +364,18 @@ DO ispin = 1, nstot
         END IF
 
     END DO ! loop over k-points
-    
+
     !! Close output files
-    
+
     CLOSE (2) ! output file 1
     CLOSE (3) ! output file 2
     CLOSE (4) ! output file 3
     CLOSE (5) ! output file 4
-    
+
 END DO ! loop over spins
 
-CLOSE (1) ! input  file 1
+IF (wien2k) CLOSE (1) ! input  file 1
+IF (ALLOCATED(pijks)) DEALLOCATE( pijks, dEijks )
 
 write(*,*) 'Summary of the output:'
 write(*,*) '(1) Components of the (m0/m*_ij) tensor are stored in file ', &!...
@@ -639,5 +462,142 @@ write(*,*) '$ ./mstar WAVEDER 1e-6'
 write(*,*) 'or'
 write(*,*) '$ ./mstar WAVEDER'
 ERROR STOP 1
+
+CONTAINS
+
+SUBROUTINE process_kpoint(pij_k, dEij_k)
+! Calculate and write inverse effective masses for one k-point and spin.
+! Host variables used: nb, ikpt, dEtol, warnHyperb, and output units 2-5.
+!
+! pij_k(a,i,l) = <i|p_a|l> [a.u.] and dEij_k(i,l) = E_l - E_i [Ha] use
+! rectangular storage (component, target band, all bands). Masses are
+! calculated for the target bands 1..SIZE(pij_k,2) (= nbcder), truncated at
+! the last complete degenerate group.
+
+COMPLEX(kind=sp), INTENT(IN) :: pij_k(:,:,:)
+REAL(kind=sp), INTENT(IN) :: dEij_k(:,:)
+
+INTEGER :: &
+    nbt, & ! number of target bands
+    ndblen, & ! number of complete degenerate groups among target bands
+    nbout, & ! last band for which masses are written
+    id, nd, j, n, & ! counters, size of a degenerate block, band index
+    ivoigt, & ! Voigt index (1..6)
+    alpha, beta ! Cartesian directions 1,2,3 = x,y,z
+INTEGER, ALLOCATABLE :: &
+    nmlist(:,:) ! list of degeneracy indices, e.g. [1 1; 2 4; ...]
+REAL(kind=dp) :: &
+    minv_det, & ! determinant of the inverse eff. mass tensor
+    minv_d, & ! density of states inverse eff. mass
+    minv_U(3,3), & ! the upper triangular part of the m0/m*_ij tensor
+    eigv_pr(3) ! principal components of m0/m*_ij
+REAL(kind=dp), ALLOCATABLE :: &
+    eigv(:), & ! eigenvalues of the effective matrix M
+    minv(:,:) ! inverse masses of a degenerate block (band, Voigt index)
+CHARACTER(len=16) :: cw ! width of the band-index field
+! Cartesian pairs for Voigt indices 1=xx; 2=yy; 3=zz; 4=yz; 5=xz; 6=xy
+INTEGER, PARAMETER :: &
+    alpha_voigt(6) = [1, 2, 3, 2, 1, 1], &
+    beta_voigt(6)  = [1, 2, 3, 3, 3, 2]
+
+nbt = SIZE(pij_k,2)
+IF (SIZE(pij_k,3) /= nb .OR. SIZE(dEij_k,1) /= nbt .OR. &
+        SIZE(dEij_k,2) /= nb) THEN
+    write(*,'(A,I0)') ' ERROR: inconsistent matrix-element arrays at k-point ', &
+        ikpt
+    ERROR STOP 1
+END IF
+
+!! Find degenerate states within the energy tolerance
+
+ALLOCATE( nmlist(nbt,2) )
+CALL dgenen(nb, nbt, dEij_k, dEtol, & ! <- args in
+        nmlist, ndblen) ! -> args out
+! NOTE: nbt (= nbcder) can cut through a degenerate group of states. Then
+!       the entire group is excluded from the output, and the output stops
+!       at nmlist(ndblen,2).
+IF (ndblen > 0) THEN
+    nbout = nmlist(ndblen,2)
+ELSE
+    nbout = 0
+END IF
+
+!! Write information about the current k-point
+
+write(2,'(A,I0,1X,A,I0,1X,A,I0)') & !...
+    '# KP: ', ikpt, 'NBCDER: ', nbout, 'NEMAX: ', nb
+write(3,'(A,I0,1X,A,I0,1X,A,I0)') & !...
+    '# KP: ', ikpt, 'NBCDER: ', nbout, 'NEMAX: ', nb
+write(4,'(A,I0,1X,A,I0,1X,A,I0)') & !...
+    '# KP: ', ikpt, 'NBCDER: ', nbout, 'NEMAX: ', nb
+write(5,'(A,I0,1X,A,I0,1X,A,I0)') & !...
+    '# KP: ', ikpt, 'NBCDER: ', nbout, 'NEMAX: ', nb
+
+!! prepare output formats for effective masses
+
+write(cw,'(I0)') nbt ! band index field as wide as the largest target band
+write(cw,'(I0)') LEN_TRIM(cw)
+wformat2 = '(I' // TRIM(cw) // ',6(1X,ES14.6E3))'
+wformat3 = '(I' // TRIM(cw) // ',1X,ES14.6E3)'
+wformat4 = '(I' // TRIM(cw) // ',3(1X,ES14.6E3))'
+wformat5 = '(I' // TRIM(cw) // ',1X,ES14.6E3)'
+wformat5w = '(I' // TRIM(cw) // ',1X,ES14.6E3,1X,A)'
+
+!! Loop through blocks of degenerate states
+
+DO id = 1, ndblen
+    ! number of degenerate states in the block
+    nd = nmlist(id,2) - nmlist(id,1) + 1
+    ! array to store inverse masses; size 6 is because of 6 Voigt indices
+    ALLOCATE( minv(nd,6) )
+    ! loop over Voigt indices: 1=xx; 2=yy; 3=zz; 4=yz; 5=xz; 6=xy
+    DO ivoigt = 1, 6
+        alpha = alpha_voigt(ivoigt)
+        beta = beta_voigt(ivoigt)
+        ! eigenvalues of the effective matrix M, Eqs. (6) and (7)
+        CALL degenmass(nmlist(id,1), nmlist(id,2), alpha, beta, & ! in
+            pij_k, dEij_k, & ! in
+            eigv) ! out
+        ! store the inverse effective masses (+ 1 if alpha=beta)
+        minv(:,ivoigt) = eigv + REAL(kdelta(alpha,beta), dp)
+        DEALLOCATE( eigv )
+    END DO ! loop over 'ivoigt'
+    ! store the inverse effective masses
+    DO j = 1, nd
+        n = nmlist(id,1) + j - 1
+        write(2,TRIM(wformat2)) n, minv(j,1:6)
+        ! the trace of the matrix does not change after diagonalization
+        ! so the sum of eigenvalues will be just a trace
+        write(3,TRIM(wformat3)) n, SUM(minv(j,1:3))/3.0_dp
+        ! determine principal components of the eff. mass tensor
+        minv_U = 0.0_dp
+        minv_U(1,1) = minv(j,1) ! the upper triangular part of minv tensor
+        minv_U(2,2) = minv(j,2) ! 1=xx; 2=yy; 3=zz; 4=yz; 5=xz; 6=xy
+        minv_U(3,3) = minv(j,3)
+        minv_U(2,3) = minv(j,4)
+        minv_U(1,3) = minv(j,5)
+        minv_U(1,2) = minv(j,6)
+        CALL eigvs(3, minv_U, & ! <- args in
+                eigv_pr) ! -> args out
+        write(4,TRIM(wformat4)) n, eigv_pr(1:3)
+        ! DOS effective mass
+        ! determinant of inv. eff. mass tensor
+        minv_det = eigv_pr(1)*eigv_pr(2)*eigv_pr(3)
+        minv_d = SIGN(ABS(minv_det)**(1.0_dp/3.0_dp), minv_det)
+        IF (ALL(eigv_pr < 0.0_dp) .OR. ALL(eigv_pr > 0.0_dp)) THEN
+            ! parabolic band dispersion
+            write(5,TRIM(wformat5)) n, minv_d
+        ELSE
+            ! hyperbolic band dispersion (signs of masses are different)
+            write(5,TRIM(wformat5w)) n, minv_d, &!...
+                'warning: hyperbolic dispersion'
+            warnHyperb = .true.
+        END IF
+    END DO
+    DEALLOCATE( minv )
+END DO ! loop over 'id'
+DEALLOCATE( nmlist )
+
+END SUBROUTINE process_kpoint
 
 END PROGRAM mstar

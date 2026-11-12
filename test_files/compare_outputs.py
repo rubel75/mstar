@@ -11,10 +11,12 @@ Comment lines other than the "# KP:" headers are ignored, so changes in the
 descriptive file header do not cause a failure. Text annotations on a data
 line (for example the hyperbolic-dispersion warning in minv_d.dat) must match.
 
-The defaults (rtol = 2e-3, atol = 1e-5) allow for rounding in the last
-printed digit (es10.3 format) and for differences between compilers, LAPACK
-libraries, and OpenMP thread counts. Exit status is 0 if all files agree and
-1 otherwise.
+The defaults (rtol = 1e-5, atol = 1e-6) allow for rounding in the last
+printed digit (7 significant digits) and for differences between compilers
+and LAPACK libraries. Use larger values when comparing with outputs of
+mstar versions before 2026-11, which were written with 4 significant digits
+and accumulated in single precision (e.g., --rtol 2e-3 --atol 1e-5).
+Exit status is 0 if all files agree and 1 otherwise.
 """
 
 import argparse
@@ -94,8 +96,8 @@ def main():
                                 formatter_class=argparse.RawDescriptionHelpFormatter)
     p.add_argument("reference_dir")
     p.add_argument("result_dir")
-    p.add_argument("--rtol", type=float, default=2e-3)
-    p.add_argument("--atol", type=float, default=1e-5)
+    p.add_argument("--rtol", type=float, default=1e-5)
+    p.add_argument("--atol", type=float, default=1e-6)
     args = p.parse_args()
 
     ref_files = sorted(glob.glob(os.path.join(args.reference_dir, "minv_*.dat")))

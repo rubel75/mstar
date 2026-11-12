@@ -7,6 +7,17 @@ It is written in Fortran and intended for Linux OS
 
 ### Current Version
 
+Development version, November 2026 (changes since Oct 13, 2021):
+
+* **VASP results obtained with earlier versions should be recalculated.** (1) The `EIGENVAL` file was read with a fixed format of VASP 5. With the wider band-index field written by VASP 6.4.3 (and possibly other VASP 6 versions), the eigenvalues were truncated to 0.01 eV. This corrupts the energy denominators and can merge non-degenerate states into false degenerate groups. `EIGENVAL` is now read in free format. (2) The couplings of band `NBANDS_CDER` (the last band with derivative matrix elements in `WAVEDER`) to all higher bands were omitted, which affected that band and the bands degenerate with it.
+* The band sums are accumulated in double precision with compensated (Kahan) summation, and the effective matrices are diagonalized in double precision. Results no longer depend on the number of OpenMP threads (the OpenMP parallelization of the inner loop was removed). Values are written with 7 significant digits.
+* For numerically near-degenerate states inside a degenerate group, the effective matrix uses the average of the inverse energy differences, which keeps it Hermitian. For exactly degenerate states the result is unchanged.
+* VASP input is read with the routines of [BerryCPT](https://github.com/rubel75/berrycpt). Only the derivative-band block is stored, which reduces the memory needed for `WAVEDER` by more than half.
+* Errors terminate with a nonzero exit status.
+* Regression tests are in `test_files` (see `test_files/README.md`).
+
+WIEN2k results are unchanged apart from rounding in the last digits.
+
 Version Oct 13, 2021
 
 Version Mar 24, 2021 (+gfortran compatibility)

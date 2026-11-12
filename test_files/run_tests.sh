@@ -10,8 +10,7 @@
 #   ../berrycpt/test_files   (relative to the mstar repository root)
 #
 # The mstar executable is taken from the repository root. Each test runs in
-# test_files/<test>/run, which is removed and recreated. OMP_NUM_THREADS is
-# set to 1 so that results do not depend on the OpenMP summation order.
+# test_files/<test>/run, which is removed and recreated.
 
 set -u
 here=$(cd "$(dirname "$0")" && pwd)
@@ -27,7 +26,6 @@ if [ ! -x "$mstar" ]; then
     exit 1
 fi
 
-export OMP_NUM_THREADS=1
 status=0
 
 run_test() {

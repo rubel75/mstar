@@ -28,18 +28,25 @@ test_files/run_tests.sh [INPUT_DIR]
 ```
 
 `INPUT_DIR` overrides the location of the input folders. Each test runs in
-`test_files/<test>/run` with `OMP_NUM_THREADS=1`, and its `minv_*.dat` files
-are compared with `test_files/<test>/expected_output` by
-`compare_outputs.py`. Values agree when
-`|a - b| <= 1e-5 + 2e-3 * max(|a|, |b|)`, which allows for rounding in the last
-printed digit and for differences between compilers and LAPACK libraries.
-
-With more than one OpenMP thread, the last printed digit can change because
-the band sum is accumulated in single precision in a thread-dependent order.
+`test_files/<test>/run`, and its `minv_*.dat` files are compared with
+`test_files/<test>/expected_output` by `compare_outputs.py`. Values agree when
+`|a - b| <= 1e-6 + 1e-5 * max(|a|, |b|)`, which allows for rounding in the
+last printed digit and for differences between compilers and LAPACK
+libraries. The tolerances can be changed with `--rtol` and `--atol`.
 
 ## History of the reference outputs
 
-- 2026-11-12: generated with gfortran 13.3 and reference LAPACK, after the
-  fix of the VASP reader that omitted the couplings of band NBANDS_CDER to all
-  higher bands. Relative to commit 1a5c1c0, only band 156 and the bands
-  degenerate with it change in the VASP test. The WIEN2k test is unchanged.
+- 2026-11-12 (pass 2): regenerated with gfortran 13.3 and reference LAPACK
+  after the change to double precision with compensated summation, the
+  free-format reading of EIGENVAL, and the 7-digit output format. WIEN2k:
+  agrees with the previous reference within 2e-3; the only larger changes are
+  off-diagonal elements below 1e-2 at k-point 1, where the change is below
+  1e-7 of the largest diagonal element of the same band (single-precision
+  rounding in the previous version). VASP: the previous reference is invalid
+  because EIGENVAL was truncated to 0.01 eV. With that reading fixed in the
+  previous code, the new results agree within 2e-3 except two off-diagonal
+  elements (k-point 4, bands 89 and 90), where the change is below 1e-7 of
+  the largest diagonal element.
+- 2026-11-12 (pass 1, commit c737808): generated with gfortran 13.3 and
+  reference LAPACK, after the fix of the VASP reader that omitted the
+  couplings of band NBANDS_CDER to all higher bands.
