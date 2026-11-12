@@ -72,6 +72,7 @@ USE read_mommat_pij_vasp_mod, ONLY: read_mommat_pij_vasp
 implicit none
 CHARACTER(len=256) :: &
     arg1, arg2, & ! command line input arguments
+    posarg(2), & ! positional command line arguments
     fnameinp, fnameout2, &
     fnameout3, fnameout4, fnameout5, & ! input/output file names
     wformat2, wformat3, &
@@ -89,6 +90,9 @@ INTEGER :: &
               ! In WIEN2k we set it = to the total number of bands
               ! In VASP it is set in WAVEDER file as NBANDS_CDER
     i, ikpt, & ! counters
+    narg, npos, & ! number of command line arguments, positional arguments
+    nbmax, & ! --nbmax option: last band for which m* is calculated (0 = all)
+    nbt, & ! number of target bands at the current k-point
     ierr ! error code
 INTEGER, ALLOCATABLE :: &
     nbk(:,:) ! number of bands at each k-point and spin (VASP)
@@ -117,27 +121,60 @@ LOGICAL :: &
     warnHyperb ! warning on hyperbolic band dispersion
 
 !! Get command line input arguments
+!
+! Positional arguments: input file and (optional) degeneracy tolerance.
+! Named option (may appear anywhere after the program name):
+!   --nbmax N  calculate masses only for bands 1..N (in VASP, at most
+!              NBANDS_CDER). The intermediate-state sums still include all
+!              bands. If N cuts through a degenerate block, that block is
+!              excluded.
 
-DO i = 1, iargc() ! loop through all command line arguments to search for help
-    CALL GETARG(i,arg1)
+narg = COMMAND_ARGUMENT_COUNT()
+DO i = 1, narg ! loop through all command line arguments to search for help
+    CALL GET_COMMAND_ARGUMENT(i,arg1)
     IF ( TRIM(arg1)=='-h' .or.  TRIM(arg1)=='--h' .or. & !...
             TRIM(arg1)=='-help' .or. TRIM(arg1)=='--help') THEN
         GOTO 911 ! print help and STOP
     END IF
 END DO
-write(*,'(A,I0)') ' Detected input arguments = ', iargc()
-IF (iargc() == 1) THEN ! check number of input arguments
-    CALL GETARG(1,arg1) ! mommat file name
-    write (*,*) 'Input mommat file = ', TRIM(arg1)
-    fnameinp = TRIM(arg1)
+write(*,'(A,I0)') ' Detected input arguments = ', narg
+npos = 0
+nbmax = 0 ! 0 = no cap
+i = 0
+DO WHILE (i < narg)
+    i = i + 1
+    CALL GET_COMMAND_ARGUMENT(i,arg1)
+    IF (TRIM(arg1) == '--nbmax') THEN
+        IF (i == narg) THEN
+            write(*,*) 'Error: the option --nbmax requires a value (number of bands)'
+            ERROR STOP 1
+        END IF
+        i = i + 1
+        CALL GET_COMMAND_ARGUMENT(i,arg2)
+        read(arg2,*,IOSTAT=ierr) nbmax
+        IF (ierr /= 0 .OR. nbmax < 1) THEN
+            write(*,*) 'Error: the value of --nbmax must be a positive integer, got ', &
+                TRIM(arg2)
+            ERROR STOP 1
+        END IF
+    ELSE IF (arg1(1:2) == '--') THEN
+        write(*,*) 'Error: unknown option ', TRIM(arg1)
+        GOTO 912 ! print error and STOP
+    ELSE
+        npos = npos + 1
+        IF (npos > 2) GOTO 912 ! print error and STOP
+        posarg(npos) = arg1
+    END IF
+END DO
+IF (npos == 0) GOTO 912 ! print error and STOP
+fnameinp = TRIM(posarg(1))
+write (*,*) 'Input mommat file = ', TRIM(fnameinp)
+IF (npos == 1) THEN
     dEtol = 1.0e-6 ! default degeneracy tolerance [Ha]
     write (*,*) 'Degeneracy tolerance is not specified,'
     write (*,'(A,es12.5,A)') '  default will be used Etol = ', dEtol, ' [Ha]'
-ELSEIF (iargc() == 2) THEN ! for 2 arguments
-    CALL GETARG(1,arg1) ! mommat file name
-    write (*,*) 'Input mommat file = ', TRIM(arg1)
-    fnameinp = TRIM(arg1)
-    CALL GETARG(2,arg2) ! degeneracy tolerance [Ha]
+ELSE
+    arg2 = posarg(2) ! degeneracy tolerance [Ha]
     write (*,*) 'Degeneracy tolerance dEtol = ', TRIM(arg2), ' [Ha]'
     read(arg2,*,IOSTAT=ierr) dEtol
     IF (ierr /= 0) THEN ! input error for 2nd argument
@@ -150,8 +187,9 @@ ELSEIF (iargc() == 2) THEN ! for 2 arguments
     END IF
     write (*,'(A,es12.5,A)') & !...
         ' Confirming text-to-number conversion dEtol = ', dEtol, ' [Ha]'
-ELSE ! impossible
-    GOTO 912 ! print error and STOP
+END IF
+IF (nbmax > 0) THEN
+    write(*,'(A,I0)') ' Masses will be calculated for bands up to --nbmax = ', nbmax
 END IF
 
 !! WIEN2k or VASP?
@@ -376,11 +414,15 @@ DO ispin = 1, nstot
             CALL read_mommat_pij (1, nb, nbb, & ! <- args in
                     iline, & ! <-> args in-out
                     pij, dEij) ! -> args out
-            CALL process_kpoint(pij, dEij)
+            nbt = nb ! all bands are targets in WIEN2k
+            IF (nbmax > 0) nbt = MIN(nbt, nbmax)
+            CALL process_kpoint(pij(:,1:nbt,:), dEij(1:nbt,:))
             DEALLOCATE( pij, dEij )
         ELSE ! VASP
-            CALL process_kpoint(pijks(:,:,:,ikpt,ispin), &
-                dEijks(:,:,ikpt,ispin))
+            nbt = nbcder ! NBANDS_CDER
+            IF (nbmax > 0) nbt = MIN(nbt, nbmax)
+            CALL process_kpoint(pijks(:,1:nbt,:,ikpt,ispin), &
+                dEijks(1:nbt,:,ikpt,ispin))
         END IF
 
         !! Output progress to screen
@@ -466,11 +508,15 @@ STOP ! end of the main code
 
 911 & ! label for GOTO statement
 write(*,*) 'Execution:'
-write(*,*) '  $ ./mstar arg1 [arg2]'
+write(*,*) '  $ ./mstar arg1 [arg2] [--nbmax N]'
 write(*,*) 'arg1 - input case.mommat2 (WIEN2k) or WAVEDER (VASP) file name'
 write(*,*) 'arg2 - (optional) degeneracy energy tolerance [Ha]'
 write(*,*) '       max dE between adjacent states to be grouped as degenerate'
 write(*,*) '       default value is 1.0e-6 Ha'
+write(*,*) '--nbmax N - (optional) calculate masses only for bands 1..N'
+write(*,*) '       (in VASP, at most NBANDS_CDER). All bands are still included'
+write(*,*) '       in the perturbation sums. If N cuts through a group of'
+write(*,*) '       degenerate bands, the whole group is excluded.'
 write(*,*) ''
 write(*,*) 'Output:'
 write(*,*) 'minv_ij.dat - contains elements of the (m0/m*_ij) tensor.'
@@ -514,7 +560,8 @@ STOP
 
 912 & ! label for GOTO statement
 write(*,*) 'Error detected for the number of input arguments.'
-write(*,*) 'There should be 1 or 2 arguments'
+write(*,*) 'There should be 1 or 2 positional arguments,'
+write(*,*) 'optionally followed by --nbmax N'
 write(*,*) 'Suggested execution (WIEN2k):'
 write(*,*) '$ ./mstar mass.mommat2 1e-6'
 write(*,*) 'or'

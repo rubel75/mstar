@@ -28,20 +28,24 @@ fi
 
 status=0
 
+# run_test NAME INPUT_SUBDIR REFERENCE_SUBDIR "INPUT FILES" MSTAR_ARGUMENTS...
 run_test() {
     local name=$1 ; shift
+    local input_subdir=$1 ; shift
+    local reference_subdir=$1 ; shift
     local input_files=$1 ; shift
     local rundir="$here/$name/run"
     echo "=== $name"
     rm -rf "$rundir"
     mkdir -p "$rundir"
     for f in $input_files; do
-        if [ ! -f "$inputs/$name/$f" ]; then
-            echo "Missing input file: $inputs/$name/$f"
+        if [ ! -f "$inputs/$input_subdir/$f" ]; then
+            echo "Missing input file: $inputs/$input_subdir/$f"
             status=1
             return
         fi
-        ln -s "$inputs/$name/$f" "$rundir/$f" 2>/dev/null || cp "$inputs/$name/$f" "$rundir/$f"
+        ln -s "$inputs/$input_subdir/$f" "$rundir/$f" 2>/dev/null || \
+            cp "$inputs/$input_subdir/$f" "$rundir/$f"
     done
     ( cd "$rundir" && "$mstar" "$@" > mstar.log 2>&1 )
     local rc=$?
@@ -50,11 +54,16 @@ run_test() {
         status=1
         return
     fi
-    python3 "$here/compare_outputs.py" "$here/$name/expected_output" "$rundir" || status=1
+    python3 "$here/compare_outputs.py" "$here/$reference_subdir/expected_output" "$rundir" || status=1
 }
 
-run_test WIEN2k "CoSi-berrycpt.mommat2" CoSi-berrycpt.mommat2 1e-5
-run_test VASP "WAVEDER EIGENVAL" WAVEDER
+run_test WIEN2k WIEN2k WIEN2k "CoSi-berrycpt.mommat2" CoSi-berrycpt.mommat2 1e-5
+run_test VASP VASP VASP "WAVEDER EIGENVAL" WAVEDER
+# --nbmax 3 cuts through the fourfold block of bands 1-4 at k-point 1
+run_test WIEN2k_nbmax3 WIEN2k WIEN2k_nbmax3 "CoSi-berrycpt.mommat2" \
+    CoSi-berrycpt.mommat2 1e-5 --nbmax 3
+# --nbmax above NBANDS_CDER (156) must not change the VASP results
+run_test VASP_nbmax1000 VASP VASP "WAVEDER EIGENVAL" --nbmax 1000 WAVEDER
 
 if [ $status -eq 0 ]; then
     echo "All tests passed."

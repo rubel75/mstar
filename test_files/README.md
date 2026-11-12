@@ -15,6 +15,12 @@ next to the mstar repository:
 |---|---|---|
 | `WIEN2k` | `CoSi-berrycpt.mommat2` (SOC, 12 k-points) | `mstar CoSi-berrycpt.mommat2 1e-5` |
 | `VASP` | `WAVEDER`, `EIGENVAL` (17 k-points, 422 bands, NBANDS_CDER = 156) | `mstar WAVEDER` |
+| `WIEN2k_nbmax3` | as `WIEN2k` | `mstar CoSi-berrycpt.mommat2 1e-5 --nbmax 3` |
+| `VASP_nbmax1000` | as `VASP` (compared with the `VASP` reference) | `mstar --nbmax 1000 WAVEDER` |
+
+`WIEN2k_nbmax3` checks that a degenerate block cut by `--nbmax` is excluded
+(bands 1-4 at k-point 1 form one block, so no band is written there).
+`VASP_nbmax1000` checks that `--nbmax` above NBANDS_CDER changes nothing.
 
 The DFT input and output files used to generate these inputs are in the
 `etc` folders of the BerryCPT tests.
@@ -36,6 +42,8 @@ libraries. The tolerances can be changed with `--rtol` and `--atol`.
 
 ## History of the reference outputs
 
+- 2026-11-12 (option --nbmax): added `WIEN2k_nbmax3`. Its records are
+  identical to the corresponding records of the `WIEN2k` reference.
 - 2026-11-12 (pass 3b): regenerated after adding the `# non-commuting block`
   annotation (84 blocks in the WIEN2k test, 34 in the VASP test) and changing
   `warning: hyperbolic dispersion` to `# hyperbolic dispersion`. All numerical

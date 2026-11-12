@@ -17,6 +17,7 @@ Development version, November 2026 (changes since Oct 13, 2021):
 * Degenerate blocks are formed by chaining adjacent bands whose energies differ by no more than the tolerance, as in BerryCPT. Previously, all bands of a block had to lie within the tolerance of the first band of the block.
 * Records of degenerate blocks whose tensor components do not share eigenvectors (band warping, e.g., heavy and light holes) are marked `# non-commuting block`. For such bands, a mass tensor cannot be assigned to an individual band [Laflamme Janssen et al., Phys. Rev. B 93, 205147 (2016), Sec. III]: only the diagonal components xx, yy, zz in `minv_ij` (inverse masses along the Cartesian axes) are meaningful, while the off-diagonal components and the values in `minv_c`, `minv_pr`, and `minv_d` are not. In `minv_ij`, the flag also gives `r`, the estimated relative error of a per-band tensor; blocks are marked when r > 1e-3. Blocks with commuting components (e.g., Kramers pairs) are not marked.
 * All annotations follow a `#` at the end of a record (e.g., `# hyperbolic dispersion` in `minv_d`, formerly `warning: hyperbolic dispersion`), so that the files can be read directly by gnuplot or `numpy.loadtxt`.
+* New option `--nbmax N` limits the output to bands 1..N (in VASP, at most `NBANDS_CDER`). All bands still enter the perturbation sums, so the masses of the bands written are unchanged. A degenerate block cut by N is excluded. This avoids writing masses of high-lying bands, which are not converged with respect to the number of empty states.
 * Errors terminate with a nonzero exit status.
 * Regression tests are in `test_files` (see `test_files/README.md`).
 
@@ -57,6 +58,8 @@ First, you need to perform a standard SCF (self-consistent field) calculation an
 `/path/to/mstar/mstar case.mommat2[up/dn] [1e-5] # if you use this GitHub version and WIEN2k (see the compatibility note above)`
 
 `/path/to/mstar/mstar WAVEDER [1e-5] # VASP`
+
+The option `--nbmax N` (anywhere on the command line) limits the output to bands 1..N.
 
 Options:
 
